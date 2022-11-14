@@ -1,0 +1,53 @@
+.constructorSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 40px;
+  padding-left: 0;
+}
+
+.list {
+  /* height: 83vh; */
+  overflow-y: auto;
+  max-height: 464px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  scrollbar-color: #8585AD #2F2F37;
+  scrollbar-width: thin;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
+
+.list::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+
+
+.listItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  row-gap: 8px;
+}
+
+.checkWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.checkSummary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

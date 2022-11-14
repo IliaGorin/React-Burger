@@ -1,0 +1,26 @@
+.header {
+  max-width: 1920px;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.link {
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navList {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.nav {
+  width: 1280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,0 +1,35 @@
+.modalWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modalHeader {
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.modalClose {
+  position: absolute;
+  top: 60px;
+  right: 40px;
+  z-index: 10;
+  cursor: pointer;
+  transition: .2s;
+  background: transparent;
+}
+
+.modalContainer {
+  position: relative;
+  box-sizing: border-box;
+  height: fit-content;
+  z-index: 2;
+  min-width: 720px;
+  background: #1C1C21;
+  border-radius: 40px;
+  padding: 40px 40px 60px;
+}
