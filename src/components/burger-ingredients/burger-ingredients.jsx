@@ -24,17 +24,24 @@ function BurgerIngredients(props) {
     setModalIngredientOpen(false);
   };
 
+  const onTabClick = (tab) => {
+    setCurrent(tab);
+    console.log(tab);
+    const element = document.getElementById(tab);
+    if (element) element.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section>
       <h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
       <div className={`${stylesForBurgeringredients.tabs}`}>
-        <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
+        <Tab value="bun" active={current === 'bun'} onClick={onTabClick}>
           Булки
         </Tab>
-        <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
+        <Tab value="sauce" active={current === 'sauce'} onClick={onTabClick}>
           Соусы
         </Tab>
-        <Tab value="main" active={current === 'main'} onClick={setCurrent}>
+        <Tab value="main" active={current === 'main'} onClick={onTabClick}>
           Начинки
         </Tab>
       </div>

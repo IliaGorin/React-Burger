@@ -5,7 +5,10 @@ import { typeOfingredient } from '../../utils/propTypes.js';
 function IngredientCategory(props) {
   return (
     <li>
-      <h3 className={`${classes.typeHeader} text text_type_main-medium`}>
+      <h3
+        className={`${classes.typeHeader} text text_type_main-medium`}
+        id={props.categoryType}
+      >
         {props.category}
       </h3>
       <ul className={classes.ingredientsByType}>
