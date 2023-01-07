@@ -9,12 +9,11 @@ const ModalOverlay = (props) => {
     }
   };
 
-  const modalCurrentStyle = props.isActive
-    ? `${stylesForModalOverlay.modalOverlay} ${stylesForModalOverlay.modalOverlay_active}`
-    : `${stylesForModalOverlay.modalOverlay}`;
-
   return (
-    <section className={modalCurrentStyle} onClick={handleClickOnOverlay}>
+    <section
+      className={stylesForModalOverlay.modalOverlay}
+      onClick={handleClickOnOverlay}
+    >
       {props.children}
     </section>
   );
@@ -22,7 +21,6 @@ const ModalOverlay = (props) => {
 
 ModalOverlay.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  isActive: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
 };
 

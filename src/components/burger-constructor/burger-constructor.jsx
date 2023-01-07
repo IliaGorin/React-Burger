@@ -73,9 +73,11 @@ function BurgerConstructor(props) {
           </Button>
         </div>
       </div>
-      <Modal isActive={isOrderModalVis} closeModal={closeOrderModal}>
-        <OrderDetails closeModal={closeOrderModal} />
-      </Modal>
+      {isOrderModalVis && (
+        <Modal closeModal={closeOrderModal}>
+          <OrderDetails closeModal={closeOrderModal} />
+        </Modal>
+      )}
     </section>
   );
 }

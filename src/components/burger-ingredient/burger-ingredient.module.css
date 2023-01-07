@@ -12,3 +12,7 @@
   flex-direction: row;
   gap: 5px;
 }
+
+.ingredientWrap:hover {
+  cursor: pointer;
+}

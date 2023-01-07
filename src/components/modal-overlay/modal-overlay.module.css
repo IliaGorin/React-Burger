@@ -12,12 +12,20 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transition: all 0.2s ease-in;
-}
-
-.modalOverlay_active {
   visibility: visible;
   opacity: 1;
   background-color: rgba(0, 0, 0, 0.6);
+  animation: slide-down 300ms ease-out forwards;
+}
+
+
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

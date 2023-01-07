@@ -64,9 +64,11 @@ function BurgerIngredients(props) {
           categoryType={'main'}
         />
       </ul>
-      <Modal isActive={isModalIngredientOpen} closeModal={closeModalIngredient}>
-        <IngredientDetails data={selectedIngredient} />
-      </Modal>
+      {isModalIngredientOpen && (
+        <Modal closeModal={closeModalIngredient}>
+          <IngredientDetails data={selectedIngredient} />
+        </Modal>
+      )}
     </section>
   );
 }
