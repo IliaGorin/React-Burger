@@ -26,7 +26,6 @@ function BurgerIngredients(props) {
 
   const onTabClick = (tab) => {
     setCurrent(tab);
-    console.log(tab);
     const element = document.getElementById(tab);
     if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
