@@ -6,6 +6,7 @@ import stylesForBurgeringredients from './burger-ingredients.module.css';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient.jsx';
 import Modal from '../modal/modal.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
+import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
 
 function BurgerIngredients(props) {
   const [current, setCurrent] = useState('bun');
@@ -38,64 +39,24 @@ function BurgerIngredients(props) {
         </Tab>
       </div>
       <ul className={stylesForBurgeringredients.ingredientsList}>
-        <li>
-          <h3
-            className={`${stylesForBurgeringredients.typeHeader} text text_type_main-medium`}
-          >
-            Булки
-          </h3>
-          <ul className={stylesForBurgeringredients.ingredientsByType}>
-            {props.data
-              .filter((data) => data.type === 'bun')
-              .map((ingredient) => (
-                <li key={ingredient._id}>
-                  <BurgerIngredient
-                    data={ingredient}
-                    openModalIngredient={openModalIngredient}
-                    id={ingredient._id}
-                  />
-                </li>
-              ))}
-          </ul>
-        </li>
-        <li>
-          <h3
-            className={`${stylesForBurgeringredients.typeHeader} text text_type_main-medium`}
-          >
-            Соусы
-          </h3>
-          <ul className={stylesForBurgeringredients.ingredientsByType}>
-            {props.data
-              .filter((data) => data.type === 'sauce')
-              .map((ingredient) => (
-                <li key={ingredient._id}>
-                  <BurgerIngredient
-                    data={ingredient}
-                    openModalIngredient={openModalIngredient}
-                  />
-                </li>
-              ))}
-          </ul>
-        </li>
-        <li>
-          <h3
-            className={`${stylesForBurgeringredients.typeHeader} text text_type_main-medium`}
-          >
-            Начинки
-          </h3>
-          <ul className={stylesForBurgeringredients.ingredientsByType}>
-            {props.data
-              .filter((data) => data.type === 'main')
-              .map((ingredient) => (
-                <li key={ingredient._id}>
-                  <BurgerIngredient
-                    data={ingredient}
-                    openModalIngredient={openModalIngredient}
-                  />
-                </li>
-              ))}
-          </ul>
-        </li>
+        <IngredientCategory
+          openModalIngredient={openModalIngredient}
+          ingredients={props.data}
+          category={'Булки'}
+          categoryType={'bun'}
+        />
+        <IngredientCategory
+          openModalIngredient={openModalIngredient}
+          ingredients={props.data}
+          category={'Соусы'}
+          categoryType={'sauce'}
+        />
+        <IngredientCategory
+          openModalIngredient={openModalIngredient}
+          ingredients={props.data}
+          category={'Начинки'}
+          categoryType={'main'}
+        />
       </ul>
       <Modal isActive={isModalIngredientOpen} closeModal={closeModalIngredient}>
         <IngredientDetails data={selectedIngredient} />
