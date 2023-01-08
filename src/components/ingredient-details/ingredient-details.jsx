@@ -45,4 +45,8 @@ const IngredientDetails = (props) => {
   );
 };
 
+IngredientDetails.propTypes = {
+  data: typeOfingredient.isRequired,
+};
+
 export default IngredientDetails;

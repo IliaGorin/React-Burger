@@ -8,8 +8,6 @@ import { MODAL_ROOT } from '../../utils/constants';
 
 const Modal = (props) => {
   useEffect(() => {
-    if (!props.isActive) return;
-
     const pressEsc = (event) => {
       event.key === 'Escape' && props.closeModal();
     };
@@ -17,14 +15,10 @@ const Modal = (props) => {
     return () => {
       document.removeEventListener('keydown', pressEsc);
     };
-  }, [props.closeModal, props.isActive]);
+  }, [props.closeModal]);
 
   return ReactDOM.createPortal(
-    <ModalOverlay
-      isActive={props.isActive}
-      onClick={props.closeModal}
-      closeModal={props.closeModal}
-    >
+    <ModalOverlay onClick={props.closeModal} closeModal={props.closeModal}>
       <div className={stylesForModal.modalContainer}>
         <div className={stylesForModal.modalClose} onClick={props.closeModal}>
           <CloseIcon className type="primary" />
@@ -38,7 +32,6 @@ const Modal = (props) => {
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
-  isActive: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
 };
 

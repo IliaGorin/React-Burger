@@ -3,13 +3,13 @@ import stylesForOrderDetails from './order-details.module.css';
 import PropTypes from 'prop-types';
 import imageOrderDone from '../../images/done.svg';
 
-const OrderDetails = () => {
+const OrderDetails = (props) => {
   return (
     <div className={`${stylesForOrderDetails.orderDetailsWrapper}`}>
       <p
         className={`${stylesForOrderDetails.orderNumber} text text_type_digits-large mt-20 mb-8`}
       >
-        034536
+        {props.orderNumber}
       </p>
       <p className="text text_type_main-medium text_color_primary ">
         идентификатор заказа
@@ -27,6 +27,10 @@ const OrderDetails = () => {
       </p>
     </div>
   );
+};
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number.isRequired,
 };
 
 export default OrderDetails;
