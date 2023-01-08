@@ -11,7 +11,7 @@ import stylesForBurgerConstructor from './burger-constructor.module.css';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientsDataContext from '../../services/ingredients-data-context.js';
-import { URL_API } from '../../utils/constants';
+import { postOrder } from '../../utils/burger-api.js';
 
 function BurgerConstructor() {
   const [isOrderModalVis, setOrderModalVis] = useState(false);
@@ -31,11 +31,14 @@ function BurgerConstructor() {
 
   const orderedIngredients = [];
 
-  orderedIngredients.push(topBun._id);
-  for (const ingredient of ingredientsForCurrentBurger) {
-    orderedIngredients.push(ingredient._id);
-  }
-  orderedIngredients.push(bottomBun._id);
+  useEffect(() => {
+    console.log('111');
+    orderedIngredients.push(topBun._id);
+    for (const ingredient of ingredientsForCurrentBurger) {
+      orderedIngredients.push(ingredient._id);
+    }
+    orderedIngredients.push(bottomBun._id);
+  }, [ingredientsForCurrentBurger]);
 
   useEffect(() => {
     const currentPrice =
@@ -49,22 +52,7 @@ function BurgerConstructor() {
   }, [topBun.price, bottomBun.price, ingredientsForCurrentBurger]);
 
   const makeOrder = (orderedIngredients) => {
-    fetch(`${URL_API}orders`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ingredients: orderedIngredients,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(res.status);
-      })
+    postOrder(orderedIngredients)
       .then((res) => setOrderNumber(res.order.number))
       .catch((err) => console.error(err));
   };
