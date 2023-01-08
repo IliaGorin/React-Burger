@@ -5,11 +5,13 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import { AppHeader } from '../app-header/app-header';
 
+import IngredientsDataContext from '../../services/ingredients-data-context';
+
 function App() {
   const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
-    fetch(URL_API)
+    fetch(`${URL_API}ingredients`)
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -24,10 +26,12 @@ function App() {
     <>
       <AppHeader />
       {ingredients.length && (
-        <main className={appStyles.mainGrid}>
-          <BurgerIngredients data={ingredients} />
-          <BurgerConstructor data={ingredients} />
-        </main>
+        <IngredientsDataContext.Provider value={ingredients}>
+          <main className={appStyles.mainGrid}>
+            <BurgerIngredients data={ingredients} />
+            <BurgerConstructor data={ingredients} />
+          </main>
+        </IngredientsDataContext.Provider>
       )}
     </>
   );
