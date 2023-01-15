@@ -1,12 +1,8 @@
 import { URL_API } from './constants';
+import { checkResponse } from '../services/actions';
 
 function getIngredients() {
-  return fetch(`${URL_API}/ingredients`).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(res.status);
-  });
+  return fetch(`${URL_API}/ingredients`).then(checkResponse);
 }
 
 function postOrder(orderedIngredients) {
@@ -19,12 +15,7 @@ function postOrder(orderedIngredients) {
     body: JSON.stringify({
       ingredients: orderedIngredients,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(res.status);
-  });
+  }).then(checkResponse);
 }
 
 export { getIngredients, postOrder };

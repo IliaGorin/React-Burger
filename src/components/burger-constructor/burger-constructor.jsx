@@ -32,7 +32,6 @@ function BurgerConstructor() {
   const orderedIngredients = [];
 
   useEffect(() => {
-    console.log('111');
     orderedIngredients.push(topBun._id);
     for (const ingredient of ingredientsForCurrentBurger) {
       orderedIngredients.push(ingredient._id);
