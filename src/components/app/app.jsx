@@ -8,8 +8,6 @@ import { AppHeader } from '../app-header/app-header';
 import { getIngredients } from '../../services/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
 
-import IngredientsDataContext from '../../services/ingredients-data-context';
-
 function App() {
   const dispatch = useDispatch();
   const ingredients = useSelector((store) => store.ingredients.data);
@@ -22,12 +20,10 @@ function App() {
     <>
       <AppHeader />
       {ingredients.length && (
-        <IngredientsDataContext.Provider value={ingredients}>
-          <main className={appStyles.mainGrid}>
-            <BurgerIngredients data={ingredients} />
-            <BurgerConstructor data={ingredients} />
-          </main>
-        </IngredientsDataContext.Provider>
+        <main className={appStyles.mainGrid}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </main>
       )}
     </>
   );

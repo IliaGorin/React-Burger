@@ -43,3 +43,29 @@ export const getIngredients = () => {
       });
   };
 };
+
+export const postOrder = (orderedIngredients) => {
+  return (dispatch) => {
+    dispatch({
+      type: SEND_ORDER,
+    });
+    const postDetails = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ingredients: orderedIngredients }),
+    };
+    sendRequest(`/orders`, postDetails)
+      .then((res) => {
+        dispatch({
+          type: SEND_ORDER_SUCCESS,
+          order: res.order.number,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: SEND_ORDER_FAILED,
+          error: err.message,
+        });
+      });
+  };
+};

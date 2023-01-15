@@ -1,10 +1,6 @@
 import { URL_API } from './constants';
 import { checkResponse } from '../services/actions';
 
-function getIngredients() {
-  return fetch(`${URL_API}/ingredients`).then(checkResponse);
-}
-
 function postOrder(orderedIngredients) {
   return fetch(`${URL_API}/orders`, {
     method: 'POST',
@@ -18,4 +14,4 @@ function postOrder(orderedIngredients) {
   }).then(checkResponse);
 }
 
-export { getIngredients, postOrder };
+export { postOrder };

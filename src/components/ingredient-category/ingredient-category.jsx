@@ -1,8 +1,14 @@
 import classes from './ingredient-category.module.css';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import { typeOfingredient } from '../../utils/propTypes.js';
+import { useSelector } from 'react-redux';
 
 function IngredientCategory(props) {
+  const ingredients = useSelector((store) => store.ingredients.data);
+  const ingredientsForRender = ingredients.filter(
+    (data) => data.type === props.categoryType
+  );
+
   return (
     <li>
       <h3
@@ -12,17 +18,15 @@ function IngredientCategory(props) {
         {props.category}
       </h3>
       <ul className={classes.ingredientsByType}>
-        {props.ingredients
-          .filter((data) => data.type === props.categoryType)
-          .map((ingredient) => (
-            <li key={ingredient._id}>
-              <BurgerIngredient
-                data={ingredient}
-                openModalIngredient={props.openModalIngredient}
-                id={ingredient._id}
-              />
-            </li>
-          ))}
+        {ingredientsForRender.map((ingredient) => (
+          <li key={ingredient._id}>
+            <BurgerIngredient
+              data={ingredient}
+              openModalIngredient={props.openModalIngredient}
+              id={ingredient._id}
+            />
+          </li>
+        ))}
       </ul>
     </li>
   );

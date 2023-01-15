@@ -8,7 +8,7 @@ import Modal from '../modal/modal.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
 
-function BurgerIngredients(props) {
+function BurgerIngredients() {
   const [current, setCurrent] = useState('bun');
 
   const [isModalIngredientOpen, setModalIngredientOpen] = useState(false);
@@ -47,19 +47,16 @@ function BurgerIngredients(props) {
       <ul className={stylesForBurgeringredients.ingredientsList}>
         <IngredientCategory
           openModalIngredient={openModalIngredient}
-          ingredients={props.data}
           category={'Булки'}
           categoryType={'bun'}
         />
         <IngredientCategory
           openModalIngredient={openModalIngredient}
-          ingredients={props.data}
           category={'Соусы'}
           categoryType={'sauce'}
         />
         <IngredientCategory
           openModalIngredient={openModalIngredient}
-          ingredients={props.data}
           category={'Начинки'}
           categoryType={'main'}
         />
@@ -73,8 +70,8 @@ function BurgerIngredients(props) {
   );
 }
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(typeOfingredient).isRequired,
-};
+// BurgerIngredients.propTypes = {
+//   data: PropTypes.arrayOf(typeOfingredient).isRequired,
+// };
 
 export default BurgerIngredients;

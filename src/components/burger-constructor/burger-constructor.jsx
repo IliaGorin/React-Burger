@@ -10,18 +10,22 @@ import {
 import stylesForBurgerConstructor from './burger-constructor.module.css';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import IngredientsDataContext from '../../services/ingredients-data-context.js';
-import { postOrder } from '../../utils/burger-api.js';
+
+import { postOrder } from '../../services/actions/index.js';
+import { useDispatch, useSelector } from 'react-redux';
 
 function BurgerConstructor() {
+  const dispatch = useDispatch();
+  const orderNumber = useSelector((store) => store.order.order);
+
   const [isOrderModalVis, setOrderModalVis] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [orderNumber, setOrderNumber] = useState(0);
 
   const closeOrderModal = () => {
     setOrderModalVis(false);
   };
-  const ingredientsData = useContext(IngredientsDataContext);
+
+  const ingredientsData = useSelector((store) => store.ingredients.data);
 
   const topBun = ingredientsData[0];
   const bottomBun = ingredientsData[0];
@@ -51,9 +55,7 @@ function BurgerConstructor() {
   }, [topBun.price, bottomBun.price, ingredientsForCurrentBurger]);
 
   const makeOrder = (orderedIngredients) => {
-    postOrder(orderedIngredients)
-      .then((res) => setOrderNumber(res.order.number))
-      .catch((err) => console.error(err));
+    dispatch(postOrder(orderedIngredients));
   };
 
   return (
