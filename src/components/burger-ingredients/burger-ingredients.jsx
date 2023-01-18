@@ -7,19 +7,23 @@ import BurgerIngredient from '../burger-ingredient/burger-ingredient.jsx';
 import Modal from '../modal/modal.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  closeIngredientDetails,
+  openIngredientDetails,
+} from '../../services/actions/index';
 
 function BurgerIngredients() {
   const [current, setCurrent] = useState('bun');
   const [bunActive, setBunActive] = useState(false);
   const [sauceActive, setSauceActive] = useState(false);
   const [mainActive, setMainActive] = useState(false);
+  const dispatch = useDispatch();
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
   const mainRef = useRef(null);
 
   const [isModalIngredientOpen, setModalIngredientOpen] = useState(false);
-
-  const [selectedIngredient, setSelectedIngredient] = useState({});
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -35,11 +39,12 @@ function BurgerIngredients() {
   }, []);
 
   const openModalIngredient = (item) => {
-    setSelectedIngredient(item);
+    dispatch(openIngredientDetails(item));
     setModalIngredientOpen(true);
   };
 
   const closeModalIngredient = () => {
+    dispatch(closeIngredientDetails());
     setModalIngredientOpen(false);
   };
 
@@ -94,7 +99,7 @@ function BurgerIngredients() {
       </ul>
       {isModalIngredientOpen && (
         <Modal closeModal={closeModalIngredient}>
-          <IngredientDetails data={selectedIngredient} />
+          <IngredientDetails />
         </Modal>
       )}
     </section>

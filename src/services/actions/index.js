@@ -1,9 +1,7 @@
 import { URL_API } from '../../utils/constants';
 
-export const INGREDIENTS = 'INGREDIENTS';
-export const CURRENT_INGREDIENTS = 'CURRENT_INGREDIENTS';
 export const BROWSED_INGREDIENT = 'BROWSED_INGREDIENT';
-export const CREATED_ORDER = 'CREATED_ORDER';
+export const CLEAR_BROWSED_INGREDIENT = 'CLEAR_BROWSED_INGREDIENT';
 
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -67,5 +65,18 @@ export const postOrder = (orderedIngredients) => {
           error: err.message,
         });
       });
+  };
+};
+
+export const openIngredientDetails = (ingredient) => {
+  return {
+    type: BROWSED_INGREDIENT,
+    data: ingredient,
+  };
+};
+
+export const closeIngredientDetails = () => {
+  return {
+    type: CLEAR_BROWSED_INGREDIENT,
   };
 };
