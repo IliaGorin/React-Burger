@@ -7,6 +7,8 @@ import { AppHeader } from '../app-header/app-header';
 
 import { getIngredients } from '../../services/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
 function App() {
   const dispatch = useDispatch();
@@ -20,10 +22,12 @@ function App() {
     <>
       <AppHeader />
       {ingredients.length && (
-        <main className={appStyles.mainGrid}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </main>
+        <DndProvider backend={HTML5Backend}>
+          <main className={appStyles.mainGrid}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </main>
+        </DndProvider>
       )}
     </>
   );

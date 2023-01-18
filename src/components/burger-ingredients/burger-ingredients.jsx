@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { typeOfingredient } from '../../utils/propTypes.js';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,10 +10,29 @@ import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
 
 function BurgerIngredients() {
   const [current, setCurrent] = useState('bun');
+  const [bunActive, setBunActive] = useState(false);
+  const [sauceActive, setSauceActive] = useState(false);
+  const [mainActive, setMainActive] = useState(false);
+  const bunsRef = useRef(null);
+  const saucesRef = useRef(null);
+  const mainRef = useRef(null);
 
   const [isModalIngredientOpen, setModalIngredientOpen] = useState(false);
 
   const [selectedIngredient, setSelectedIngredient] = useState({});
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entry.target.id === 'bun' && setBunActive(entry.isIntersecting);
+        entry.target.id === 'sauce' && setSauceActive(entry.isIntersecting);
+        entry.target.id === 'main' && setMainActive(entry.isIntersecting);
+      });
+    });
+    bunsRef.current !== null && observer.observe(bunsRef.current);
+    saucesRef.current !== null && observer.observe(saucesRef.current);
+    mainRef.current !== null && observer.observe(mainRef.current);
+  }, []);
 
   const openModalIngredient = (item) => {
     setSelectedIngredient(item);
@@ -29,6 +48,12 @@ function BurgerIngredients() {
     const element = document.getElementById(tab);
     if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    bunActive && setCurrent('bun');
+    !bunActive && sauceActive && setCurrent('sauce');
+    !sauceActive && mainActive && setCurrent('main');
+  }, [bunActive, sauceActive, mainActive]);
 
   return (
     <section>
@@ -49,16 +74,22 @@ function BurgerIngredients() {
           openModalIngredient={openModalIngredient}
           category={'Булки'}
           categoryType={'bun'}
+          ref={bunsRef}
+          id={'bun'}
         />
         <IngredientCategory
           openModalIngredient={openModalIngredient}
           category={'Соусы'}
           categoryType={'sauce'}
+          ref={saucesRef}
+          id={'sauce'}
         />
         <IngredientCategory
           openModalIngredient={openModalIngredient}
           category={'Начинки'}
           categoryType={'main'}
+          ref={mainRef}
+          id={'main'}
         />
       </ul>
       {isModalIngredientOpen && (
