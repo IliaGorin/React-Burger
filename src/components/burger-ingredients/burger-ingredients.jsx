@@ -1,9 +1,6 @@
 import { React, useEffect, useState, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { typeOfingredient } from '../../utils/propTypes.js';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForBurgeringredients from './burger-ingredients.module.css';
-import BurgerIngredient from '../burger-ingredient/burger-ingredient.jsx';
 import Modal from '../modal/modal.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
@@ -23,7 +20,7 @@ function BurgerIngredients() {
   const saucesRef = useRef(null);
   const mainRef = useRef(null);
 
-  const [isModalIngredientOpen, setModalIngredientOpen] = useState(false);
+  const isModalIngredientOpen = useSelector((store) => store.openCard.isOpen);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -40,12 +37,10 @@ function BurgerIngredients() {
 
   const openModalIngredient = (item) => {
     dispatch(openIngredientDetails(item));
-    setModalIngredientOpen(true);
   };
 
   const closeModalIngredient = () => {
     dispatch(closeIngredientDetails());
-    setModalIngredientOpen(false);
   };
 
   const onTabClick = (tab) => {
@@ -105,9 +100,5 @@ function BurgerIngredients() {
     </section>
   );
 }
-
-// BurgerIngredients.propTypes = {
-//   data: PropTypes.arrayOf(typeOfingredient).isRequired,
-// };
 
 export default BurgerIngredients;
