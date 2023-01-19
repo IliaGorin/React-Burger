@@ -6,13 +6,16 @@ import {
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForBurgeringredient from './burger-ingredient.module.css';
+import { openIngredientDetails } from '../../services/actions/index';
+import { useDispatch } from 'react-redux';
 
 function BurgerIngredient(props) {
+  const dispatch = useDispatch();
   return (
     <div
       className={`${stylesForBurgeringredient.ingredientWrap}`}
       id={props.data.id}
-      onClick={() => props.openModalIngredient(props.data)}
+      onClick={() => dispatch(openIngredientDetails(props.data))}
     >
       {props.data.name === 'Краторная булка N-200i' && (
         <Counter count={1} size="default" extraClass="m-1" />

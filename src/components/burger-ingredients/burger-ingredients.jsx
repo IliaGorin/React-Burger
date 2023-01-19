@@ -5,10 +5,7 @@ import Modal from '../modal/modal.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  closeIngredientDetails,
-  openIngredientDetails,
-} from '../../services/actions/index';
+import { closeIngredientDetails } from '../../services/actions/index';
 
 function BurgerIngredients() {
   const [current, setCurrent] = useState('bun');
@@ -35,14 +32,6 @@ function BurgerIngredients() {
     mainRef.current !== null && observer.observe(mainRef.current);
   }, []);
 
-  const openModalIngredient = (item) => {
-    dispatch(openIngredientDetails(item));
-  };
-
-  const closeModalIngredient = () => {
-    dispatch(closeIngredientDetails());
-  };
-
   const onTabClick = (tab) => {
     setCurrent(tab);
     const element = document.getElementById(tab);
@@ -55,45 +44,42 @@ function BurgerIngredients() {
     !sauceActive && mainActive && setCurrent('main');
   }, [bunActive, sauceActive, mainActive]);
 
+  const categories = [
+    { categoryType: 'bun', category: 'Булки', ref: bunsRef, id: 'bun' },
+    { categoryType: 'sauce', category: 'Соусы', ref: saucesRef, id: 'sauce' },
+    { categoryType: 'main', category: 'Начинки', ref: mainRef, id: 'main' },
+  ];
+
   return (
     <section>
       <h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
       <div className={`${stylesForBurgeringredients.tabs}`}>
-        <Tab value="bun" active={current === 'bun'} onClick={onTabClick}>
-          Булки
-        </Tab>
-        <Tab value="sauce" active={current === 'sauce'} onClick={onTabClick}>
-          Соусы
-        </Tab>
-        <Tab value="main" active={current === 'main'} onClick={onTabClick}>
-          Начинки
-        </Tab>
+        {categories.map((category) => {
+          return (
+            <Tab
+              value={category.categoryType}
+              active={category.categoryType}
+              onClick={onTabClick}
+              key={category.id}
+            >
+              {category.category}
+            </Tab>
+          );
+        })}
       </div>
       <ul className={stylesForBurgeringredients.ingredientsList}>
-        <IngredientCategory
-          openModalIngredient={openModalIngredient}
-          category={'Булки'}
-          categoryType={'bun'}
-          ref={bunsRef}
-          id={'bun'}
-        />
-        <IngredientCategory
-          openModalIngredient={openModalIngredient}
-          category={'Соусы'}
-          categoryType={'sauce'}
-          ref={saucesRef}
-          id={'sauce'}
-        />
-        <IngredientCategory
-          openModalIngredient={openModalIngredient}
-          category={'Начинки'}
-          categoryType={'main'}
-          ref={mainRef}
-          id={'main'}
-        />
+        {categories.map((category) => (
+          <IngredientCategory
+            category={category.category}
+            categoryType={category.categoryType}
+            ref={category.ref}
+            id={category.id}
+            key={category.id}
+          />
+        ))}
       </ul>
       {isModalIngredientOpen && (
-        <Modal closeModal={closeModalIngredient}>
+        <Modal closeModal={() => dispatch(closeIngredientDetails())}>
           <IngredientDetails />
         </Modal>
       )}
