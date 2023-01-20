@@ -1,3 +1,4 @@
+import { v4 as uuid4 } from 'uuid';
 import { URL_API } from '../../utils/constants';
 
 export const BROWSED_INGREDIENT = 'BROWSED_INGREDIENT';
@@ -9,6 +10,10 @@ export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const SEND_ORDER = 'SEND_ORDER';
 export const SEND_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
 export const SEND_ORDER_FAILED = 'SEND_ORDER_FAILED';
+
+export const ADD_INGREDIENT_TO_CONSTRUCTOR = 'ADD_INGREDIENT_TO_CONSTRUCTOR';
+export const REMOVE_INGREDIENT_FROM_CONSTRUCTOR =
+  'REMOVE_INGREDIENT_FROM_CONSTRUCTOR';
 
 export function checkResponse(res) {
   if (res.ok) {
@@ -78,5 +83,20 @@ export const openIngredientDetails = (ingredient) => {
 export const closeIngredientDetails = () => {
   return {
     type: CLEAR_BROWSED_INGREDIENT,
+  };
+};
+
+export const addIngredientToConstructor = (ingredient) => {
+  return {
+    type: ADD_INGREDIENT_TO_CONSTRUCTOR,
+    data: ingredient,
+    keyId: uuid4(),
+  };
+};
+
+export const removeIngredientFromConstructor = (ingredient) => {
+  return {
+    type: REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
+    data: ingredient,
   };
 };

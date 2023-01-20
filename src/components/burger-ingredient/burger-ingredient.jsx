@@ -8,14 +8,22 @@ import {
 import stylesForBurgeringredient from './burger-ingredient.module.css';
 import { openIngredientDetails } from '../../services/actions/index';
 import { useDispatch } from 'react-redux';
+import { useDrag } from 'react-dnd';
 
 function BurgerIngredient(props) {
   const dispatch = useDispatch();
+  const [, dragRef] = useDrag({
+    type: 'ingredient',
+    item: props.data,
+  });
+
   return (
     <div
       className={`${stylesForBurgeringredient.ingredientWrap}`}
       id={props.data.id}
       onClick={() => dispatch(openIngredientDetails(props.data))}
+      draggable
+      ref={dragRef}
     >
       {props.data.name === 'Краторная булка N-200i' && (
         <Counter count={1} size="default" extraClass="m-1" />

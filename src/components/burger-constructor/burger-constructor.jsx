@@ -13,6 +13,8 @@ import OrderDetails from '../order-details/order-details';
 
 import { postOrder } from '../../services/actions/index.js';
 import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { addIngredientToConstructor } from '../../services/actions/index.js';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -26,11 +28,14 @@ function BurgerConstructor() {
   };
 
   const ingredientsData = useSelector((store) => store.ingredients.data);
+  const addedIngredientsData = useSelector(
+    (store) => store.inConstructor.ingredients
+  );
 
   const topBun = ingredientsData[0];
   const bottomBun = ingredientsData[0];
   const ingredientsForCurrentBurger = ingredientsData.filter(
-    (igredient) => igredient.type !== 'bun' && igredient.type !== ''
+    (ingredient) => ingredient.type !== 'bun' && ingredient.type !== ''
   );
 
   const orderedIngredients = [];
@@ -58,6 +63,17 @@ function BurgerConstructor() {
     dispatch(postOrder(orderedIngredients));
   };
 
+  const [{ isOver }, dropRef] = useDrop({
+    accept: 'ingredient',
+    drop: (item) => {
+      dispatch(addIngredientToConstructor(item));
+      console.log('add', addedIngredientsData);
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  });
+
   return (
     <section
       className={`${stylesForBurgerConstructor.constructorSection} mt-25 ml-4 mr-4`}
@@ -71,10 +87,21 @@ function BurgerConstructor() {
           thumbnail={topBun.image}
         />
       </div>
-      <ul className={`${stylesForBurgerConstructor.list}`}>
-        {ingredientsForCurrentBurger.map((ingredient) => (
+      <ul className={`${stylesForBurgerConstructor.list}`} ref={dropRef}>
+        <li
+          key={ingredientsData[1]._id}
+          className={`${stylesForBurgerConstructor.listItem} mb-4`}
+        >
+          <DragIcon type="primary" />
+          <ConstructorElement
+            text={ingredientsData[1].name}
+            price={ingredientsData[1].price}
+            thumbnail={ingredientsData[1].image}
+          />
+        </li>
+        {addedIngredientsData.map((ingredient) => (
           <li
-            key={ingredient._id}
+            key={ingredient.keyId}
             className={`${stylesForBurgerConstructor.listItem} mb-4`}
           >
             <DragIcon type="primary" />

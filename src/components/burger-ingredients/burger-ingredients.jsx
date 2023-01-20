@@ -58,7 +58,7 @@ function BurgerIngredients() {
           return (
             <Tab
               value={category.categoryType}
-              active={category.categoryType}
+              active={current === category.categoryType}
               onClick={onTabClick}
               key={category.id}
             >
