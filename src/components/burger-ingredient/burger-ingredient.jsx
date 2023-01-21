@@ -7,7 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForBurgeringredient from './burger-ingredient.module.css';
 import { openIngredientDetails } from '../../services/actions/index';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 
 function BurgerIngredient(props) {
@@ -16,6 +16,26 @@ function BurgerIngredient(props) {
     type: 'ingredient',
     item: props.data,
   });
+  const ingredientsForCurrentBurger = useSelector(
+    (store) => store.inConstructor.ingredients
+  );
+  const bun = useSelector((store) => store.inConstructor.bun);
+  const [counter, setCounter] = useState(0);
+  useEffect(() => {
+    if (props.data.type !== 'bun') {
+      setCounter(
+        ingredientsForCurrentBurger.filter(
+          (item) => item._id === props.data._id
+        ).length
+      );
+    }
+    if (bun && props.data.type === 'bun' && props.data.name === bun.name) {
+      setCounter('2');
+    }
+    if (bun && props.data.type === 'bun' && props.data.name !== bun.name) {
+      setCounter('0');
+    }
+  }, [ingredientsForCurrentBurger, bun]);
 
   return (
     <div
@@ -25,11 +45,8 @@ function BurgerIngredient(props) {
       draggable
       ref={dragRef}
     >
-      {props.data.name === 'Краторная булка N-200i' && (
-        <Counter count={1} size="default" extraClass="m-1" />
-      )}
-      {props.data.name === 'Соус традиционный галактический' && (
-        <Counter count={1} size="default" extraClass="m-1" />
+      {counter > 0 && (
+        <Counter count={counter} size="default" extraClass="m-1" />
       )}
       <img
         className={`pr-4 pl-4`}
