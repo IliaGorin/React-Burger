@@ -22,7 +22,12 @@ export const ingredientsInConstructorReducer = (
       };
     }
     case REMOVE_INGREDIENT_FROM_CONSTRUCTOR: {
-      return state;
+      return {
+        ...state,
+        ingredients: state.ingredients.filter((ingredient) => {
+          return ingredient.keyId !== action.data;
+        }),
+      };
     }
     default:
       return state;

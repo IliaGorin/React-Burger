@@ -14,7 +14,10 @@ import OrderDetails from '../order-details/order-details';
 import { postOrder } from '../../services/actions/index.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { addIngredientToConstructor } from '../../services/actions/index.js';
+import {
+  addIngredientToConstructor,
+  removeIngredientFromConstructor,
+} from '../../services/actions/index.js';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -28,9 +31,6 @@ function BurgerConstructor() {
   };
 
   const ingredientsData = useSelector((store) => store.ingredients.data);
-  const addedIngredientsData = useSelector(
-    (store) => store.inConstructor.ingredients
-  );
 
   const topBun = ingredientsData[0];
   const bottomBun = ingredientsData[0];
@@ -63,16 +63,23 @@ function BurgerConstructor() {
     dispatch(postOrder(orderedIngredients));
   };
 
+  const addedIngredientsData = useSelector(
+    (store) => store.inConstructor.ingredients
+  );
+
   const [{ isOver }, dropRef] = useDrop({
     accept: 'ingredient',
     drop: (item) => {
       dispatch(addIngredientToConstructor(item));
-      console.log('add', addedIngredientsData);
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   });
+
+  const deleteItem = (item) => {
+    dispatch(removeIngredientFromConstructor(item));
+  };
 
   return (
     <section
@@ -109,6 +116,7 @@ function BurgerConstructor() {
               text={ingredient.name}
               price={ingredient.price}
               thumbnail={ingredient.image}
+              handleClose={() => deleteItem(ingredient.keyId)}
             />
           </li>
         ))}
