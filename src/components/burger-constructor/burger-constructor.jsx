@@ -23,46 +23,17 @@ import {
 function BurgerConstructor() {
   const dispatch = useDispatch();
   const orderNumber = useSelector((store) => store.order.order);
-
   const [isOrderModalVis, setOrderModalVis] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(0);
 
   const closeOrderModal = () => {
     setOrderModalVis(false);
   };
 
-  const ingredientsData = useSelector((store) => store.ingredients.data);
-
-  // const bun = {};
-
-  // for (let key in ingredientsData[0]) {
-  //   bun[key] = ingredientsData[0][key];
-  // }
-
-  // useEffect(() => {
-  //   dispatch(addBunToConstructor(bun));
-  // }, []);
-
-  // const ingredientsForCurrentBurger = ingredientsData.filter(
-  //   (ingredient) => ingredient.type !== 'bun' && ingredient.type !== ''
-  // );
-
   const ingredientsForCurrentBurger = useSelector(
     (store) => store.inConstructor.ingredients
   );
-
   const bun = useSelector((store) => store.inConstructor.bun);
-
-  const orderedIngredients = [];
-
-  // useEffect(() => {
-  //   orderedIngredients.push(bun._id);
-  //   for (const ingredient of ingredientsForCurrentBurger) {
-  //     orderedIngredients.push(ingredient._id);
-  //   }
-  //   orderedIngredients.push(bun._id);
-  // }, [ingredientsForCurrentBurger]);
-
+  // const orderedIngredients = [];
   let currentPrice = 0;
 
   if (bun && ingredientsForCurrentBurger.length) {
@@ -74,27 +45,9 @@ function BurgerConstructor() {
       );
   }
 
-  // useEffect(() => {
-  //   const currentPrice =
-  //     Bun.price * 2 +
-  //     ingredientsForCurrentBurger.reduce(
-  //       (sum, ingredient) => sum + ingredient.price,
-  //       0
-  //     );
-  //   setTotalPrice(currentPrice);
-  // }, [Bun.price, ingredientsForCurrentBurger]);
-
   const makeOrder = (orderedIngredients) => {
     dispatch(postOrder(orderedIngredients));
   };
-
-  // const bunForCurrentBurger = useSelector((store) => store.inConstructor.bun);
-
-  // useEffect(() => {
-  //   for (let key in bun) {
-  //     bun[key] = bunForCurrentBurger[key];
-  //   }
-  // }, [bunForCurrentBurger]);
 
   const [{ isOver }, dropRef] = useDrop({
     accept: 'ingredient',
@@ -170,24 +123,6 @@ function BurgerConstructor() {
       ) : (
         <div className={'text text_type_main-default'}>Добавьте булку</div>
       )}
-      {/* <div className={`${stylesForBurgerConstructor.checkWrapper} mt-10`}>
-        <div className={`${stylesForBurgerConstructor.checkSummary}`}>
-          <p className={`text text_type_digits-medium mr-2`}>{currentPrice}</p>
-          <CurrencyIcon type="primary" />
-          <span className={`text text_type_digits-medium ml-10`}></span>
-          <Button
-            htmlType="button"
-            type="primary"
-            size="large"
-            onClick={() => {
-              setOrderModalVis(true);
-              makeOrder(orderedIngredients);
-            }}
-          >
-            Оформить заказ
-          </Button>
-        </div>
-      </div> */}
       {ingredientsForCurrentBurger.length >= 1 && bun ? (
         <div className={`${stylesForBurgerConstructor.checkSummary}`}>
           <p className={`text text_type_digits-medium mr-2`}>{currentPrice}</p>
@@ -199,7 +134,7 @@ function BurgerConstructor() {
             size="large"
             onClick={() => {
               setOrderModalVis(true);
-              makeOrder(orderedIngredients);
+              makeOrder(ingredientsForCurrentBurger);
             }}
           >
             Оформить заказ
