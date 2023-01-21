@@ -2,6 +2,7 @@ import {
   ADD_INGREDIENT_TO_CONSTRUCTOR,
   ADD_BUN_TO_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
+  REORDER_CONSTRUCTOR,
 } from '../actions/index';
 
 const initialState = {
@@ -36,6 +37,19 @@ export const ingredientsInConstructorReducer = (
         }),
       };
     }
+    case REORDER_CONSTRUCTOR: {
+      const copyArr = [...state.ingredients];
+      copyArr.splice(
+        action.data.hoverIndex,
+        0,
+        copyArr.splice(action.data.dragIndex, 1)[0]
+      );
+      return {
+        ...state,
+        ingredients: [...copyArr],
+      };
+    }
+
     default:
       return state;
   }

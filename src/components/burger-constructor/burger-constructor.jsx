@@ -109,6 +109,7 @@ function BurgerConstructor() {
             handleKey={ingredient.keyId}
             index={index}
             key={ingredient.keyId}
+            id={ingredient.keyId}
           />
         ))}
       </ul>
