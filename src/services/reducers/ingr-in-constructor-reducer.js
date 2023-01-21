@@ -1,5 +1,6 @@
 import {
   ADD_INGREDIENT_TO_CONSTRUCTOR,
+  ADD_BUN_TO_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
 } from '../actions/index';
 
@@ -22,7 +23,7 @@ export const ingredientsInConstructorReducer = (
         ],
       };
     }
-    case 'ADD_BUN_TO_CONSTRUCTOR':
+    case ADD_BUN_TO_CONSTRUCTOR:
       return {
         ...state,
         bun: action.data,

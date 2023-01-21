@@ -33,7 +33,6 @@ function BurgerConstructor() {
     (store) => store.inConstructor.ingredients
   );
   const bun = useSelector((store) => store.inConstructor.bun);
-  // const orderedIngredients = [];
   let currentPrice = 0;
 
   if (bun && ingredientsForCurrentBurger.length) {
@@ -70,6 +69,7 @@ function BurgerConstructor() {
   return (
     <section
       className={`${stylesForBurgerConstructor.constructorSection} mt-25 ml-4 mr-4`}
+      ref={dropRef}
     >
       {bun ? (
         <div className={`ml-8`}>
@@ -84,7 +84,7 @@ function BurgerConstructor() {
       ) : (
         <div className={'text text_type_main-default'}>Добавьте булку</div>
       )}
-      <ul className={`${stylesForBurgerConstructor.list}`} ref={dropRef}>
+      <ul className={`${stylesForBurgerConstructor.list}`}>
         {!ingredientsForCurrentBurger.length && (
           <li
             key={'invite'}

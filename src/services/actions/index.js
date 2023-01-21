@@ -12,6 +12,7 @@ export const SEND_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
 export const SEND_ORDER_FAILED = 'SEND_ORDER_FAILED';
 
 export const ADD_INGREDIENT_TO_CONSTRUCTOR = 'ADD_INGREDIENT_TO_CONSTRUCTOR';
+export const ADD_BUN_TO_CONSTRUCTOR = 'ADD_BUN_TO_CONSTRUCTOR';
 export const REMOVE_INGREDIENT_FROM_CONSTRUCTOR =
   'REMOVE_INGREDIENT_FROM_CONSTRUCTOR';
 
@@ -103,7 +104,7 @@ export const removeIngredientFromConstructor = (ingredient) => {
 
 export const addBunToConstructor = (bun) => {
   return {
-    type: 'ADD_BUN_TO_CONSTRUCTOR',
+    type: ADD_BUN_TO_CONSTRUCTOR,
     data: bun,
   };
 };
