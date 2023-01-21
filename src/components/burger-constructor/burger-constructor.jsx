@@ -13,12 +13,13 @@ import OrderDetails from '../order-details/order-details';
 
 import { postOrder } from '../../services/actions/index.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { useDrop } from 'react-dnd';
+import { useDrop, useDrag } from 'react-dnd';
 import {
   addIngredientToConstructor,
   removeIngredientFromConstructor,
   addBunToConstructor,
 } from '../../services/actions/index.js';
+import ConstructorElementDraggable from '../constructor-element-draggable/constructor-element-draggable.js';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -66,6 +67,10 @@ function BurgerConstructor() {
     dispatch(removeIngredientFromConstructor(item));
   };
 
+  const [, dragRef] = useDrag({
+    type: 'ingredient',
+  });
+
   return (
     <section
       className={`${stylesForBurgerConstructor.constructorSection} mt-25 ml-4 mr-4`}
@@ -100,12 +105,12 @@ function BurgerConstructor() {
             key={ingredient.keyId}
             className={`${stylesForBurgerConstructor.listItem} mb-4`}
           >
-            <DragIcon type="primary" />
-            <ConstructorElement
+            <ConstructorElementDraggable
               text={ingredient.name}
               price={ingredient.price}
               thumbnail={ingredient.image}
-              handleClose={() => deleteItem(ingredient.keyId)}
+              handleClose={deleteItem}
+              handleKey={ingredient.keyId}
             />
           </li>
         ))}
