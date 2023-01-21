@@ -100,3 +100,10 @@ export const removeIngredientFromConstructor = (ingredient) => {
     data: ingredient,
   };
 };
+
+export const addBunToConstructor = (bun) => {
+  return {
+    type: 'ADD_BUN_TO_CONSTRUCTOR',
+    data: bun,
+  };
+};

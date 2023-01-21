@@ -5,6 +5,7 @@ import {
 
 const initialState = {
   ingredients: [],
+  bun: null,
 };
 
 export const ingredientsInConstructorReducer = (
@@ -21,6 +22,11 @@ export const ingredientsInConstructorReducer = (
         ],
       };
     }
+    case 'ADD_BUN_TO_CONSTRUCTOR':
+      return {
+        ...state,
+        bun: action.data,
+      };
     case REMOVE_INGREDIENT_FROM_CONSTRUCTOR: {
       return {
         ...state,

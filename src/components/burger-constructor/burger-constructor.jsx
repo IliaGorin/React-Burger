@@ -1,4 +1,4 @@
-import { React, useEffect, useState, useContext } from 'react';
+import { React, useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { typeOfingredient } from '../../utils/propTypes.js';
 import {
@@ -17,6 +17,7 @@ import { useDrop } from 'react-dnd';
 import {
   addIngredientToConstructor,
   removeIngredientFromConstructor,
+  addBunToConstructor,
 } from '../../services/actions/index.js';
 
 function BurgerConstructor() {
@@ -32,45 +33,77 @@ function BurgerConstructor() {
 
   const ingredientsData = useSelector((store) => store.ingredients.data);
 
-  const topBun = ingredientsData[0];
-  const bottomBun = ingredientsData[0];
-  const ingredientsForCurrentBurger = ingredientsData.filter(
-    (ingredient) => ingredient.type !== 'bun' && ingredient.type !== ''
+  // const bun = {};
+
+  // for (let key in ingredientsData[0]) {
+  //   bun[key] = ingredientsData[0][key];
+  // }
+
+  // useEffect(() => {
+  //   dispatch(addBunToConstructor(bun));
+  // }, []);
+
+  // const ingredientsForCurrentBurger = ingredientsData.filter(
+  //   (ingredient) => ingredient.type !== 'bun' && ingredient.type !== ''
+  // );
+
+  const ingredientsForCurrentBurger = useSelector(
+    (store) => store.inConstructor.ingredients
   );
+
+  const bun = useSelector((store) => store.inConstructor.bun);
 
   const orderedIngredients = [];
 
-  useEffect(() => {
-    orderedIngredients.push(topBun._id);
-    for (const ingredient of ingredientsForCurrentBurger) {
-      orderedIngredients.push(ingredient._id);
-    }
-    orderedIngredients.push(bottomBun._id);
-  }, [ingredientsForCurrentBurger]);
+  // useEffect(() => {
+  //   orderedIngredients.push(bun._id);
+  //   for (const ingredient of ingredientsForCurrentBurger) {
+  //     orderedIngredients.push(ingredient._id);
+  //   }
+  //   orderedIngredients.push(bun._id);
+  // }, [ingredientsForCurrentBurger]);
 
-  useEffect(() => {
-    const currentPrice =
-      topBun.price +
-      bottomBun.price +
+  let currentPrice = 0;
+
+  if (bun && ingredientsForCurrentBurger.length) {
+    currentPrice =
+      bun.price * 2 +
       ingredientsForCurrentBurger.reduce(
         (sum, ingredient) => sum + ingredient.price,
         0
       );
-    setTotalPrice(currentPrice);
-  }, [topBun.price, bottomBun.price, ingredientsForCurrentBurger]);
+  }
+
+  // useEffect(() => {
+  //   const currentPrice =
+  //     Bun.price * 2 +
+  //     ingredientsForCurrentBurger.reduce(
+  //       (sum, ingredient) => sum + ingredient.price,
+  //       0
+  //     );
+  //   setTotalPrice(currentPrice);
+  // }, [Bun.price, ingredientsForCurrentBurger]);
 
   const makeOrder = (orderedIngredients) => {
     dispatch(postOrder(orderedIngredients));
   };
 
-  const addedIngredientsData = useSelector(
-    (store) => store.inConstructor.ingredients
-  );
+  // const bunForCurrentBurger = useSelector((store) => store.inConstructor.bun);
+
+  // useEffect(() => {
+  //   for (let key in bun) {
+  //     bun[key] = bunForCurrentBurger[key];
+  //   }
+  // }, [bunForCurrentBurger]);
 
   const [{ isOver }, dropRef] = useDrop({
     accept: 'ingredient',
     drop: (item) => {
-      dispatch(addIngredientToConstructor(item));
+      if (item.type !== 'bun') {
+        dispatch(addIngredientToConstructor(item));
+      } else if (item.type === 'bun') {
+        dispatch(addBunToConstructor(item));
+      }
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -85,28 +118,31 @@ function BurgerConstructor() {
     <section
       className={`${stylesForBurgerConstructor.constructorSection} mt-25 ml-4 mr-4`}
     >
-      <div className={`ml-8`}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${topBun.name} (верх)`}
-          price={topBun.price}
-          thumbnail={topBun.image}
-        />
-      </div>
-      <ul className={`${stylesForBurgerConstructor.list}`} ref={dropRef}>
-        <li
-          key={ingredientsData[1]._id}
-          className={`${stylesForBurgerConstructor.listItem} mb-4`}
-        >
-          <DragIcon type="primary" />
+      {bun ? (
+        <div className={`ml-8`}>
           <ConstructorElement
-            text={ingredientsData[1].name}
-            price={ingredientsData[1].price}
-            thumbnail={ingredientsData[1].image}
+            type="top"
+            isLocked={true}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
-        </li>
-        {addedIngredientsData.map((ingredient) => (
+        </div>
+      ) : (
+        <div className={'text text_type_main-default'}>Добавьте булку</div>
+      )}
+      <ul className={`${stylesForBurgerConstructor.list}`} ref={dropRef}>
+        {!ingredientsForCurrentBurger.length && (
+          <li
+            key={'invite'}
+            className={`${stylesForBurgerConstructor.listItem} mb-4`}
+          >
+            <div className={'text text_type_main-default'}>
+              Добавьте элементы вашего бургера...
+            </div>
+          </li>
+        )}
+        {ingredientsForCurrentBurger.map((ingredient) => (
           <li
             key={ingredient.keyId}
             className={`${stylesForBurgerConstructor.listItem} mb-4`}
@@ -121,18 +157,22 @@ function BurgerConstructor() {
           </li>
         ))}
       </ul>
-      <div className={`ml-8`}>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${bottomBun.name} (низ)`}
-          price={bottomBun.price}
-          thumbnail={bottomBun.image}
-        />
-      </div>
-      <div className={`${stylesForBurgerConstructor.checkWrapper} mt-10`}>
+      {bun ? (
+        <div className={`ml-8`}>
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+        </div>
+      ) : (
+        <div className={'text text_type_main-default'}>Добавьте булку</div>
+      )}
+      {/* <div className={`${stylesForBurgerConstructor.checkWrapper} mt-10`}>
         <div className={`${stylesForBurgerConstructor.checkSummary}`}>
-          <p className={`text text_type_digits-medium mr-2`}>{totalPrice}</p>
+          <p className={`text text_type_digits-medium mr-2`}>{currentPrice}</p>
           <CurrencyIcon type="primary" />
           <span className={`text text_type_digits-medium ml-10`}></span>
           <Button
@@ -147,7 +187,30 @@ function BurgerConstructor() {
             Оформить заказ
           </Button>
         </div>
-      </div>
+      </div> */}
+      {ingredientsForCurrentBurger.length >= 1 && bun ? (
+        <div className={`${stylesForBurgerConstructor.checkSummary}`}>
+          <p className={`text text_type_digits-medium mr-2`}>{currentPrice}</p>
+          <CurrencyIcon type="primary" />
+          <span className={`text text_type_digits-medium ml-10`}></span>
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={() => {
+              setOrderModalVis(true);
+              makeOrder(orderedIngredients);
+            }}
+          >
+            Оформить заказ
+          </Button>
+        </div>
+      ) : (
+        <div className={'text text_type_main-default'}>
+          Для оформления заказа выберите булку и ингредиенты
+        </div>
+      )}
+
       {isOrderModalVis && (
         <Modal closeModal={closeOrderModal}>
           <OrderDetails
