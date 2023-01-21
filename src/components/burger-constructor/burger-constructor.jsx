@@ -100,19 +100,16 @@ function BurgerConstructor() {
             </div>
           </li>
         )}
-        {ingredientsForCurrentBurger.map((ingredient) => (
-          <li
+        {ingredientsForCurrentBurger.map((ingredient, index) => (
+          <ConstructorElementDraggable
+            text={ingredient.name}
+            price={ingredient.price}
+            thumbnail={ingredient.image}
+            handleClose={deleteItem}
+            handleKey={ingredient.keyId}
+            index={index}
             key={ingredient.keyId}
-            className={`${stylesForBurgerConstructor.listItem} mb-4`}
-          >
-            <ConstructorElementDraggable
-              text={ingredient.name}
-              price={ingredient.price}
-              thumbnail={ingredient.image}
-              handleClose={deleteItem}
-              handleKey={ingredient.keyId}
-            />
-          </li>
+          />
         ))}
       </ul>
       {bun ? (
