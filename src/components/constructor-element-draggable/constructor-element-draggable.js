@@ -7,6 +7,8 @@ import { useDrop, useDrag } from 'react-dnd';
 import styles from './constructor-element-draggable.module.css';
 import { useDispatch } from 'react-redux';
 import { reorderConstructor } from '../../services/actions/ingr-in-constructor-actions';
+import PropTypes from 'prop-types';
+import { typeOfingredient } from '../../utils/propTypes.js';
 
 function ConstructorElementDraggable(props) {
   const dispatch = useDispatch();
@@ -83,5 +85,15 @@ function ConstructorElementDraggable(props) {
     </li>
   );
 }
+
+ConstructorElementDraggable.propTypes = {
+  text: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  handleKey: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+};
 
 export default ConstructorElementDraggable;

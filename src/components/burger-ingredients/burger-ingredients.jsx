@@ -6,6 +6,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { closeIngredientDetails } from '../../services/actions/browsed-ingredient-actions';
+import { CATEGORIES } from '../../utils/constants';
 
 function BurgerIngredients() {
   const [current, setCurrent] = useState('bun');
@@ -46,17 +47,11 @@ function BurgerIngredients() {
     !sauceActive && mainActive && setCurrent('main');
   }, [bunActive, sauceActive, mainActive]);
 
-  const categories = [
-    { categoryType: 'bun', category: 'Булки', ref: bunsRef, id: 'bun' },
-    { categoryType: 'sauce', category: 'Соусы', ref: saucesRef, id: 'sauce' },
-    { categoryType: 'main', category: 'Начинки', ref: mainRef, id: 'main' },
-  ];
-
   return (
     <section>
       <h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
       <div className={`${stylesForBurgeringredients.tabs}`}>
-        {categories.map((category) => {
+        {CATEGORIES.map((category) => {
           return (
             <Tab
               value={category.categoryType}
@@ -70,11 +65,11 @@ function BurgerIngredients() {
         })}
       </div>
       <ul className={stylesForBurgeringredients.ingredientsList}>
-        {categories.map((category) => (
+        {CATEGORIES.map((category) => (
           <IngredientCategory
             category={category.category}
             categoryType={category.categoryType}
-            ref={category.ref}
+            ref={eval(category.ref)}
             id={category.id}
             key={category.id}
           />

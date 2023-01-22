@@ -21,6 +21,7 @@ function BurgerIngredient(props) {
   );
   const bun = useSelector((store) => store.inConstructor.bun);
   const [counter, setCounter] = useState(0);
+
   useEffect(() => {
     if (props.data.type !== 'bun') {
       setCounter(

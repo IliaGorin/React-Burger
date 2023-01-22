@@ -36,16 +36,18 @@ function BurgerConstructor() {
     (store) => store.inConstructor.ingredients
   );
   const bun = useSelector((store) => store.inConstructor.bun);
-  let currentPrice = 0;
 
-  if (bun && ingredientsForCurrentBurger.length) {
-    currentPrice =
+  const currentPrice = useMemo(() => {
+    return (
+      ingredientsForCurrentBurger.length > 0 &&
+      bun &&
       bun.price * 2 +
-      ingredientsForCurrentBurger.reduce(
-        (sum, ingredient) => sum + ingredient.price,
-        0
-      );
-  }
+        ingredientsForCurrentBurger.reduce(
+          (sum, ingredient) => sum + ingredient.price,
+          0
+        )
+    );
+  }, [ingredientsForCurrentBurger, bun]);
 
   const makeOrder = (orderedIngredients) => {
     dispatch(postOrder(orderedIngredients));
@@ -73,21 +75,27 @@ function BurgerConstructor() {
     type: 'ingredient',
   });
 
+  const bunRender = (type, name) => {
+    return (
+      <div className={`ml-8`}>
+        <ConstructorElement
+          type={type}
+          isLocked={true}
+          text={`${bun.name} (${name})`}
+          price={bun.price}
+          thumbnail={bun.image}
+        />
+      </div>
+    );
+  };
+
   return (
     <section
       className={`${stylesForBurgerConstructor.constructorSection} mt-25 ml-4 mr-4`}
       ref={dropRef}
     >
       {bun ? (
-        <div className={`ml-8`}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </div>
+        bunRender('top', 'верх')
       ) : (
         <div className={'text text_type_main-default'}>Добавьте булку</div>
       )}
@@ -116,15 +124,7 @@ function BurgerConstructor() {
         ))}
       </ul>
       {bun ? (
-        <div className={`ml-8`}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${bun.name} (низ)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </div>
+        bunRender('bottom', 'низ')
       ) : (
         <div className={'text text_type_main-default'}>Добавьте булку</div>
       )}
