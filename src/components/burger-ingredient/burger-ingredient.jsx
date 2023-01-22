@@ -9,6 +9,7 @@ import stylesForBurgeringredient from './burger-ingredient.module.css';
 import { openIngredientDetails } from '../../services/actions/browsed-ingredient-actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
+import { BUN } from '../../utils/constants.js';
 
 function BurgerIngredient(props) {
   const dispatch = useDispatch();
@@ -23,17 +24,17 @@ function BurgerIngredient(props) {
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
-    if (props.data.type !== 'bun') {
+    if (props.data.type !== BUN) {
       setCounter(
         ingredientsForCurrentBurger.filter(
           (item) => item._id === props.data._id
         ).length
       );
     }
-    if (bun && props.data.type === 'bun' && props.data.name === bun.name) {
+    if (bun && props.data.type === BUN && props.data.name === bun.name) {
       setCounter('2');
     }
-    if (bun && props.data.type === 'bun' && props.data.name !== bun.name) {
+    if (bun && props.data.type === BUN && props.data.name !== bun.name) {
       setCounter('0');
     }
   }, [ingredientsForCurrentBurger, bun]);

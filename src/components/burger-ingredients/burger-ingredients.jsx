@@ -7,9 +7,10 @@ import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { closeIngredientDetails } from '../../services/actions/browsed-ingredient-actions';
 import { CATEGORIES } from '../../utils/constants';
+import { BUN, SAUCE, MAIN } from '../../utils/constants';
 
 function BurgerIngredients() {
-  const [current, setCurrent] = useState('bun');
+  const [current, setCurrent] = useState(BUN);
   const [bunActive, setBunActive] = useState(false);
   const [sauceActive, setSauceActive] = useState(false);
   const [mainActive, setMainActive] = useState(false);
@@ -25,9 +26,9 @@ function BurgerIngredients() {
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        entry.target.id === 'bun' && setBunActive(entry.isIntersecting);
-        entry.target.id === 'sauce' && setSauceActive(entry.isIntersecting);
-        entry.target.id === 'main' && setMainActive(entry.isIntersecting);
+        entry.target.id === BUN && setBunActive(entry.isIntersecting);
+        entry.target.id === SAUCE && setSauceActive(entry.isIntersecting);
+        entry.target.id === MAIN && setMainActive(entry.isIntersecting);
       });
     });
     bunsRef.current !== null && observer.observe(bunsRef.current);
@@ -42,9 +43,9 @@ function BurgerIngredients() {
   };
 
   useEffect(() => {
-    bunActive && setCurrent('bun');
-    !bunActive && sauceActive && setCurrent('sauce');
-    !sauceActive && mainActive && setCurrent('main');
+    bunActive && setCurrent(BUN);
+    !bunActive && sauceActive && setCurrent(SAUCE);
+    !sauceActive && mainActive && setCurrent(MAIN);
   }, [bunActive, sauceActive, mainActive]);
 
   return (

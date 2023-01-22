@@ -23,6 +23,7 @@ import {
   addBunToConstructor,
 } from '../../services/actions/ingr-in-constructor-actions';
 import ConstructorElementDraggable from '../constructor-element-draggable/constructor-element-draggable.js';
+import { BUN } from '../../utils/constants.js';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -56,9 +57,9 @@ function BurgerConstructor() {
   const [{ isOver }, dropRef] = useDrop({
     accept: 'ingredient',
     drop: (item) => {
-      if (item.type !== 'bun') {
+      if (item.type !== BUN) {
         dispatch(addIngredientToConstructor(item));
-      } else if (item.type === 'bun') {
+      } else if (item.type === BUN) {
         dispatch(addBunToConstructor(item));
       }
     },

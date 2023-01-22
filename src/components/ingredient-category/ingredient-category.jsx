@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import classes from './ingredient-category.module.css';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
-import { typeOfingredient } from '../../utils/propTypes.js';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 const IngredientCategory = forwardRef((props, ref) => {
@@ -29,8 +29,10 @@ const IngredientCategory = forwardRef((props, ref) => {
   );
 });
 
-BurgerIngredient.propTypes = {
-  data: typeOfingredient.isRequired,
+IngredientCategory.propTypes = {
+  category: PropTypes.string.isRequired,
+  categoryType: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default IngredientCategory;

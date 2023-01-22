@@ -8,12 +8,18 @@ import styles from './constructor-element-draggable.module.css';
 import { useDispatch } from 'react-redux';
 import { reorderConstructor } from '../../services/actions/ingr-in-constructor-actions';
 import PropTypes from 'prop-types';
-import { typeOfingredient } from '../../utils/propTypes.js';
 
-function ConstructorElementDraggable(props) {
+function ConstructorElementDraggable({
+  id,
+  index,
+  text,
+  price,
+  thumbnail,
+  handleKey,
+  ...props
+}) {
   const dispatch = useDispatch();
-  const id = props.id;
-  const index = props.index;
+
   const ref = useRef();
 
   const [, drop] = useDrop(() => ({
@@ -77,10 +83,10 @@ function ConstructorElementDraggable(props) {
     >
       <DragIcon type="primary" />
       <ConstructorElement
-        text={props.text}
-        price={props.price}
-        thumbnail={props.thumbnail}
-        handleClose={() => props.handleClose(props.handleKey)}
+        text={text}
+        price={price}
+        thumbnail={thumbnail}
+        handleClose={() => props.handleClose(handleKey)}
       />
     </li>
   );
