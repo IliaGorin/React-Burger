@@ -17,7 +17,9 @@ function BurgerIngredients() {
   const saucesRef = useRef(null);
   const mainRef = useRef(null);
 
-  const isModalIngredientOpen = useSelector((store) => store.openCard.isOpen);
+  const isModalIngredientOpen = useSelector(
+    (store) => store.openCard.browsedIngredient
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {

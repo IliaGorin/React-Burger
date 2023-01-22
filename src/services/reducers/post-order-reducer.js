@@ -2,10 +2,11 @@ import {
   SEND_ORDER,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_FAILED,
+  CLEAR_ORDER,
 } from '../actions/post-order-actions';
 
 const initialStatePost = {
-  order: 0,
+  order: null,
   orderPostProcessing: false,
   orderPostFailed: false,
 };
@@ -30,6 +31,12 @@ export const postOrderReducer = (state = initialStatePost, action) => {
         ...state,
         orderPostProcessing: false,
         orderPostFailed: true,
+      };
+    }
+    case CLEAR_ORDER: {
+      return {
+        ...state,
+        order: null,
       };
     }
     default: {

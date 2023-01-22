@@ -4,6 +4,7 @@ import { checkResponse, sendRequest } from './index';
 export const SEND_ORDER = 'SEND_ORDER';
 export const SEND_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
 export const SEND_ORDER_FAILED = 'SEND_ORDER_FAILED';
+export const CLEAR_ORDER = 'CLEAR_ORDER';
 
 export const postOrder = (orderedIngredients) => {
   return (dispatch) => {
@@ -28,5 +29,12 @@ export const postOrder = (orderedIngredients) => {
           error: err.message,
         });
       });
+  };
+};
+
+export const clearOrder = () => {
+  return {
+    type: CLEAR_ORDER,
+    order: null,
   };
 };

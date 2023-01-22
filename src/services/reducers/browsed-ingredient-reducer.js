@@ -4,8 +4,7 @@ import {
 } from '../actions/browsed-ingredient-actions';
 
 const initialState = {
-  browsedIngredient: {},
-  isOpen: false,
+  browsedIngredient: null,
 };
 
 export const openIngredientCard = (state = initialState, action) => {
@@ -14,14 +13,12 @@ export const openIngredientCard = (state = initialState, action) => {
       return {
         ...state,
         browsedIngredient: { ...state.browsedIngredient, ...action.data },
-        isOpen: true,
       };
     }
     case CLEAR_BROWSED_INGREDIENT: {
       return {
         ...state,
-        browsedIngredient: {},
-        isOpen: false,
+        browsedIngredient: null,
       };
     }
     default:

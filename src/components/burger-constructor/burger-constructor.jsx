@@ -11,7 +11,10 @@ import stylesForBurgerConstructor from './burger-constructor.module.css';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 
-import { postOrder } from '../../services/actions/post-order-actions';
+import {
+  postOrder,
+  clearOrder,
+} from '../../services/actions/post-order-actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
 import {
@@ -24,10 +27,9 @@ import ConstructorElementDraggable from '../constructor-element-draggable/constr
 function BurgerConstructor() {
   const dispatch = useDispatch();
   const orderNumber = useSelector((store) => store.order.order);
-  const [isOrderModalVis, setOrderModalVis] = useState(false);
 
   const closeOrderModal = () => {
-    setOrderModalVis(false);
+    dispatch(clearOrder());
   };
 
   const ingredientsForCurrentBurger = useSelector(
@@ -136,7 +138,6 @@ function BurgerConstructor() {
             type="primary"
             size="large"
             onClick={() => {
-              setOrderModalVis(true);
               makeOrder(ingredientsForCurrentBurger);
             }}
           >
@@ -149,12 +150,9 @@ function BurgerConstructor() {
         </div>
       )}
 
-      {isOrderModalVis && (
+      {orderNumber && (
         <Modal closeModal={closeOrderModal}>
-          <OrderDetails
-            closeModal={closeOrderModal}
-            orderNumber={orderNumber}
-          />
+          <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
     </section>
