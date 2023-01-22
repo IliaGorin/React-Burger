@@ -6,7 +6,7 @@ import {
 import { useDrop, useDrag } from 'react-dnd';
 import styles from './constructor-element-draggable.module.css';
 import { useDispatch } from 'react-redux';
-import { reorderConstructor } from '../../services/actions';
+import { reorderConstructor } from '../../services/actions/ingr-in-constructor-actions';
 
 function ConstructorElementDraggable(props) {
   const dispatch = useDispatch();

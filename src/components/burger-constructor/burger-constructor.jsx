@@ -11,14 +11,14 @@ import stylesForBurgerConstructor from './burger-constructor.module.css';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 
-import { postOrder } from '../../services/actions/index.js';
+import { postOrder } from '../../services/actions/post-order-actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
 import {
   addIngredientToConstructor,
   removeIngredientFromConstructor,
   addBunToConstructor,
-} from '../../services/actions/index.js';
+} from '../../services/actions/ingr-in-constructor-actions';
 import ConstructorElementDraggable from '../constructor-element-draggable/constructor-element-draggable.js';
 
 function BurgerConstructor() {

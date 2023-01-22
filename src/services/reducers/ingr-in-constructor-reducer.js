@@ -3,7 +3,7 @@ import {
   ADD_BUN_TO_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   REORDER_CONSTRUCTOR,
-} from '../actions/index';
+} from '../actions/ingr-in-constructor-actions';
 
 const initialState = {
   ingredients: [],

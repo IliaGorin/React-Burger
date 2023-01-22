@@ -5,7 +5,7 @@ import Modal from '../modal/modal.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
 import { useSelector, useDispatch } from 'react-redux';
-import { closeIngredientDetails } from '../../services/actions/index';
+import { closeIngredientDetails } from '../../services/actions/browsed-ingredient-actions';
 
 function BurgerIngredients() {
   const [current, setCurrent] = useState('bun');

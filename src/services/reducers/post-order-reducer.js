@@ -2,7 +2,7 @@ import {
   SEND_ORDER,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_FAILED,
-} from '../actions/index';
+} from '../actions/post-order-actions';
 
 const initialStatePost = {
   order: 0,

@@ -6,7 +6,7 @@ import {
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForBurgeringredient from './burger-ingredient.module.css';
-import { openIngredientDetails } from '../../services/actions/index';
+import { openIngredientDetails } from '../../services/actions/browsed-ingredient-actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 

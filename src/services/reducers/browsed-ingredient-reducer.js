@@ -1,4 +1,7 @@
-import { BROWSED_INGREDIENT, CLEAR_BROWSED_INGREDIENT } from '../actions';
+import {
+  BROWSED_INGREDIENT,
+  CLEAR_BROWSED_INGREDIENT,
+} from '../actions/browsed-ingredient-actions';
 
 const initialState = {
   browsedIngredient: {},
