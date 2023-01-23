@@ -1,28 +1,40 @@
-import { React, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { typeOfingredient } from '../../utils/propTypes.js';
+import { React, useEffect, useState, useRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForBurgeringredients from './burger-ingredients.module.css';
-import BurgerIngredient from '../burger-ingredient/burger-ingredient.jsx';
 import Modal from '../modal/modal.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
+import { useSelector, useDispatch } from 'react-redux';
+import { closeIngredientDetails } from '../../services/actions/browsed-ingredient-actions';
+import { CATEGORIES } from '../../utils/constants';
+import { BUN, SAUCE, MAIN } from '../../utils/constants';
 
-function BurgerIngredients(props) {
-  const [current, setCurrent] = useState('bun');
+function BurgerIngredients() {
+  const [current, setCurrent] = useState(BUN);
+  const [bunActive, setBunActive] = useState(false);
+  const [sauceActive, setSauceActive] = useState(false);
+  const [mainActive, setMainActive] = useState(false);
+  const dispatch = useDispatch();
+  const bunsRef = useRef(null);
+  const saucesRef = useRef(null);
+  const mainRef = useRef(null);
 
-  const [isModalIngredientOpen, setModalIngredientOpen] = useState(false);
+  const isModalIngredientOpen = useSelector(
+    (store) => store.openCard.browsedIngredient
+  );
 
-  const [selectedIngredient, setSelectedIngredient] = useState({});
-
-  const openModalIngredient = (item) => {
-    setSelectedIngredient(item);
-    setModalIngredientOpen(true);
-  };
-
-  const closeModalIngredient = () => {
-    setModalIngredientOpen(false);
-  };
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entry.target.id === BUN && setBunActive(entry.isIntersecting);
+        entry.target.id === SAUCE && setSauceActive(entry.isIntersecting);
+        entry.target.id === MAIN && setMainActive(entry.isIntersecting);
+      });
+    });
+    bunsRef.current !== null && observer.observe(bunsRef.current);
+    saucesRef.current !== null && observer.observe(saucesRef.current);
+    mainRef.current !== null && observer.observe(mainRef.current);
+  }, []);
 
   const onTabClick = (tab) => {
     setCurrent(tab);
@@ -30,51 +42,47 @@ function BurgerIngredients(props) {
     if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
 
+  useEffect(() => {
+    bunActive && setCurrent(BUN);
+    !bunActive && sauceActive && setCurrent(SAUCE);
+    !sauceActive && mainActive && setCurrent(MAIN);
+  }, [bunActive, sauceActive, mainActive]);
+
   return (
     <section>
       <h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
       <div className={`${stylesForBurgeringredients.tabs}`}>
-        <Tab value="bun" active={current === 'bun'} onClick={onTabClick}>
-          Булки
-        </Tab>
-        <Tab value="sauce" active={current === 'sauce'} onClick={onTabClick}>
-          Соусы
-        </Tab>
-        <Tab value="main" active={current === 'main'} onClick={onTabClick}>
-          Начинки
-        </Tab>
+        {CATEGORIES.map((category) => {
+          return (
+            <Tab
+              value={category.categoryType}
+              active={current === category.categoryType}
+              onClick={onTabClick}
+              key={category.id}
+            >
+              {category.category}
+            </Tab>
+          );
+        })}
       </div>
       <ul className={stylesForBurgeringredients.ingredientsList}>
-        <IngredientCategory
-          openModalIngredient={openModalIngredient}
-          ingredients={props.data}
-          category={'Булки'}
-          categoryType={'bun'}
-        />
-        <IngredientCategory
-          openModalIngredient={openModalIngredient}
-          ingredients={props.data}
-          category={'Соусы'}
-          categoryType={'sauce'}
-        />
-        <IngredientCategory
-          openModalIngredient={openModalIngredient}
-          ingredients={props.data}
-          category={'Начинки'}
-          categoryType={'main'}
-        />
+        {CATEGORIES.map((category) => (
+          <IngredientCategory
+            category={category.category}
+            categoryType={category.categoryType}
+            ref={eval(category.ref)}
+            id={category.id}
+            key={category.id}
+          />
+        ))}
       </ul>
       {isModalIngredientOpen && (
-        <Modal closeModal={closeModalIngredient}>
-          <IngredientDetails data={selectedIngredient} />
+        <Modal closeModal={() => dispatch(closeIngredientDetails())}>
+          <IngredientDetails />
         </Modal>
       )}
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(typeOfingredient).isRequired,
-};
 
 export default BurgerIngredients;

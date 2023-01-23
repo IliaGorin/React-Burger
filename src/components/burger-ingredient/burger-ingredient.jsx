@@ -6,19 +6,49 @@ import {
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForBurgeringredient from './burger-ingredient.module.css';
+import { openIngredientDetails } from '../../services/actions/browsed-ingredient-actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrag } from 'react-dnd';
+import { BUN } from '../../utils/constants.js';
 
 function BurgerIngredient(props) {
+  const dispatch = useDispatch();
+  const [, dragRef] = useDrag({
+    type: 'ingredient',
+    item: props.data,
+  });
+  const ingredientsForCurrentBurger = useSelector(
+    (store) => store.inConstructor.ingredients
+  );
+  const bun = useSelector((store) => store.inConstructor.bun);
+  const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    if (props.data.type !== BUN) {
+      setCounter(
+        ingredientsForCurrentBurger.filter(
+          (item) => item._id === props.data._id
+        ).length
+      );
+    }
+    if (bun && props.data.type === BUN && props.data.name === bun.name) {
+      setCounter('2');
+    }
+    if (bun && props.data.type === BUN && props.data.name !== bun.name) {
+      setCounter('0');
+    }
+  }, [ingredientsForCurrentBurger, bun]);
+
   return (
     <div
       className={`${stylesForBurgeringredient.ingredientWrap}`}
       id={props.data.id}
-      onClick={() => props.openModalIngredient(props.data)}
+      onClick={() => dispatch(openIngredientDetails(props.data))}
+      draggable
+      ref={dragRef}
     >
-      {props.data.name === 'Краторная булка N-200i' && (
-        <Counter count={1} size="default" extraClass="m-1" />
-      )}
-      {props.data.name === 'Соус традиционный галактический' && (
-        <Counter count={1} size="default" extraClass="m-1" />
+      {counter > 0 && (
+        <Counter count={counter} size="default" extraClass="m-1" />
       )}
       <img
         className={`pr-4 pl-4`}

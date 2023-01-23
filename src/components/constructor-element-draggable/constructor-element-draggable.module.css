@@ -1,0 +1,11 @@
+.listItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  row-gap: 8px;
+}
+
+.isDragging {
+  cursor: grabbing;
+  opacity: .2;
+}
