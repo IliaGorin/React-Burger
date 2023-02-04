@@ -9,7 +9,6 @@ const IngredientCategory = forwardRef((props, ref) => {
   const ingredientsForRender = ingredients.filter(
     (data) => data.type === props.categoryType
   );
-
   return (
     <li ref={ref} id={props.id}>
       <h3
