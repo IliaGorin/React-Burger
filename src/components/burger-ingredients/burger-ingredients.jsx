@@ -6,7 +6,6 @@ import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { closeIngredientDetails } from '../../services/actions/browsed-ingredient-actions';
-import { CATEGORIES } from '../../utils/constants';
 import { BUN, SAUCE, MAIN } from '../../utils/constants';
 
 function BurgerIngredients() {
@@ -48,6 +47,22 @@ function BurgerIngredients() {
     !sauceActive && mainActive && setCurrent(MAIN);
   }, [bunActive, sauceActive, mainActive]);
 
+  const CATEGORIES = [
+    { categoryType: 'bun', category: 'Булки', ref: bunsRef, id: BUN },
+    {
+      categoryType: SAUCE,
+      category: 'Соусы',
+      ref: saucesRef,
+      id: SAUCE,
+    },
+    {
+      categoryType: MAIN,
+      category: 'Начинки',
+      ref: mainRef,
+      id: MAIN,
+    },
+  ];
+
   return (
     <section>
       <h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
@@ -70,7 +85,7 @@ function BurgerIngredients() {
           <IngredientCategory
             category={category.category}
             categoryType={category.categoryType}
-            ref={eval(category.ref)}
+            ref={category.ref}
             id={category.id}
             key={category.id}
           />
