@@ -74,6 +74,7 @@ function ConstructorElementDraggable({
 
   return (
     <li
+      key={id}
       ref={ref}
       className={
         isDragging

@@ -22,7 +22,7 @@ import {
   removeIngredientFromConstructor,
   addBunToConstructor,
 } from '../../services/actions/ingr-in-constructor-actions';
-import ConstructorElementDraggable from '../constructor-element-draggable/constructor-element-draggable.js';
+import ConstructorElementDraggable from '../constructor-element-draggable/constructor-element-draggable.jsx';
 import { BUN } from '../../utils/constants.js';
 
 function BurgerConstructor() {

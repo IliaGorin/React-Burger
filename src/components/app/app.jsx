@@ -1,36 +1,26 @@
 import { React, useEffect } from 'react';
 
-import appStyles from './app.module.css';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import { AppHeader } from '../app-header/app-header';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import RootLayout from '../../pages/root';
+import HomePage from '../../pages/home';
+import { LoginPage } from '../../pages/login';
 
-import { getIngredients } from '../../services/actions/get-ingredients-actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <RootLayout />,
+    children: [
+      { index: true, element: <HomePage /> },
+      {
+        path: '/login',
+        element: <LoginPage />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  const dispatch = useDispatch();
-  const ingredients = useSelector((store) => store.ingredients.data);
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
-  return (
-    <>
-      <AppHeader />
-      {ingredients.length && (
-        <DndProvider backend={HTML5Backend}>
-          <main className={appStyles.mainGrid}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </main>
-        </DndProvider>
-      )}
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
