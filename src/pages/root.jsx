@@ -1,4 +1,4 @@
-import { Outlet, useLoaderData, useSubmit } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { AppHeader } from '../components/app-header/app-header';
 
 function RootLayout() {

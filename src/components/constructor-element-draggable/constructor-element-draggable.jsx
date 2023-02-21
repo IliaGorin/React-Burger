@@ -53,9 +53,7 @@ function ConstructorElementDraggable({
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-
       dispatch(reorderConstructor({ dragIndex, hoverIndex }));
-
       item.index = hoverIndex;
     },
   }));

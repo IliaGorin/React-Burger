@@ -1,9 +1,10 @@
-import { React, useEffect } from 'react';
+import { React } from 'react';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RootLayout from '../../pages/root';
 import HomePage from '../../pages/home';
 import { LoginPage } from '../../pages/login';
+import { RegistrationPage } from '../../pages/registation';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <LoginPage />,
+      },
+      {
+        path: '/registration',
+        element: <RegistrationPage />,
       },
     ],
   },
