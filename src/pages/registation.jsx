@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Input,
   EmailInput,
@@ -7,8 +7,29 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import styles from './registration.module.css';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../services/actions/users';
+import { useNavigate } from 'react-router-dom';
 
 export const RegistrationPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [form, setValue] = useState({ name: '', email: '', password: '' });
+
+  const onChange = (e) => {
+    setValue({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleRegister = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(registerUser(form.name, form.email, form.password, navigate));
+      console.log(form);
+    },
+    [dispatch, form]
+  );
+
   return (
     <main className={styles.main}>
       <form className={styles.form}>
@@ -16,30 +37,30 @@ export const RegistrationPage = () => {
           Регистрация
         </h1>
         <Input
-          value={''}
+          value={form.name}
           name={'name'}
           type={'text'}
           placeholder={'Имя'}
           error={false}
           errorText={'Ошибка'}
-          onChange={console.log('press')}
+          onChange={onChange}
         />
         <EmailInput
-          value={''}
+          value={form.email}
           name={'email'}
           isIcon={false}
-          onChange={console.log('press')}
+          onChange={onChange}
         />
         <PasswordInput
-          value={''}
+          value={form.password}
           name={'password'}
-          onChange={console.log('press')}
+          onChange={onChange}
         />
         <Button
+          onClick={handleRegister}
           htmlType="button"
           type="primary"
           size="medium"
-          onClick={console.log('press')}
         >
           Зарегистрироваться
         </Button>

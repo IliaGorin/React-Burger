@@ -1,12 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Button,
   EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { changePasswordRequest } from '../services/actions/users';
 
 export const ForgotPasswordPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+
+  const handleRequest = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(changePasswordRequest({ email: email }));
+      navigate('/reset-password');
+    },
+    [dispatch, email]
+  );
+
+  const onChange = (e) => {
+    setEmail(e.target.value);
+  };
+
   return (
     <main className={styles.main}>
       <form className={styles.form}>
@@ -14,16 +34,16 @@ export const ForgotPasswordPage = () => {
           Восстановление пароля
         </h1>
         <EmailInput
-          value={'email'}
+          onChange={onChange}
+          value={email}
           placeholder={'Укажите e-mail'}
           name={'email'}
-          onChange={console.log('press')}
         />
         <Button
           htmlType="button"
           type="primary"
           size="medium"
-          onClick={console.log('press')}
+          onClick={handleRequest}
         >
           Восстановить
         </Button>

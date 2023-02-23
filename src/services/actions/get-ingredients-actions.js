@@ -1,5 +1,4 @@
-import { checkResponse, sendRequest } from './index';
-import { URL_API } from '../../utils/constants';
+import { sendRequest } from './index';
 
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
