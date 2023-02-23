@@ -13,12 +13,12 @@ export const AppHeader = () => {
       <nav className={stylesForAppHeader.nav}>
         <ul className={stylesForAppHeader.navList}>
           <li className="pt-4 pr-5 pb-4 pl-5">
-            <a href="/#" className={stylesForAppHeader.link}>
+            <Link to="/" className={stylesForAppHeader.link}>
               <BurgerIcon type="primary" />
               <span className="ml-2 text text_type_main-default">
                 Конструктор
               </span>
-            </a>
+            </Link>
           </li>
           <li className="pt-4 pr-5 pb-4 pl-5">
             <a href="/#" className={stylesForAppHeader.link}>

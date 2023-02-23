@@ -5,6 +5,8 @@ import RootLayout from '../../pages/root';
 import HomePage from '../../pages/home';
 import { LoginPage } from '../../pages/login';
 import { RegistrationPage } from '../../pages/registation';
+import { ForgotPasswordPage } from '../../pages/forgot-password';
+import { ResetPasswordPage } from '../../pages/reset-password';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,14 @@ const router = createBrowserRouter([
       {
         path: '/registration',
         element: <RegistrationPage />,
+      },
+      {
+        path: '/forgot-password',
+        element: <ForgotPasswordPage />,
+      },
+      {
+        path: '/reset-password',
+        element: <ResetPasswordPage />,
       },
     ],
   },

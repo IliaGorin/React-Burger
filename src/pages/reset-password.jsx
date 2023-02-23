@@ -1,38 +1,32 @@
-import React, { useState } from 'react';
-import {
-  Input,
-  EmailInput,
-  PasswordInput,
-  Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './registration.module.css';
+import {
+  Button,
+  Input,
+  PasswordInput,
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './login.module.css';
 
-export const RegistrationPage = () => {
+export const ResetPasswordPage = () => {
   return (
     <main className={styles.main}>
       <form className={styles.form}>
         <h1 className="text text_type_main-medium text_color_primary">
-          Регистрация
+          Восстановление пароля
         </h1>
+        <PasswordInput
+          value={'password'}
+          placeholder={'Введите новый пароль'}
+          name={'password'}
+          onChange={console.log('press')}
+        />
         <Input
-          value={''}
-          name={'name'}
           type={'text'}
-          placeholder={'Имя'}
+          placeholder={'Введите код из письма'}
+          value={''}
+          name={'token'}
           error={false}
           errorText={'Ошибка'}
-          onChange={console.log('press')}
-        />
-        <EmailInput
-          value={''}
-          name={'email'}
-          isIcon={false}
-          onChange={console.log('press')}
-        />
-        <PasswordInput
-          value={''}
-          name={'password'}
           onChange={console.log('press')}
         />
         <Button
@@ -41,11 +35,11 @@ export const RegistrationPage = () => {
           size="medium"
           onClick={console.log('press')}
         >
-          Зарегистрироваться
+          Сохранить
         </Button>
       </form>
       <p className="text text_type_main-default text_color_inactive">
-        Уже зарегистрированы?{' '}
+        Вспомнили пароль?{' '}
         <Link to="/login" className={styles.link}>
           Войти
         </Link>

@@ -24,15 +24,15 @@ export const LoginPage = () => {
       <form className={styles.form}>
         <h1 className="text text_type_main-medium text_color_primary">Вход</h1>
         <EmailInput
-          onChange={onChangeEmail}
           value={email}
           name={'email'}
           isIcon={false}
+          onChange={onChangeEmail}
         />
         <PasswordInput
-          onChange={onChangePassword}
           value={password}
           name={'password'}
+          onChange={onChangePassword}
         />
         <Button
           onClick={console.log('press')}
@@ -51,8 +51,14 @@ export const LoginPage = () => {
       </p>
       <p className="text text_type_main-default text_color_inactive mt-4">
         Забыли пароль?{' '}
-        <Link to="/registration" className={styles.link}>
+        <Link to="/forgot-password" className={styles.link}>
           Восстановить пароль
+        </Link>
+      </p>
+      <p className="text text_type_main-default text_color_inactive">
+        Временно
+        <Link to="/reset-password" className={styles.link}>
+          Страницы для нового пароля
         </Link>
       </p>
     </main>
