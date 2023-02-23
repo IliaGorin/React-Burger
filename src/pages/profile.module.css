@@ -1,0 +1,20 @@
+.wrapper {
+  padding-top: 120px;
+  max-width: 650px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 60px;
+  margin: 0 auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+}

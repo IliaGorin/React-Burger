@@ -5,20 +5,25 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForAppHeader from './app-header.module.css';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export const AppHeader = () => {
+  const activeLinkStyle = `${stylesForAppHeader.link} text_type_main-default`;
+  const inactiveLinkStyle = `${stylesForAppHeader.link} text_type_main-default text_color_inactive`;
   return (
     <header className={stylesForAppHeader.header}>
       <nav className={stylesForAppHeader.nav}>
         <ul className={stylesForAppHeader.navList}>
           <li className="pt-4 pr-5 pb-4 pl-5">
-            <Link to="/" className={stylesForAppHeader.link}>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive ? activeLinkStyle : inactiveLinkStyle
+              }
+            >
               <BurgerIcon type="primary" />
-              <span className="ml-2 text text_type_main-default">
-                Конструктор
-              </span>
-            </Link>
+              <span className="ml-2 text">Конструктор</span>
+            </NavLink>
           </li>
           <li className="pt-4 pr-5 pb-4 pl-5">
             <a href="/#" className={stylesForAppHeader.link}>
@@ -30,12 +35,15 @@ export const AppHeader = () => {
           </li>
         </ul>
         <Logo />
-        <Link to="/login" className={stylesForAppHeader.link}>
+        <NavLink
+          to="/profile"
+          className={({ isActive }) =>
+            isActive ? activeLinkStyle : inactiveLinkStyle
+          }
+        >
           <ProfileIcon type="secondary" />
-          <span className="ml-2 text text_type_main-default text_color_inactive">
-            Личный кабинет
-          </span>
-        </Link>
+          <span className="ml-2 text">Личный кабинет</span>
+        </NavLink>
       </nav>
     </header>
   );
