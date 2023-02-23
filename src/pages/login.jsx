@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../services/actions/users';
 
 export const LoginPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,6 +22,14 @@ export const LoginPage = () => {
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
+
+  const handleLogin = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(loginUser(email, password, navigate));
+    },
+    [email, password, navigate]
+  );
 
   return (
     <main className={styles.main}>
@@ -35,7 +47,7 @@ export const LoginPage = () => {
           onChange={onChangePassword}
         />
         <Button
-          onClick={console.log('press')}
+          onClick={handleLogin}
           htmlType="button"
           type="primary"
           size="medium"

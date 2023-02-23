@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Button,
@@ -6,8 +6,26 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
+import { useDispatch } from 'react-redux';
+import { resetPassword } from '../services/actions/users';
 
 export const ResetPasswordPage = () => {
+  const dispatch = useDispatch();
+  const [form, setValue] = useState({ password: '', token: '' });
+
+  const onChange = (e) => {
+    setValue({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handlerResetPassword = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(resetPassword(form));
+      setValue({ password: '', token: '' });
+    },
+    [form, dispatch]
+  );
+
   return (
     <main className={styles.main}>
       <form className={styles.form}>
@@ -15,25 +33,25 @@ export const ResetPasswordPage = () => {
           Восстановление пароля
         </h1>
         <PasswordInput
-          value={'password'}
+          value={form.password}
           placeholder={'Введите новый пароль'}
           name={'password'}
-          onChange={console.log('press')}
+          onChange={onChange}
         />
         <Input
           type={'text'}
           placeholder={'Введите код из письма'}
-          value={''}
+          value={form.token}
           name={'token'}
           error={false}
           errorText={'Ошибка'}
-          onChange={console.log('press')}
+          onChange={onChange}
         />
         <Button
           htmlType="button"
           type="primary"
           size="medium"
-          onClick={console.log('press')}
+          onClick={handlerResetPassword}
         >
           Сохранить
         </Button>

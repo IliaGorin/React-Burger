@@ -17,8 +17,7 @@ export const ForgotPasswordPage = () => {
   const handleRequest = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(changePasswordRequest({ email: email }));
-      navigate('/reset-password');
+      dispatch(changePasswordRequest(email, navigate));
     },
     [dispatch, email]
   );

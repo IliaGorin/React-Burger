@@ -4,8 +4,12 @@ export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const FORGOT_PASSWORD_SUCCESSFUL = 'FORGOT_PASSWORD_SUCCESSFUL';
 export const REGISTER_USER_SUCCESSFUL = 'REGISTER_USER_SUCCESSFUL';
 export const REGISTER_USER = 'REGISTER_USER';
+export const RESET_PASSWORD_SUCCESSFUL = 'RESET_PASSWORD_SUCCESSFUL';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
+export const LOGIN_USER = 'LOGIN_USER';
+export const LOGIN_USER_SUCCESSFUL = 'LOGIN_USER_SUCCESSFUL';
 
-export const changePasswordRequest = (email, history) => {
+export const changePasswordRequest = (email, navigate) => {
   return (dispatch) => {
     dispatch({
       type: FORGOT_PASSWORD,
@@ -21,7 +25,7 @@ export const changePasswordRequest = (email, history) => {
     sendRequest(`/password-reset`, postDetails)
       .then((data) => {
         if (data.success) {
-          return history.replace({ pathname: '/reset-password' });
+          return navigate('/reset-password');
         }
         return null;
       })
@@ -58,5 +62,57 @@ export const registerUser = (name, email, password, navigate) => {
       .catch((error) => {
         alert('Ошибка, код ошибки: ', error.type);
       });
+  };
+};
+
+export const resetPassword = (password, token) => {
+  return (dispatch) => {
+    dispatch({
+      type: RESET_PASSWORD,
+      token: token,
+    });
+    const postDetails = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: password, token: token }),
+    };
+    dispatch({
+      type: RESET_PASSWORD_SUCCESSFUL,
+    });
+    sendRequest('/password-reset/reset', postDetails).catch((error) =>
+      alert('Ошибка, код ошибки: ', error.type)
+    );
+  };
+};
+
+export const loginUser = (email, password, navigate) => {
+  return (dispatch) => {
+    dispatch({
+      type: LOGIN_USER,
+      email: email,
+      password: password,
+    });
+    const postDetails = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: `${email}`,
+        password: `${password}`,
+      }),
+    };
+    dispatch({
+      type: LOGIN_USER_SUCCESSFUL,
+    });
+    sendRequest('/auth/login', postDetails)
+      .then((data) => {
+        if (data.success) {
+          if (!localStorage.length) {
+            localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('refreshToken', data.refreshToken);
+          }
+          navigate('/');
+        }
+      })
+      .catch((error) => alert('Ошибка, код ошибки: ', error.type));
   };
 };
