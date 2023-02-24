@@ -8,6 +8,10 @@ export const RESET_PASSWORD_SUCCESSFUL = 'RESET_PASSWORD_SUCCESSFUL';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGIN_USER_SUCCESSFUL = 'LOGIN_USER_SUCCESSFUL';
+export const GET_USER_INFO = 'GET_USER_INFO';
+export const GET_USER_INFO_SUCCESSFUL = 'GET_USER_INFO_SUCCESSFUL';
+export const PATCH_USER_INFO = 'PATH_USER_INFO';
+export const PATCH_USER_INFO_SUCCESSFUL = 'PATH_USER_INFO_SUCCESSFUL';
 
 export const changePasswordRequest = (email, navigate) => {
   return (dispatch) => {
@@ -106,13 +110,64 @@ export const loginUser = (email, password, navigate) => {
     sendRequest('/auth/login', postDetails)
       .then((data) => {
         if (data.success) {
-          if (!localStorage.length) {
-            localStorage.setItem('accessToken', data.accessToken);
-            localStorage.setItem('refreshToken', data.refreshToken);
-          }
+          localStorage.setItem('accessToken', data.accessToken);
+          localStorage.setItem('refreshToken', data.refreshToken);
           navigate('/');
         }
       })
       .catch((error) => alert('Ошибка, код ошибки: ', error.type));
+  };
+};
+
+export const getUserInfo = () => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_USER_INFO,
+    });
+    const postDetails = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: window.localStorage.getItem('accessToken'),
+      },
+    };
+    sendRequest('/auth/user', postDetails)
+      .then((data) => {
+        if (data.success) {
+          dispatch({
+            type: GET_USER_INFO_SUCCESSFUL,
+            email: data.user.email,
+            name: data.user.name,
+          });
+        }
+      })
+      .catch((error) => alert('Ошибка, код ошибки: ', error.type));
+  };
+};
+
+export const patchUserInfo = (email, name) => {
+  return (dispatch) => {
+    dispatch({
+      type: PATCH_USER_INFO,
+      email: email,
+      name: name,
+    });
+    const postDetails = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: window.localStorage.getItem('accessToken'),
+      },
+      body: JSON.stringify({
+        email: email,
+        name: name,
+      }),
+    };
+    dispatch({
+      type: PATCH_USER_INFO_SUCCESSFUL,
+    });
+    sendRequest('/auth/user', postDetails).catch((error) =>
+      alert('Ошибка, код ошибки: ', error.type)
+    );
   };
 };

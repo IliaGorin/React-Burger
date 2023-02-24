@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Input,
   Button,
@@ -7,8 +7,37 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
 import { ProfileNavMenu } from '../components/profile-nav-menu/profile-nav-menu';
+import { getUserInfo, patchUserInfo } from '../services/actions/users';
+import { useSelector, useDispatch } from 'react-redux';
 
 export const ProfilePage = () => {
+  const dispatch = useDispatch();
+  const { name, email, password } = useSelector((store) => store.users);
+
+  const initialState = {
+    name: `${name}`,
+    email: `${email}`,
+    password: `${password}`,
+  };
+  const [form, setValue] = useState(initialState);
+
+  useEffect(() => {
+    dispatch(getUserInfo());
+    setValue(form);
+  }, [form, name, email, password]);
+
+  const onChange = (e) => {
+    setValue({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleUpdateUserInfo = () => {
+    dispatch(patchUserInfo(form.email, form.name));
+  };
+
+  const handleResetUserInfo = () => {
+    setValue(initialState);
+  };
+
   return (
     <main className={styles.wrapper}>
       <ProfileNavMenu />
@@ -19,8 +48,8 @@ export const ProfilePage = () => {
         }}
       >
         <Input
-          onChange={console.log('')}
-          value={'name'}
+          onChange={onChange}
+          value={form.name}
           name={'name'}
           type={'text'}
           placeholder={'Имя'}
@@ -28,27 +57,32 @@ export const ProfilePage = () => {
           error={false}
         />
         <EmailInput
-          onChange={console.log('')}
-          value={'email'}
+          onChange={onChange}
+          value={form.email}
           name="email"
           icon="EditIcon"
         />
         <PasswordInput
-          onChange={console.log('')}
-          value={'password'}
+          onChange={onChange}
+          value={form.password}
           name={'password'}
           icon={'EditIcon'}
         />
         <div className={styles.buttonWrapper}>
           <Button
-            onClick={console.log('')}
+            onClick={handleResetUserInfo}
             type={'secondary'}
             size={'medium'}
             htmlType={'button'}
           >
             Отмена
           </Button>
-          <Button type={'primary'} size={'medium'} htmlType={'submit'}>
+          <Button
+            onClick={handleUpdateUserInfo}
+            type={'primary'}
+            size={'medium'}
+            htmlType={'submit'}
+          >
             Сохранить
           </Button>
         </div>

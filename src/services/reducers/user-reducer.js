@@ -7,6 +7,10 @@ import {
   RESET_PASSWORD_SUCCESSFUL,
   LOGIN_USER,
   LOGIN_USER_SUCCESSFUL,
+  GET_USER_INFO,
+  GET_USER_INFO_SUCCESSFUL,
+  PATCH_USER_INFO,
+  PATCH_USER_INFO_SUCCESSFUL,
 } from '../actions/users';
 
 const initialState = {
@@ -78,6 +82,36 @@ export const usersReducer = (state = initialState, action) => {
         pending: false,
         success: true,
         isLoggedIn: true,
+      };
+    }
+    case GET_USER_INFO: {
+      return {
+        ...state,
+        pending: false,
+        success: true,
+      };
+    }
+    case GET_USER_INFO_SUCCESSFUL: {
+      return {
+        ...state,
+        email: action.email,
+        name: action.name,
+        isLoggedIn: true,
+        pending: false,
+      };
+    }
+    case PATCH_USER_INFO: {
+      return {
+        ...state,
+        email: action.email,
+        name: action.name,
+      };
+    }
+    case PATCH_USER_INFO_SUCCESSFUL: {
+      return {
+        ...state,
+        success: true,
+        pending: false,
       };
     }
   }
