@@ -5,15 +5,18 @@ export function getAuthToken() {
   return token;
 }
 
-export function tokenLoader() {
-  return getAuthToken();
-}
-
 export function checkAuthLoader() {
   const token = getAuthToken();
-  console.log(token);
   if (!token) {
     return redirect('/login');
+  }
+  return null;
+}
+
+export function checkNotAuthLoader() {
+  const token = getAuthToken();
+  if (token) {
+    return redirect('/');
   }
   return null;
 }

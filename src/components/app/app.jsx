@@ -9,7 +9,7 @@ import { ForgotPasswordPage } from '../../pages/forgot-password';
 import { ResetPasswordPage } from '../../pages/reset-password';
 import { ProfilePage } from '../../pages/profile';
 import { ErrorPage } from '../../pages/error';
-import { checkAuthLoader } from '../../utils/auth';
+import { checkAuthLoader, checkNotAuthLoader } from '../../utils/auth';
 
 const router = createBrowserRouter([
   {
@@ -21,18 +21,22 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <LoginPage />,
+        loader: checkNotAuthLoader,
       },
       {
         path: '/registration',
         element: <RegistrationPage />,
+        loader: checkNotAuthLoader,
       },
       {
         path: '/forgot-password',
         element: <ForgotPasswordPage />,
+        loader: checkNotAuthLoader,
       },
       {
         path: '/reset-password',
         element: <ResetPasswordPage />,
+        loader: checkNotAuthLoader,
       },
       {
         path: '/profile',

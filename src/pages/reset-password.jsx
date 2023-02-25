@@ -1,15 +1,24 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Button,
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from '../services/actions/users';
 
 export const ResetPasswordPage = () => {
+  const navigate = useNavigate();
+  const successEmail = useSelector((state) => state.users.success);
+
+  useEffect(() => {
+    if (!successEmail) {
+      return navigate('/');
+    }
+  });
+
   const dispatch = useDispatch();
   const [form, setValue] = useState({ password: '', token: '' });
 
