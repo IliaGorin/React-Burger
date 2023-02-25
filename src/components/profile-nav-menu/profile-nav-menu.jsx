@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './profile-nav-menu.module.css';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../services/actions/users';
 
 export const ProfileNavMenu = () => {
   const linkActive = `${styles.link} ${styles.active} text text_type_main-medium`;
+
+  const dispatch = useDispatch();
   return (
     <ul className={styles.list}>
       <li>
@@ -21,7 +25,11 @@ export const ProfileNavMenu = () => {
         </Link>
       </li>
       <li>
-        <Link to={'/login'} className={linkActive}>
+        <Link
+          to={'/login'}
+          onClick={() => dispatch(logoutUser())}
+          className={linkActive}
+        >
           <p className="text text_type_main-medium text_color_primary">Выход</p>
         </Link>
       </li>

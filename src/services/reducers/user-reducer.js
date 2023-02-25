@@ -11,6 +11,8 @@ import {
   GET_USER_INFO_SUCCESSFUL,
   PATCH_USER_INFO,
   PATCH_USER_INFO_SUCCESSFUL,
+  LOGOUT_USER_SUCCESS,
+  LOGOUT_USER,
 } from '../actions/users';
 
 const initialState = {

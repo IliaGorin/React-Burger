@@ -9,6 +9,7 @@ import { ForgotPasswordPage } from '../../pages/forgot-password';
 import { ResetPasswordPage } from '../../pages/reset-password';
 import { ProfilePage } from '../../pages/profile';
 import { ErrorPage } from '../../pages/error';
+import { checkAuthLoader } from '../../utils/auth';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       {
         path: '/profile',
         element: <ProfilePage />,
+        loader: checkAuthLoader,
       },
     ],
   },

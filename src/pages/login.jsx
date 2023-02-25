@@ -67,12 +67,6 @@ export const LoginPage = () => {
           Восстановить пароль
         </Link>
       </p>
-      <p className="text text_type_main-default text_color_inactive">
-        Временно
-        <Link to="/reset-password" className={styles.link}>
-          Страницы для нового пароля
-        </Link>
-      </p>
     </main>
   );
 };

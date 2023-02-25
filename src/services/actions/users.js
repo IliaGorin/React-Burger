@@ -12,6 +12,8 @@ export const GET_USER_INFO = 'GET_USER_INFO';
 export const GET_USER_INFO_SUCCESSFUL = 'GET_USER_INFO_SUCCESSFUL';
 export const PATCH_USER_INFO = 'PATH_USER_INFO';
 export const PATCH_USER_INFO_SUCCESSFUL = 'PATH_USER_INFO_SUCCESSFUL';
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
 
 export const changePasswordRequest = (email, navigate) => {
   return (dispatch) => {
@@ -169,5 +171,34 @@ export const patchUserInfo = (email, name) => {
     sendRequest('/auth/user', postDetails).catch((error) =>
       alert('Ошибка, код ошибки: ', error.type)
     );
+  };
+};
+
+export const logoutUser = () => {
+  return (dispatch) => {
+    dispatch({
+      type: LOGOUT_USER,
+    });
+    const postDetails = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: localStorage.getItem('refreshToken'),
+      }),
+    };
+    sendRequest('/auth/logout', postDetails)
+      .then((data) => {
+        if (data.success) {
+          window.localStorage.removeItem('accessToken');
+          window.localStorage.removeItem('refreshToken');
+          dispatch({
+            type: LOGOUT_USER_SUCCESS,
+            user: '',
+            accessToken: '',
+            refreshToken: '',
+          });
+        }
+      })
+      .catch((error) => alert('Ошибка, код ошибки: ', error.type));
   };
 };
