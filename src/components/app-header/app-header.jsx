@@ -5,7 +5,7 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForAppHeader from './app-header.module.css';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const AppHeader = () => {
   const activeLinkStyle = `${stylesForAppHeader.link} text_type_main-default`;

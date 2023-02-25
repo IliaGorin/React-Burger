@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   EmailInput,
@@ -28,7 +28,7 @@ export const LoginPage = () => {
       e.preventDefault();
       dispatch(loginUser(email, password, navigate));
     },
-    [email, password, navigate]
+    [email, password, navigate, dispatch]
   );
 
   return (

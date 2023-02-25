@@ -24,7 +24,7 @@ export const ProfilePage = () => {
   useEffect(() => {
     dispatch(getUserInfo());
     setValue(form);
-  }, [form, name, email, password]);
+  }, [form, name, email, password, dispatch]);
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });

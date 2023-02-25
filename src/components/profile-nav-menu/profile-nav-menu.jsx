@@ -1,37 +1,47 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './profile-nav-menu.module.css';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../../services/actions/users';
 
 export const ProfileNavMenu = () => {
-  const linkActive = `${styles.link} ${styles.active} text text_type_main-medium`;
+  const activeLinkStyle = `${styles.link} ${styles.active} text text_type_main-medium`;
+  const inactiveLinkStyle = `${styles.link} text_type_main-default text_color_inactive`;
 
   const dispatch = useDispatch();
   return (
     <ul className={styles.list}>
       <li>
-        <Link to={'/profile'} className={linkActive}>
-          <p className="text text_type_main-medium text_color_primary">
-            Профиль
-          </p>
-        </Link>
+        <NavLink
+          to={'/profile'}
+          end
+          className={({ isActive }) =>
+            isActive ? activeLinkStyle : inactiveLinkStyle
+          }
+        >
+          <p className="text text_type_main-medium">Профиль</p>
+        </NavLink>
       </li>
       <li>
-        <Link to={'/profile/orders'} className={linkActive}>
-          <p className={'text text_type_main-medium text_color_primary'}>
-            История заказов
-          </p>
-        </Link>
+        <NavLink
+          to={'/profile/orders'}
+          className={({ isActive }) =>
+            isActive ? activeLinkStyle : inactiveLinkStyle
+          }
+        >
+          <p className={'text text_type_main-medium'}>История заказов</p>
+        </NavLink>
       </li>
       <li>
-        <Link
+        <NavLink
           to={'/login'}
           onClick={() => dispatch(logoutUser())}
-          className={linkActive}
+          className={({ isActive }) =>
+            isActive ? activeLinkStyle : inactiveLinkStyle
+          }
         >
-          <p className="text text_type_main-medium text_color_primary">Выход</p>
-        </Link>
+          <p className="text text_type_main-medium">Выход</p>
+        </NavLink>
       </li>
       <p className="text text_type_main-small text_color_inactive mt-20">
         В этом разделе вы можете изменить свои персональные данные
