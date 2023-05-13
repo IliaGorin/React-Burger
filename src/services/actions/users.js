@@ -114,7 +114,7 @@ export const loginUser = (email, password, navigate) => {
         if (data.success) {
           localStorage.setItem('accessToken', data.accessToken);
           localStorage.setItem('refreshToken', data.refreshToken);
-          navigate('/');
+          navigate('/profile');
         }
       })
       .catch((error) => alert('Ошибка, код ошибки: ', error.type));

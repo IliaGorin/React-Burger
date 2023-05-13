@@ -6,8 +6,8 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
-import { ProfileNavMenu } from '../components/profile-nav-menu/profile-nav-menu';
-import { getUserInfo, patchUserInfo } from '../services/actions/users';
+import { ProfileNavMenu } from '../../components/profile-nav-menu/profile-nav-menu';
+import { getUserInfo, patchUserInfo } from '../../services/actions/users';
 import { useSelector, useDispatch } from 'react-redux';
 
 export const ProfilePage = () => {
@@ -40,7 +40,7 @@ export const ProfilePage = () => {
 
   return (
     <main className={styles.wrapper}>
-      <ProfileNavMenu />
+      <ProfileNavMenu caption="В этом разделе вы можете изменить свои персональные данные" />
       <form
         className={styles.form}
         onSubmit={(e) => {

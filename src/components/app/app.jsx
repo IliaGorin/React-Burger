@@ -1,15 +1,17 @@
 import { React } from 'react';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import RootLayout from '../../pages/root';
-import HomePage from '../../pages/home';
-import { LoginPage } from '../../pages/login';
-import { RegistrationPage } from '../../pages/registation';
-import { ForgotPasswordPage } from '../../pages/forgot-password';
-import { ResetPasswordPage } from '../../pages/reset-password';
-import { ProfilePage } from '../../pages/profile';
-import { ErrorPage } from '../../pages/error';
+import RootLayout from '../../pages/root/root';
+import HomePage from '../../pages/home/home';
+import { LoginPage } from '../../pages/login/login';
+import { RegistrationPage } from '../../pages/registration/registation';
+import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password';
+import { ResetPasswordPage } from '../../pages/reset-password/reset-password';
+import { ProfilePage } from '../../pages/profile/profile';
+import { ErrorPage } from '../../pages/error/error';
 import { checkAuthLoader, checkNotAuthLoader } from '../../utils/auth';
+import { OrdersPage } from '../../pages/orders/orders';
+import { OrdersListPage } from '../../pages/orders-list/orders-list';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +43,16 @@ const router = createBrowserRouter([
       {
         path: '/profile',
         element: <ProfilePage />,
+        loader: checkAuthLoader,
+      },
+      {
+        path: '/profile/orders',
+        element: <OrdersPage />,
+        loader: checkAuthLoader,
+      },
+      {
+        path: '/orders-list',
+        element: <OrdersListPage />,
         loader: checkAuthLoader,
       },
     ],

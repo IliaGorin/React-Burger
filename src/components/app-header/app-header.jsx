@@ -26,12 +26,15 @@ export const AppHeader = () => {
             </NavLink>
           </li>
           <li className="pt-4 pr-5 pb-4 pl-5">
-            <a href="/#" className={stylesForAppHeader.link}>
+            <NavLink
+              to="/orders-list"
+              className={({ isActive }) =>
+                isActive ? activeLinkStyle : inactiveLinkStyle
+              }
+            >
               <ListIcon type="secondary" />
-              <span className="ml-2 text text_type_main-default text_color_inactive">
-                Лента заказов
-              </span>
-            </a>
+              <span className="ml-2 text">Лента заказов</span>
+            </NavLink>
           </li>
         </ul>
         <Logo />

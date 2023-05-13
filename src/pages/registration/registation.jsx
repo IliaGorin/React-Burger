@@ -8,7 +8,7 @@ import {
 import { Link } from 'react-router-dom';
 import styles from './registration.module.css';
 import { useDispatch } from 'react-redux';
-import { registerUser } from '../services/actions/users';
+import { registerUser } from '../../services/actions/users';
 import { useNavigate } from 'react-router-dom';
 
 export const RegistrationPage = () => {

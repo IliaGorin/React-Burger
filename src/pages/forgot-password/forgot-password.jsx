@@ -4,10 +4,10 @@ import {
   Button,
   EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './login.module.css';
+import styles from './forgot-password.module.css';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { changePasswordRequest } from '../services/actions/users';
+import { changePasswordRequest } from '../../services/actions/users';
 
 export const ForgotPasswordPage = () => {
   const dispatch = useDispatch();

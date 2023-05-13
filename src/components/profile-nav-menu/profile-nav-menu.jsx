@@ -4,7 +4,7 @@ import styles from './profile-nav-menu.module.css';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../../services/actions/users';
 
-export const ProfileNavMenu = () => {
+export const ProfileNavMenu = ({caption}) => {
   const activeLinkStyle = `${styles.link} ${styles.active} text text_type_main-medium`;
   const inactiveLinkStyle = `${styles.link} text_type_main-default text_color_inactive`;
 
@@ -44,7 +44,7 @@ export const ProfileNavMenu = () => {
         </NavLink>
       </li>
       <p className="text text_type_main-small text_color_inactive mt-20">
-        В этом разделе вы можете изменить свои персональные данные
+        {caption}
       </p>
     </ul>
   );

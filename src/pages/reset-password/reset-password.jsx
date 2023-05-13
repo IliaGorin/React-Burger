@@ -5,9 +5,9 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './login.module.css';
+import styles from './reset-password.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetPassword } from '../services/actions/users';
+import { resetPassword } from '../../services/actions/users';
 
 export const ResetPasswordPage = () => {
   const navigate = useNavigate();

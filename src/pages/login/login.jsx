@@ -7,7 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../services/actions/users';
+import { loginUser } from '../../services/actions/users';
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -26,6 +26,7 @@ export const LoginPage = () => {
   const handleLogin = useCallback(
     (e) => {
       e.preventDefault();
+      console.log('login attempt');
       dispatch(loginUser(email, password, navigate));
     },
     [email, password, navigate, dispatch]
