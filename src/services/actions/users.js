@@ -14,6 +14,8 @@ export const PATCH_USER_INFO = 'PATH_USER_INFO';
 export const PATCH_USER_INFO_SUCCESSFUL = 'PATH_USER_INFO_SUCCESSFUL';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
+export const REFRESH_USER = 'REFRESH_USER';
+export const REFRESH_USER_SUCCESS = 'REFRESH_USER_SUCCESS';
 
 export const changePasswordRequest = (email, navigate) => {
   return (dispatch) => {

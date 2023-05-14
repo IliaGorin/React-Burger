@@ -20,5 +20,3 @@ export function checkNotAuthLoader() {
   }
   return null;
 }
-
-export function loadingData() {}

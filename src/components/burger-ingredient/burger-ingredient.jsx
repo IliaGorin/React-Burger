@@ -9,9 +9,10 @@ import { openIngredientDetails } from '../../services/actions/browsed-ingredient
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { BUN } from '../../utils/constants.js';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function BurgerIngredient(props) {
+  const location = useLocation();
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({
     type: 'ingredient',
@@ -41,7 +42,8 @@ function BurgerIngredient(props) {
 
   return (
     <Link
-      to={{ pathname: `/ingredients/${props.data._id}` }}
+      to={`/ingredients/${props.data._id}`}
+      state={{ background: location }}
       className={stylesForBurgeringredient.link}
       draggable
       ref={dragRef}

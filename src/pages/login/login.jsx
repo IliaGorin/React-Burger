@@ -26,7 +26,6 @@ export const LoginPage = () => {
   const handleLogin = useCallback(
     (e) => {
       e.preventDefault();
-      console.log('login attempt');
       dispatch(loginUser(email, password, navigate));
     },
     [email, password, navigate, dispatch]

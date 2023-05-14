@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 import styles from './ingredient-page.module.css';
@@ -10,16 +10,15 @@ import { useNavigate } from 'react-router-dom';
 
 export const IngredientPage = () => {
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
+  const location = useLocation();
   const ingredients = useSelector((store) => store.ingredients.data);
   const { id } = useParams();
+
   const selectedItem = ingredients.find((item) => item._id === id);
-  // useEffect(() => {
-  //   console.log(selectedItem);
-  // }, [selectedItem]);
-  const isModalIngredientOpen = useSelector(
-    (store) => store.openCard.browsedIngredient
-  );
+  const background = location.state && location.state.background;
+
   const closeModal = () => {
     dispatch(closeIngredientDetails());
     navigate(-1);
@@ -27,7 +26,7 @@ export const IngredientPage = () => {
 
   return (
     <main className={styles.wrapper}>
-      {isModalIngredientOpen ? (
+      {background ? (
         <>
           <HomePage />
           <Modal closeModal={closeModal} title="Детали ингредиента">

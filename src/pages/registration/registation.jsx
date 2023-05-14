@@ -25,7 +25,6 @@ export const RegistrationPage = () => {
     (e) => {
       e.preventDefault();
       dispatch(registerUser(form.name, form.email, form.password, navigate));
-      console.log(form);
     },
     [dispatch, form]
   );
