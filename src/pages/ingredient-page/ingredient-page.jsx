@@ -27,8 +27,6 @@ export const IngredientPage = () => {
 
   return (
     <main className={styles.wrapper}>
-      {/* <h1 className="text_type_main-large">Детали ингредиента</h1>
-      <IngredientDetails item={selectedItem} /> */}
       {isModalIngredientOpen ? (
         <>
           <HomePage />

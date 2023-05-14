@@ -5,9 +5,13 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForAppHeader from './app-header.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useMatch } from 'react-router-dom';
 
 export const AppHeader = () => {
+  const isConstructor = !!useMatch({ path: '/', end: true });
+  const isOrders = !!useMatch({ path: '/orders-list' });
+  const isProfile = !!useMatch({ path: '/profile', end: false });
+
   const activeLinkStyle = `${stylesForAppHeader.link} text_type_main-default`;
   const inactiveLinkStyle = `${stylesForAppHeader.link} text_type_main-default text_color_inactive`;
   return (
@@ -21,7 +25,7 @@ export const AppHeader = () => {
                 isActive ? activeLinkStyle : inactiveLinkStyle
               }
             >
-              <BurgerIcon type="primary" />
+              <BurgerIcon type={isConstructor ? 'primary' : 'secondary'} />
               <span className="ml-2 text">Конструктор</span>
             </NavLink>
           </li>
@@ -32,7 +36,7 @@ export const AppHeader = () => {
                 isActive ? activeLinkStyle : inactiveLinkStyle
               }
             >
-              <ListIcon type="secondary" />
+              <ListIcon type={isOrders ? 'primary' : 'secondary'} />
               <span className="ml-2 text">Лента заказов</span>
             </NavLink>
           </li>
@@ -44,7 +48,7 @@ export const AppHeader = () => {
             isActive ? activeLinkStyle : inactiveLinkStyle
           }
         >
-          <ProfileIcon type="secondary" />
+          <ProfileIcon type={isProfile ? 'primary' : 'secondary'} />
           <span className="ml-2 text">Личный кабинет</span>
         </NavLink>
       </nav>
