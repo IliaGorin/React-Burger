@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useEffect } from 'react';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RootLayout from '../../pages/root/root';
@@ -12,6 +12,10 @@ import { ErrorPage } from '../../pages/error/error';
 import { checkAuthLoader, checkNotAuthLoader } from '../../utils/auth';
 import { OrdersPage } from '../../pages/orders/orders';
 import { OrdersListPage } from '../../pages/orders-list/orders-list';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
+import { getIngredients } from '../../services/actions/get-ingredients-actions';
+import { useDispatch } from 'react-redux';
 
 const router = createBrowserRouter([
   {
@@ -55,11 +59,21 @@ const router = createBrowserRouter([
         element: <OrdersListPage />,
         loader: checkAuthLoader,
       },
+      {
+        path: '/ingredients/:id',
+        element: <IngredientPage />,
+      },
     ],
   },
 ]);
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
   return <RouterProvider router={router} />;
 }
 
