@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   EmailInput,
   PasswordInput,
@@ -15,6 +15,10 @@ export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [searchParams] = useSearchParams();
+
+  const redirectRoute = searchParams.get('RedirectTo');
+
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -26,9 +30,9 @@ export const LoginPage = () => {
   const handleLogin = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(loginUser(email, password, navigate));
+      dispatch(loginUser(email, password, navigate, redirectRoute));
     },
-    [email, password, navigate, dispatch]
+    [email, password, navigate, dispatch, redirectRoute]
   );
 
   return (

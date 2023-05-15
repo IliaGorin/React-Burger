@@ -24,11 +24,13 @@ export const IngredientPage = () => {
     navigate(-1);
   };
 
+  const backgroundElement = background.pathname === '/' ? <HomePage /> : null;
+
   return (
     <main className={styles.wrapper}>
       {background ? (
         <>
-          <HomePage />
+          {backgroundElement}
           <Modal closeModal={closeModal} title="Детали ингредиента">
             <IngredientDetails item={selectedItem} />
           </Modal>

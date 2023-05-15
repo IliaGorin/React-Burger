@@ -5,10 +5,13 @@ export function getAuthToken() {
   return token;
 }
 
-export function checkAuthLoader() {
+export function checkAuthLoader({ request }) {
+  const url = new URL(request.url);
+  console.log(url);
+  const pathname = url.pathname;
   const token = getAuthToken();
   if (!token) {
-    return redirect('/login');
+    return redirect(`/login?RedirectTo=${pathname}`);
   }
   return null;
 }

@@ -93,7 +93,7 @@ export const resetPassword = (password, token) => {
   };
 };
 
-export const loginUser = (email, password, navigate) => {
+export const loginUser = (email, password, navigate, redirectRoute) => {
   return (dispatch) => {
     dispatch({
       type: LOGIN_USER,
@@ -116,7 +116,7 @@ export const loginUser = (email, password, navigate) => {
         if (data.success) {
           localStorage.setItem('accessToken', data.accessToken);
           localStorage.setItem('refreshToken', data.refreshToken);
-          navigate('/profile');
+          navigate(redirectRoute);
         }
       })
       .catch((error) => alert('Ошибка, код ошибки: ', error.type));
