@@ -23,6 +23,7 @@ const initialState = {
   pending: true,
   success: false,
   isLoggedIn: false,
+  checkAuth: false,
 };
 
 export const usersReducer = (state = initialState, action) => {

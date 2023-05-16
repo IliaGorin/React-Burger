@@ -8,7 +8,6 @@
 }
 
 .list {
-  /* height: 83vh; */
   overflow-y: auto;
   max-height: 464px;
   list-style-type: none;
