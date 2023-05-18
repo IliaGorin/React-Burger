@@ -37,9 +37,7 @@ export const changePasswordRequest = (email, navigate) => {
         }
         return null;
       })
-      .catch((error) => {
-        alert('Ошибка, код ошибки: ', error.type);
-      });
+      .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));
   };
 };
 
@@ -67,9 +65,7 @@ export const registerUser = (name, email, password, navigate) => {
       .then((data) =>
         data.success ? navigate('/login') : alert('Укажите корректную почту')
       )
-      .catch((error) => {
-        alert('Ошибка, код ошибки: ', error.type);
-      });
+      .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));
   };
 };
 
@@ -87,8 +83,8 @@ export const resetPassword = (password, token) => {
     dispatch({
       type: RESET_PASSWORD_SUCCESSFUL,
     });
-    sendRequest('/password-reset/reset', postDetails).catch((error) =>
-      alert('Ошибка, код ошибки: ', error.type)
+    sendRequest('/password-reset/reset', postDetails).catch((err) =>
+      alert(`'Ошибка, код ошибки: ', ${err.message}`)
     );
   };
 };
@@ -119,7 +115,7 @@ export const loginUser = (email, password, navigate, redirectRoute) => {
           navigate(redirectRoute);
         }
       })
-      .catch((error) => alert('Ошибка, код ошибки: ', error.type));
+      .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));
   };
 };
 
@@ -145,7 +141,7 @@ export const getUserInfo = () => {
           });
         }
       })
-      .catch((error) => alert('Ошибка, код ошибки: ', error.type));
+      .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));
   };
 };
 
@@ -170,8 +166,8 @@ export const patchUserInfo = (email, name) => {
     dispatch({
       type: PATCH_USER_INFO_SUCCESSFUL,
     });
-    sendRequest('/auth/user', postDetails).catch((error) =>
-      alert('Ошибка, код ошибки: ', error.type)
+    sendRequest('/auth/user', postDetails).catch((err) =>
+      alert(`'Ошибка, код ошибки: ', ${err.message}`)
     );
   };
 };
@@ -201,6 +197,30 @@ export const logoutUser = () => {
           });
         }
       })
-      .catch((error) => alert('Ошибка, код ошибки: ', error.type));
+      .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));
   };
 };
+
+export function refreshTokens() {
+  const postDetails = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      token: localStorage.getItem('refreshToken'),
+    }),
+  };
+  sendRequest('/auth/token', postDetails)
+    .then((data) => {
+      localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
+      return data;
+    })
+    .catch((err) => {
+      if (err.message === 'Token is invalid') {
+        window.localStorage.removeItem('accessToken');
+        window.localStorage.removeItem('refreshToken');
+      } else {
+        console.log(err);
+      }
+    });
+}
