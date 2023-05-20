@@ -1,5 +1,4 @@
 import { sendRequest } from './index';
-import { store } from '../..';
 
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const FORGOT_PASSWORD_SUCCESSFUL = 'FORGOT_PASSWORD_SUCCESSFUL';
@@ -112,6 +111,7 @@ export const loginUser = (email, password, navigate, redirectRoute) => {
     sendRequest('/auth/login', postDetails)
       .then((data) => {
         if (data.success) {
+          localStorage.setItem('isLoggedIn', true);
           localStorage.setItem('accessToken', data.accessToken);
           localStorage.setItem('refreshToken', data.refreshToken);
           navigate(redirectRoute);
@@ -136,6 +136,7 @@ export const getUserInfo = (navigate) => {
     sendRequest('/auth/user', postDetails)
       .then((data) => {
         if (data.success) {
+          localStorage.setItem('isLoggedIn', true);
           dispatch({
             type: GET_USER_INFO_SUCCESSFUL,
             email: data.user.email,
@@ -147,13 +148,14 @@ export const getUserInfo = (navigate) => {
         if (err.message === 'jwt expired') {
           refreshTokens(navigate);
         } else {
+          window.localStorage.removeItem('isLoggedIn');
           console.log(err.message);
         }
       });
   };
 };
 
-export const patchUserInfo = (email, name) => {
+export const patchUserInfo = ({ email, name, password }) => {
   return (dispatch) => {
     dispatch({
       type: PATCH_USER_INFO,
@@ -169,14 +171,16 @@ export const patchUserInfo = (email, name) => {
       body: JSON.stringify({
         email: email,
         name: name,
+        password: password,
       }),
     };
-    dispatch({
-      type: PATCH_USER_INFO_SUCCESSFUL,
-    });
-    sendRequest('/auth/user', postDetails).catch((err) =>
-      alert(`'Ошибка, код ошибки: ', ${err.message}`)
-    );
+    sendRequest('/auth/user', postDetails)
+      .then(() =>
+        dispatch({
+          type: PATCH_USER_INFO_SUCCESSFUL,
+        })
+      )
+      .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));
   };
 };
 
@@ -198,6 +202,7 @@ export const logoutUser = () => {
         if (data.success) {
           window.localStorage.removeItem('accessToken');
           window.localStorage.removeItem('refreshToken');
+          window.localStorage.removeItem('isLoggedIn');
           dispatch({
             type: LOGOUT_USER_SUCCESSFUL,
           });
@@ -219,14 +224,17 @@ export function refreshTokens(navigate) {
     .then((data) => {
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
+      localStorage.setItem('isLoggedIn', true);
     })
     .catch((err) => {
       if (err.message === 'Token is invalid') {
         window.localStorage.removeItem('accessToken');
         window.localStorage.removeItem('refreshToken');
+        window.localStorage.removeItem('isLoggedIn');
         alert(`'Ошибка, код ошибки: ', ${err.message}`);
         navigate('/');
       } else {
+        window.localStorage.removeItem('isLoggedIn');
         console.log(err);
       }
     });

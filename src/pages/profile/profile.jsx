@@ -28,7 +28,7 @@ export const ProfilePage = () => {
   useEffect(() => {
     dispatch(getUserInfo(navigate));
     setValue(form);
-  }, [form, name, email, password, dispatch]);
+  }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -41,7 +41,7 @@ export const ProfilePage = () => {
   };
 
   const handleUpdateUserInfo = () => {
-    dispatch(patchUserInfo(form.email, form.name));
+    dispatch(patchUserInfo(form));
   };
 
   const handleResetUserInfo = () => {
