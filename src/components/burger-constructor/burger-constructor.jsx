@@ -28,6 +28,7 @@ import { BUN } from '../../utils/constants.js';
 function BurgerConstructor() {
   const dispatch = useDispatch();
   const orderNumber = useSelector((store) => store.order.order);
+  const { isLoggedIn } = useSelector((store) => store.users);
 
   const closeOrderModal = () => {
     dispatch(clearOrder());
@@ -134,16 +135,23 @@ function BurgerConstructor() {
           <p className={`text text_type_digits-medium mr-2`}>{currentPrice}</p>
           <CurrencyIcon type="primary" />
           <span className={`text text_type_digits-medium ml-10`}></span>
-          <Button
-            htmlType="button"
-            type="primary"
-            size="large"
-            onClick={() => {
-              makeOrder(ingredientsForCurrentBurger);
-            }}
-          >
-            Оформить заказ
-          </Button>
+
+          {isLoggedIn ? (
+            <Button
+              htmlType="button"
+              type="primary"
+              size="large"
+              onClick={() => {
+                makeOrder(ingredientsForCurrentBurger);
+              }}
+            >
+              Оформить заказ
+            </Button>
+          ) : (
+            <Button htmlType="button" type="primary" disabled>
+              Оформить заказ
+            </Button>
+          )}
         </div>
       ) : (
         <div className={'text text_type_main-default'}>
