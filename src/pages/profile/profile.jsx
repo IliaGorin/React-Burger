@@ -14,7 +14,9 @@ import { useNavigate } from 'react-router-dom';
 export const ProfilePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { name, email, password } = useSelector((store) => store.users);
+  const { name, email, password, isLoggedIn } = useSelector(
+    (store) => store.users
+  );
 
   const initialState = {
     name: `${name}`,
@@ -27,6 +29,12 @@ export const ProfilePage = () => {
     dispatch(getUserInfo(navigate));
     setValue(form);
   }, [form, name, email, password, dispatch]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }, [isLoggedIn]);
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
@@ -41,54 +49,56 @@ export const ProfilePage = () => {
   };
 
   return (
-    <main className={styles.wrapper}>
-      <ProfileNavMenu caption="В этом разделе вы можете изменить свои персональные данные" />
-      <form
-        className={styles.form}
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <Input
-          onChange={onChange}
-          value={form.name}
-          name={'name'}
-          type={'text'}
-          placeholder={'Имя'}
-          icon={'EditIcon'}
-          error={false}
-        />
-        <EmailInput
-          onChange={onChange}
-          value={form.email}
-          name="email"
-          icon="EditIcon"
-        />
-        <PasswordInput
-          onChange={onChange}
-          value={form.password}
-          name={'password'}
-          icon={'EditIcon'}
-        />
-        <div className={styles.buttonWrapper}>
-          <Button
-            onClick={handleResetUserInfo}
-            type={'secondary'}
-            size={'medium'}
-            htmlType={'button'}
-          >
-            Отмена
-          </Button>
-          <Button
-            onClick={handleUpdateUserInfo}
-            type={'primary'}
-            size={'medium'}
-            htmlType={'submit'}
-          >
-            Сохранить
-          </Button>
-        </div>
-      </form>
-    </main>
+    { isLoggedIn } && (
+      <main className={styles.wrapper}>
+        <ProfileNavMenu caption="В этом разделе вы можете изменить свои персональные данные" />
+        <form
+          className={styles.form}
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <Input
+            onChange={onChange}
+            value={form.name}
+            name={'name'}
+            type={'text'}
+            placeholder={'Имя'}
+            icon={'EditIcon'}
+            error={false}
+          />
+          <EmailInput
+            onChange={onChange}
+            value={form.email}
+            name="email"
+            icon="EditIcon"
+          />
+          <PasswordInput
+            onChange={onChange}
+            value={form.password}
+            name={'password'}
+            icon={'EditIcon'}
+          />
+          <div className={styles.buttonWrapper}>
+            <Button
+              onClick={handleResetUserInfo}
+              type={'secondary'}
+              size={'medium'}
+              htmlType={'button'}
+            >
+              Отмена
+            </Button>
+            <Button
+              onClick={handleUpdateUserInfo}
+              type={'primary'}
+              size={'medium'}
+              htmlType={'submit'}
+            >
+              Сохранить
+            </Button>
+          </div>
+        </form>
+      </main>
+    )
   );
 };

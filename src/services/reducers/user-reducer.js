@@ -128,19 +128,22 @@ export const usersReducer = (state = initialState, action) => {
       };
     }
     case LOGOUT_USER: {
+      console.log(LOGOUT_USER);
       return {
         ...state,
+
         pending: true,
         success: false,
+      };
+    }
+    case LOGOUT_USER_SUCCESSFUL: {
+      console.log(LOGOUT_USER_SUCCESSFUL);
+      return {
+        ...state,
         user: '',
         email: '',
         password: '',
         isLoggedIn: false,
-      };
-    }
-    case LOGOUT_USER_SUCCESSFUL: {
-      return {
-        ...state,
         pending: false,
         success: true,
       };

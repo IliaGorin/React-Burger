@@ -29,7 +29,7 @@ const router = createBrowserRouter([
         loader: checkNotAuthLoader,
       },
       {
-        path: 'registration',
+        path: '/registration',
         element: <RegistrationPage />,
         loader: checkNotAuthLoader,
       },

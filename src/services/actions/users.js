@@ -1,4 +1,5 @@
 import { sendRequest } from './index';
+import { store } from '../..';
 
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const FORGOT_PASSWORD_SUCCESSFUL = 'FORGOT_PASSWORD_SUCCESSFUL';
@@ -183,6 +184,7 @@ export const logoutUser = () => {
     dispatch({
       type: LOGOUT_USER,
     });
+
     const postDetails = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -195,7 +197,6 @@ export const logoutUser = () => {
         if (data.success) {
           window.localStorage.removeItem('accessToken');
           window.localStorage.removeItem('refreshToken');
-          console.log('user is logged out');
           dispatch({
             type: LOGOUT_USER_SUCCESSFUL,
           });
