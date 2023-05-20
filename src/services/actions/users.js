@@ -13,7 +13,7 @@ export const GET_USER_INFO_SUCCESSFUL = 'GET_USER_INFO_SUCCESSFUL';
 export const PATCH_USER_INFO = 'PATH_USER_INFO';
 export const PATCH_USER_INFO_SUCCESSFUL = 'PATH_USER_INFO_SUCCESSFUL';
 export const LOGOUT_USER = 'LOGOUT_USER';
-export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
+export const LOGOUT_USER_SUCCESSFUL = 'LOGOUT_USER_SUCCESSFUL';
 export const REFRESH_USER = 'REFRESH_USER';
 export const REFRESH_USER_SUCCESS = 'REFRESH_USER_SUCCESS';
 
@@ -119,7 +119,7 @@ export const loginUser = (email, password, navigate, redirectRoute) => {
   };
 };
 
-export const getUserInfo = () => {
+export const getUserInfo = (navigate) => {
   return (dispatch) => {
     dispatch({
       type: GET_USER_INFO,
@@ -141,7 +141,13 @@ export const getUserInfo = () => {
           });
         }
       })
-      .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));
+      .catch((err) => {
+        if (err.message === 'jwt expired') {
+          refreshTokens(navigate);
+        } else {
+          console.log(err.message);
+        }
+      });
   };
 };
 
@@ -189,11 +195,9 @@ export const logoutUser = () => {
         if (data.success) {
           window.localStorage.removeItem('accessToken');
           window.localStorage.removeItem('refreshToken');
+          console.log('user is logged out');
           dispatch({
-            type: LOGOUT_USER_SUCCESS,
-            user: '',
-            accessToken: '',
-            refreshToken: '',
+            type: LOGOUT_USER_SUCCESSFUL,
           });
         }
       })
@@ -201,7 +205,7 @@ export const logoutUser = () => {
   };
 };
 
-export function refreshTokens() {
+export function refreshTokens(navigate) {
   const postDetails = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -213,12 +217,13 @@ export function refreshTokens() {
     .then((data) => {
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
-      return data;
     })
     .catch((err) => {
       if (err.message === 'Token is invalid') {
         window.localStorage.removeItem('accessToken');
         window.localStorage.removeItem('refreshToken');
+        alert(`'Ошибка, код ошибки: ', ${err.message}`);
+        navigate('/');
       } else {
         console.log(err);
       }

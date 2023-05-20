@@ -5,7 +5,7 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForAppHeader from './app-header.module.css';
-import { NavLink, useMatch } from 'react-router-dom';
+import { Link, NavLink, useMatch } from 'react-router-dom';
 
 export const AppHeader = () => {
   const isConstructor = !!useMatch({ path: '/', end: true });
@@ -41,7 +41,9 @@ export const AppHeader = () => {
             </NavLink>
           </li>
         </ul>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
         <NavLink
           to="/profile"
           className={({ isActive }) =>

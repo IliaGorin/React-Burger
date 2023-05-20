@@ -18,3 +18,17 @@
 .active {
   color: var(--text-primary-color);
 }
+
+.button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: #8585AD;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  min-height: 64px;
+  transition: ease-out .3s;
+}

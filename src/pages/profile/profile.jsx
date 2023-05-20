@@ -9,8 +9,10 @@ import styles from './profile.module.css';
 import { ProfileNavMenu } from '../../components/profile-nav-menu/profile-nav-menu';
 import { getUserInfo, patchUserInfo } from '../../services/actions/users';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const ProfilePage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { name, email, password } = useSelector((store) => store.users);
 
@@ -22,7 +24,7 @@ export const ProfilePage = () => {
   const [form, setValue] = useState(initialState);
 
   useEffect(() => {
-    dispatch(getUserInfo());
+    dispatch(getUserInfo(navigate));
     setValue(form);
   }, [form, name, email, password, dispatch]);
 

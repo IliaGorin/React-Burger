@@ -11,7 +11,7 @@ import {
   GET_USER_INFO_SUCCESSFUL,
   PATCH_USER_INFO,
   PATCH_USER_INFO_SUCCESSFUL,
-  LOGOUT_USER_SUCCESS,
+  LOGOUT_USER_SUCCESSFUL,
   LOGOUT_USER,
 } from '../actions/users';
 
@@ -23,7 +23,6 @@ const initialState = {
   pending: true,
   success: false,
   isLoggedIn: false,
-  checkAuth: false,
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -31,6 +30,8 @@ export const usersReducer = (state = initialState, action) => {
     case FORGOT_PASSWORD: {
       return {
         ...state,
+        pending: true,
+        success: false,
         email: action.email,
       };
     }
@@ -47,6 +48,8 @@ export const usersReducer = (state = initialState, action) => {
     case REGISTER_USER: {
       return {
         ...state,
+        pending: true,
+        success: false,
         email: action.email,
         password: action.password,
         name: action.name,
@@ -62,6 +65,8 @@ export const usersReducer = (state = initialState, action) => {
     case RESET_PASSWORD: {
       return {
         ...state,
+        pending: true,
+        success: false,
         token: action.token,
       };
     }
@@ -75,6 +80,8 @@ export const usersReducer = (state = initialState, action) => {
     case LOGIN_USER: {
       return {
         ...state,
+        pending: true,
+        success: false,
         email: action.email,
         password: action.password,
       };
@@ -90,8 +97,8 @@ export const usersReducer = (state = initialState, action) => {
     case GET_USER_INFO: {
       return {
         ...state,
-        pending: false,
-        success: true,
+        pending: true,
+        success: false,
       };
     }
     case GET_USER_INFO_SUCCESSFUL: {
@@ -101,11 +108,14 @@ export const usersReducer = (state = initialState, action) => {
         name: action.name,
         isLoggedIn: true,
         pending: false,
+        success: true,
       };
     }
     case PATCH_USER_INFO: {
       return {
         ...state,
+        pending: true,
+        success: false,
         email: action.email,
         name: action.name,
       };
@@ -115,6 +125,24 @@ export const usersReducer = (state = initialState, action) => {
         ...state,
         success: true,
         pending: false,
+      };
+    }
+    case LOGOUT_USER: {
+      return {
+        ...state,
+        pending: true,
+        success: false,
+        user: '',
+        email: '',
+        password: '',
+        isLoggedIn: false,
+      };
+    }
+    case LOGOUT_USER_SUCCESSFUL: {
+      return {
+        ...state,
+        pending: false,
+        success: true,
       };
     }
   }

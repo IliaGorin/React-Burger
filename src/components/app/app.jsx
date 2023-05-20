@@ -12,7 +12,6 @@ import { ErrorPage } from '../../pages/error/error';
 import { checkAuthLoader, checkNotAuthLoader } from '../../utils/auth';
 import { OrdersPage } from '../../pages/orders/orders';
 import { OrdersListPage } from '../../pages/orders-list/orders-list';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
 import { getIngredients } from '../../services/actions/get-ingredients-actions';
 import { useDispatch } from 'react-redux';
@@ -30,7 +29,7 @@ const router = createBrowserRouter([
         loader: checkNotAuthLoader,
       },
       {
-        path: '/registration',
+        path: 'registration',
         element: <RegistrationPage />,
         loader: checkNotAuthLoader,
       },
