@@ -68,6 +68,7 @@ export const usersReducer = (state = initialState, action) => {
         pending: true,
         success: false,
         token: action.token,
+        password: action.password,
       };
     }
     case RESET_PASSWORD_SUCCESSFUL: {

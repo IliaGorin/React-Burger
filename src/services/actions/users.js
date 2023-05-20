@@ -70,7 +70,8 @@ export const registerUser = (name, email, password, navigate) => {
   };
 };
 
-export const resetPassword = (password, token) => {
+export const resetPassword = (form, navigate) => {
+  const { password, token } = form;
   return (dispatch) => {
     dispatch({
       type: RESET_PASSWORD,
@@ -84,9 +85,9 @@ export const resetPassword = (password, token) => {
     dispatch({
       type: RESET_PASSWORD_SUCCESSFUL,
     });
-    sendRequest('/password-reset/reset', postDetails).catch((err) =>
-      alert(`'Ошибка, код ошибки: ', ${err.message}`)
-    );
+    sendRequest('/password-reset/reset', postDetails)
+      .then(() => navigate('/'))
+      .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));
   };
 };
 

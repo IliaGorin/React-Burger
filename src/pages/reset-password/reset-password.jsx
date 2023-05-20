@@ -29,7 +29,7 @@ export const ResetPasswordPage = () => {
   const handlerResetPassword = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(resetPassword(form));
+      dispatch(resetPassword(form, navigate));
       setValue({ password: '', token: '' });
     },
     [form, dispatch]
