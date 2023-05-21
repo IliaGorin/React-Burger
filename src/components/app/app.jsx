@@ -1,36 +1,79 @@
 import { React, useEffect } from 'react';
 
-import appStyles from './app.module.css';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import { AppHeader } from '../app-header/app-header';
-
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import RootLayout from '../../pages/root/root';
+import HomePage from '../../pages/home/home';
+import { LoginPage } from '../../pages/login/login';
+import { RegistrationPage } from '../../pages/registration/registation';
+import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password';
+import { ResetPasswordPage } from '../../pages/reset-password/reset-password';
+import { ProfilePage } from '../../pages/profile/profile';
+import { ErrorPage } from '../../pages/error/error';
+import { checkAuthLoader, checkNotAuthLoader } from '../../utils/auth';
+import { OrdersPage } from '../../pages/orders/orders';
+import { OrdersListPage } from '../../pages/orders-list/orders-list';
+import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
 import { getIngredients } from '../../services/actions/get-ingredients-actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
+import { useDispatch } from 'react-redux';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <RootLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <HomePage /> },
+      {
+        path: '/login',
+        element: <LoginPage />,
+        loader: checkNotAuthLoader,
+      },
+      {
+        path: '/registration',
+        element: <RegistrationPage />,
+        loader: checkNotAuthLoader,
+      },
+      {
+        path: '/forgot-password',
+        element: <ForgotPasswordPage />,
+        loader: checkNotAuthLoader,
+      },
+      {
+        path: '/reset-password',
+        element: <ResetPasswordPage />,
+        loader: checkNotAuthLoader,
+      },
+      {
+        path: '/profile',
+        element: <ProfilePage />,
+        loader: checkAuthLoader,
+      },
+      {
+        path: '/profile/orders',
+        element: <OrdersPage />,
+        loader: checkAuthLoader,
+      },
+      {
+        path: '/orders-list',
+        element: <OrdersListPage />,
+        loader: checkAuthLoader,
+      },
+      {
+        path: '/ingredients/:id',
+        element: <IngredientPage />,
+      },
+    ],
+  },
+]);
 
 function App() {
   const dispatch = useDispatch();
-  const ingredients = useSelector((store) => store.ingredients.data);
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  return (
-    <>
-      <AppHeader />
-      {ingredients.length && (
-        <DndProvider backend={HTML5Backend}>
-          <main className={appStyles.mainGrid}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </main>
-        </DndProvider>
-      )}
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

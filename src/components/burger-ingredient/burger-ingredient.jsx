@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { typeOfingredient } from '../../utils/propTypes.js';
 import {
   CurrencyIcon,
@@ -10,8 +9,10 @@ import { openIngredientDetails } from '../../services/actions/browsed-ingredient
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { BUN } from '../../utils/constants.js';
+import { Link, useLocation } from 'react-router-dom';
 
 function BurgerIngredient(props) {
+  const location = useLocation();
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({
     type: 'ingredient',
@@ -40,29 +41,34 @@ function BurgerIngredient(props) {
   }, [ingredientsForCurrentBurger, bun]);
 
   return (
-    <div
-      className={`${stylesForBurgeringredient.ingredientWrap}`}
-      id={props.data.id}
-      onClick={() => dispatch(openIngredientDetails(props.data))}
+    <Link
+      to={`/ingredients/${props.data._id}`}
+      state={{ background: location }}
+      className={stylesForBurgeringredient.link}
       draggable
       ref={dragRef}
     >
-      {counter > 0 && (
-        <Counter count={counter} size="default" extraClass="m-1" />
-      )}
-      <img
-        className={`pr-4 pl-4`}
-        src={props.data.image}
-        alt={props.data.name}
-      />
       <div
-        className={`${stylesForBurgeringredient.ingredientPriceWrap} pt-1 pb-1`}
+        className={`${stylesForBurgeringredient.ingredientWrap}`}
+        onClick={() => dispatch(openIngredientDetails(props.data))}
       >
-        <p className={'text text_type_digits-default'}>{props.data.price}</p>
-        <CurrencyIcon type={'primary'} />
+        {counter > 0 && (
+          <Counter count={counter} size="default" extraClass="m-1" />
+        )}
+        <img
+          className={`pr-4 pl-4`}
+          src={props.data.image}
+          alt={props.data.name}
+        />
+        <div
+          className={`${stylesForBurgeringredient.ingredientPriceWrap} pt-1 pb-1`}
+        >
+          <p className={'text text_type_digits-default'}>{props.data.price}</p>
+          <CurrencyIcon type={'primary'} />
+        </div>
+        <p className={'text text_type_main-default'}>{props.data.name}</p>
       </div>
-      <p className={'text text_type_main-default'}>{props.data.name}</p>
-    </div>
+    </Link>
   );
 }
 

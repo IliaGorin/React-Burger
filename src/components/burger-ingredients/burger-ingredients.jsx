@@ -91,11 +91,6 @@ function BurgerIngredients() {
           />
         ))}
       </ul>
-      {isModalIngredientOpen && (
-        <Modal closeModal={() => dispatch(closeIngredientDetails())}>
-          <IngredientDetails />
-        </Modal>
-      )}
     </section>
   );
 }
