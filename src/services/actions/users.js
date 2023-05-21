@@ -1,4 +1,4 @@
-import { sendRequest } from './index';
+import { sendRequest, refreshTokens } from './index';
 
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const FORGOT_PASSWORD_SUCCESSFUL = 'FORGOT_PASSWORD_SUCCESSFUL';
@@ -121,7 +121,7 @@ export const loginUser = (email, password, navigate, redirectRoute) => {
   };
 };
 
-export const getUserInfo = (navigate) => {
+export const getUserInfo = () => {
   return (dispatch) => {
     dispatch({
       type: GET_USER_INFO,
@@ -136,6 +136,7 @@ export const getUserInfo = (navigate) => {
     sendRequest('/auth/user', postDetails)
       .then((data) => {
         if (data.success) {
+          console.log('data.success');
           localStorage.setItem('isLoggedIn', true);
           dispatch({
             type: GET_USER_INFO_SUCCESSFUL,
@@ -146,7 +147,29 @@ export const getUserInfo = (navigate) => {
       })
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          refreshTokens(navigate);
+          refreshTokens()
+            .then((data) => {
+              localStorage.setItem('accessToken', data.accessToken);
+              localStorage.setItem('refreshToken', data.refreshToken);
+              localStorage.setItem('isLoggedIn', true);
+              console.log('tokes has been refreshed');
+            })
+            .then(() => {
+              dispatch(getUserInfo());
+            })
+            .catch((err) => {
+              if (err.message === 'Token is invalid') {
+                window.localStorage.removeItem('accessToken');
+                window.localStorage.removeItem('refreshToken');
+                window.localStorage.removeItem('isLoggedIn');
+                alert(`'Ошибка, код ошибки: ', ${err.message}`);
+              } else {
+                window.localStorage.removeItem('accessToken');
+                window.localStorage.removeItem('refreshToken');
+                window.localStorage.removeItem('isLoggedIn');
+                console.log(err);
+              }
+            });
         } else {
           window.localStorage.removeItem('isLoggedIn');
           console.log(err.message);
@@ -155,7 +178,7 @@ export const getUserInfo = (navigate) => {
   };
 };
 
-export const patchUserInfo = ({ email, name, password }) => {
+export const patchUserInfo = (name, email, password) => {
   return (dispatch) => {
     dispatch({
       type: PATCH_USER_INFO,
@@ -180,7 +203,36 @@ export const patchUserInfo = ({ email, name, password }) => {
           type: PATCH_USER_INFO_SUCCESSFUL,
         })
       )
-      .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));
+      .catch((err) => {
+        if (err.message === 'jwt expired') {
+          refreshTokens()
+            .then((data) => {
+              localStorage.setItem('accessToken', data.accessToken);
+              localStorage.setItem('refreshToken', data.refreshToken);
+              localStorage.setItem('isLoggedIn', true);
+              console.log('tokes has been refreshed');
+            })
+            .then(() => {
+              dispatch(patchUserInfo(name, email, password));
+            })
+            .catch((err) => {
+              if (err.message === 'Token is invalid') {
+                window.localStorage.removeItem('accessToken');
+                window.localStorage.removeItem('refreshToken');
+                window.localStorage.removeItem('isLoggedIn');
+                alert(`'Ошибка, код ошибки: ', ${err.message}`);
+              } else {
+                window.localStorage.removeItem('accessToken');
+                window.localStorage.removeItem('refreshToken');
+                window.localStorage.removeItem('isLoggedIn');
+                console.log(err);
+              }
+            });
+        } else {
+          window.localStorage.removeItem('isLoggedIn');
+          console.log(err.message);
+        }
+      });
   };
 };
 
@@ -211,31 +263,3 @@ export const logoutUser = () => {
       .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));
   };
 };
-
-export function refreshTokens(navigate) {
-  const postDetails = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      token: localStorage.getItem('refreshToken'),
-    }),
-  };
-  sendRequest('/auth/token', postDetails)
-    .then((data) => {
-      localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('refreshToken', data.refreshToken);
-      localStorage.setItem('isLoggedIn', true);
-    })
-    .catch((err) => {
-      if (err.message === 'Token is invalid') {
-        window.localStorage.removeItem('accessToken');
-        window.localStorage.removeItem('refreshToken');
-        window.localStorage.removeItem('isLoggedIn');
-        alert(`'Ошибка, код ошибки: ', ${err.message}`);
-        navigate('/');
-      } else {
-        window.localStorage.removeItem('isLoggedIn');
-        console.log(err);
-      }
-    });
-}

@@ -26,7 +26,7 @@ export const ProfilePage = () => {
   const [form, setValue] = useState(initialState);
 
   useEffect(() => {
-    dispatch(getUserInfo(navigate));
+    dispatch(getUserInfo());
     setValue(form);
   }, []);
 
@@ -41,7 +41,7 @@ export const ProfilePage = () => {
   };
 
   const handleUpdateUserInfo = () => {
-    dispatch(patchUserInfo(form));
+    dispatch(patchUserInfo(form.name, form.email, form.password));
   };
 
   const handleResetUserInfo = () => {

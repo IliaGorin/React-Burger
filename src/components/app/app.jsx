@@ -15,7 +15,7 @@ import { OrdersListPage } from '../../pages/orders-list/orders-list';
 import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
 import { getIngredients } from '../../services/actions/get-ingredients-actions';
 import { useDispatch } from 'react-redux';
-window.localStorage.removeItem('isLoggedIn');
+
 const router = createBrowserRouter([
   {
     path: '/',
