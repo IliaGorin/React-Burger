@@ -93,6 +93,8 @@ export const usersReducer = (state = initialState, action) => {
         pending: false,
         success: true,
         isLoggedIn: true,
+        email: action.email,
+        name: action.name,
       };
     }
     case GET_USER_INFO: {
@@ -143,6 +145,7 @@ export const usersReducer = (state = initialState, action) => {
         ...state,
         user: '',
         email: '',
+        name: '',
         password: '',
         isLoggedIn: false,
         pending: false,

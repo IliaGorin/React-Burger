@@ -15,6 +15,7 @@ import { OrdersListPage } from '../../pages/orders-list/orders-list';
 import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
 import { getIngredients } from '../../services/actions/get-ingredients-actions';
 import { useDispatch } from 'react-redux';
+import { getUserInfo } from '../../services/actions/users';
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ function App() {
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, []);
 
   return <RouterProvider router={router} />;
 }

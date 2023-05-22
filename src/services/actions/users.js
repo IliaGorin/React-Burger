@@ -105,12 +105,14 @@ export const loginUser = (email, password, navigate, redirectRoute) => {
         password: `${password}`,
       }),
     };
-    dispatch({
-      type: LOGIN_USER_SUCCESSFUL,
-    });
     sendRequest('/auth/login', postDetails)
       .then((data) => {
         if (data.success) {
+          dispatch({
+            type: LOGIN_USER_SUCCESSFUL,
+            name: data.user.name,
+            email: data.user.email,
+          });
           localStorage.setItem('isLoggedIn', true);
           localStorage.setItem('accessToken', data.accessToken);
           localStorage.setItem('refreshToken', data.refreshToken);
@@ -236,7 +238,7 @@ export const patchUserInfo = (name, email, password) => {
   };
 };
 
-export const logoutUser = () => {
+export const logoutUser = (navigate, pathname) => {
   return (dispatch) => {
     dispatch({
       type: LOGOUT_USER,
@@ -258,6 +260,7 @@ export const logoutUser = () => {
           dispatch({
             type: LOGOUT_USER_SUCCESSFUL,
           });
+          navigate(`/`);
         }
       })
       .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));
