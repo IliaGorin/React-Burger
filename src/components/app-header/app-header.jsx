@@ -9,7 +9,7 @@ import { Link, NavLink, useMatch } from 'react-router-dom';
 
 export const AppHeader = () => {
   const isConstructor = !!useMatch({ path: '/', end: true });
-  const isOrders = !!useMatch({ path: '/orders-list' });
+  const isOrders = !!useMatch({ path: '/feed' });
   const isProfile = !!useMatch({ path: '/profile', end: false });
 
   const activeLinkStyle = `${stylesForAppHeader.link} text_type_main-default`;
@@ -31,7 +31,7 @@ export const AppHeader = () => {
           </li>
           <li className="pt-4 pr-5 pb-4 pl-5">
             <NavLink
-              to="/orders-list"
+              to="/feed"
               className={({ isActive }) =>
                 isActive ? activeLinkStyle : inactiveLinkStyle
               }
