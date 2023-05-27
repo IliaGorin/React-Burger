@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './orders-list.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import Order from '../../components/order/order';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_STOP,
+} from '../../services/actions/ws-actions';
 
 export const OrdersListPage = () => {
+  const orders = useSelector((store) => store.wsOrders.orders);
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: WS_CONNECTION_START,
+      payload: {},
+    });
+    return () => {
+      dispatch({
+        type: WS_CONNECTION_STOP,
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log(orders);
+  });
 
   return (
     <main className={styles.wrapper}>
