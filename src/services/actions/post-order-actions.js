@@ -13,7 +13,11 @@ export const postOrder = (orderedIngredients) => {
     });
     const postDetails = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: window.localStorage.getItem('accessToken'),
+      },
       body: JSON.stringify({ ingredients: orderedIngredients }),
     };
     sendRequest(`/orders`, postDetails)

@@ -16,9 +16,7 @@ function Order(props) {
   const { name, createdAt, number, ingredients } = props.data;
   const orderLength = ingredients.length;
   const notShownIngredientsCount = orderLength - 6;
-  const priceScore = useMemo(() => {
-    return allIngredients.reduce((acc, ing) => acc + ing.price, 0);
-  }, [allIngredients]);
+
   const orderIngredients = useMemo(
     () =>
       ingredients
@@ -26,6 +24,9 @@ function Order(props) {
         .map((id) => allIngredients.find((item) => id === item._id)),
     [ingredients, allIngredients]
   );
+  const priceScore = useMemo(() => {
+    return orderIngredients.reduce((acc, element) => acc + element.price, 0);
+  }, [allIngredients]);
   useEffect(() => {
     console.log(orderIngredients);
   }, []);
@@ -43,25 +44,6 @@ function Order(props) {
           {orderIngredients &&
             orderLength <= 6 &&
             orderIngredients.map((element) => {
-              return (
-                <li className={styles.list} key={uuid4()}>
-                  {element && (
-                    <div className={styles.imageWrapper}>
-                      <div className={styles.imageStyler}>
-                        <img
-                          className={styles.image}
-                          src={element.image}
-                          alt={element.alt}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-          {orderIngredients &&
-            orderLength > 6 &&
-            orderIngredients.slice(0, 5).map((element) => {
               return (
                 <li className={styles.list} key={uuid4()}>
                   {element && (
@@ -99,6 +81,25 @@ function Order(props) {
                       </div>
                     )}
                   </div>
+                </li>
+              );
+            })}
+          {orderIngredients &&
+            orderLength > 6 &&
+            orderIngredients.slice(0, 5).map((element) => {
+              return (
+                <li className={styles.list} key={uuid4()}>
+                  {element && (
+                    <div className={styles.imageWrapper}>
+                      <div className={styles.imageStyler}>
+                        <img
+                          className={styles.image}
+                          src={element.image}
+                          alt={element.alt}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </li>
               );
             })}

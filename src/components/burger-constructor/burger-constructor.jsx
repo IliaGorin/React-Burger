@@ -142,7 +142,7 @@ function BurgerConstructor() {
               type="primary"
               size="large"
               onClick={() => {
-                makeOrder(ingredientsForCurrentBurger);
+                makeOrder([bun, ...ingredientsForCurrentBurger, bun]);
               }}
             >
               Оформить заказ
