@@ -39,11 +39,11 @@ export const OrdersListPage = () => {
         <ul className={styles.orders}>
           {orders?.map((order) => {
             return (
-              <li key={order._id}>
+              <li className={styles.listOfOrders} key={order._id}>
                 <Link
                   to={`/feed/${order._id}`}
                   state={{ background: location }}
-                  className={styles.emptyStyle}
+                  className={styles.linkToOrder}
                 >
                   {/* {order._id} */}
                   <Order id={order._id} data={order} />

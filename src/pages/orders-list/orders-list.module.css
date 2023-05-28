@@ -59,10 +59,12 @@
 
 .orders {
   max-height: 716px;
-  max-width: 650px;
+  padding: 0;
+  /* max-width: 650px; */
   scrollbar-color: #8585AD #2F2F37;
   scrollbar-width: thin;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: clip;
 }
 
 .orders::-webkit-scrollbar {
@@ -75,4 +77,20 @@
 
 .orders::-webkit-scrollbar-track {
   background: #2F2F37;
+}
+
+.listOfOrders {
+  list-style: none;
+  padding: 0;
+  max-width: 90%;
+}
+
+.linkToOrder {
+  text-decoration: none;
+}
+
+.ordersFeed {
+  max-width: 608px;
+  display: flex;
+  flex-direction: column;
 }
