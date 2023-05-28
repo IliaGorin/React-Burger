@@ -11,6 +11,8 @@ import {
 
 export const OrdersListPage = () => {
   const orders = useSelector((store) => store.wsOrders.orders);
+  const total = useSelector((store) => store.wsOrders.total);
+  const totalToday = useSelector((store) => store.wsOrders.totalToday);
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -31,7 +33,7 @@ export const OrdersListPage = () => {
   });
 
   return (
-    <main className={styles.wrapper}>
+    <main className={styles.mainGrid}>
       <section className={`${styles.OrdersFeed} mt-10`}>
         <h2 className={'text text_type_main-large mb-5'}>Лента заказов</h2>
         <ul className={styles.orders}>
@@ -54,34 +56,56 @@ export const OrdersListPage = () => {
         </ul>
       </section>
       <section className={styles.summary}>
-        <div className={styles.emptyStyle}>
-          <div className={styles.emptyStyle}>
-            <h2 className={styles.emptyStyle}>Готовы:</h2>
-            <ul className={styles.emptyStyle}>
-              <li className={styles.emptyStyle} key={123}>
-                <div>Заказ №1</div>
-              </li>
+        <div className={styles.ordersQueues}>
+          <div className={styles.ordersQueueWrapper}>
+            <h2 className={`${styles.minorHeader} text text_type_main-medium`}>
+              Готовы:
+            </h2>
+            <ul className={styles.orderQueue}>
+              {orders.map((order) =>
+                order.status === 'done' ? (
+                  <li className={`${styles.readyOrders}`} key={order._id}>
+                    <p className="text text_type_digits-default">
+                      {order.number}
+                    </p>
+                  </li>
+                ) : null
+              )}
             </ul>
           </div>
-          <div className={styles.emptyStyle}>
-            <h2 className={styles.emptyStyle}>В работе:</h2>
-            <ul className={styles.emptyStyle}>
-              <li className={styles.emptyStyle} key={123}>
-                <div>Заказ №1</div>
-              </li>
+          <div className={styles.ordersQueueWrapper}>
+            <h2 className={`${styles.minorHeader} text text_type_main-medium`}>
+              В работе:
+            </h2>
+            <ul className={styles.orderQueue}>
+              <ul className={styles.orderQueue}>
+                {orders.map((order) =>
+                  order.status !== 'done' ? (
+                    <li className={`${styles.notReadyOrders}`} key={order._id}>
+                      <p className="text text_type_digits-default">
+                        {order.number}
+                      </p>
+                    </li>
+                  ) : null
+                )}
+              </ul>
             </ul>
           </div>
         </div>
         <div>
-          <h2 className={styles.emptyStyle}>Выполнено за все время:</h2>
-          <p className={` ${styles.emptyStyle} text text_type_digits-large`}>
-            1234
+          <h2 className={`${styles.minorHeader} text text_type_main-medium`}>
+            Выполнено за все время:
+          </h2>
+          <p className={` ${styles.totalCount} text text_type_digits-large`}>
+            {total}
           </p>
         </div>
         <div>
-          <h2 className={styles.emptyStyle}>Выполнено за сегодня:</h2>
-          <p className={`${styles.emptyStyle} text text_type_digits-large `}>
-            12331
+          <h2 className={`${styles.minorHeader} text text_type_main-medium`}>
+            Выполнено за сегодня:
+          </h2>
+          <p className={`${styles.totalCount} text text_type_digits-large `}>
+            {totalToday}
           </p>
         </div>
       </section>

@@ -4,9 +4,9 @@ import { useLocation, useParams } from 'react-router-dom';
 import styles from './order-page.module.css';
 import Modal from '../../components/modal/modal';
 
-import HomePage from '../home/home';
 import { useNavigate } from 'react-router-dom';
 import Order from '../../components/order/order';
+import { OrdersListPage } from '../orders-list/orders-list';
 
 export const OrderPage = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export const OrderPage = () => {
     <main className={styles.wrapper}>
       {background ? (
         <>
-          {background.pathname === '/' ? <HomePage /> : undefined}
+          {background.pathname === '/feed' ? <OrdersListPage /> : undefined}
           <Modal closeModal={closeModal} title="">
             <Order id={id} />
           </Modal>
