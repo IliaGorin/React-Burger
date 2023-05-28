@@ -31,7 +31,8 @@ export const AppHeader = () => {
           </li>
           <li className="pt-4 pr-5 pb-4 pl-5">
             <NavLink
-              to="/feed"
+              to={'/feed'}
+              end
               className={({ isActive }) =>
                 isActive ? activeLinkStyle : inactiveLinkStyle
               }

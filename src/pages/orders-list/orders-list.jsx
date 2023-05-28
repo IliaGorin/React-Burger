@@ -30,21 +30,29 @@ export const OrdersListPage = () => {
 
   useEffect(() => {
     console.log(orders);
-  });
+  }, []);
 
   return (
     <main className={styles.mainGrid}>
-      <section className={`${styles.OrdersFeed} mt-10`}>
+      <section className={`${styles.ordersFeed} mt-10`}>
         <h2 className={'text text_type_main-large mb-5'}>Лента заказов</h2>
         <ul className={styles.orders}>
-          <Link
-            to={`/feed/1`}
-            state={{ background: location }}
-            className={styles.emptyStyle}
-            key={123}
-          >
-            <Order id={'1'} />
-          </Link>
+          {orders?.map((order) => {
+            return (
+              <li key={order._id}>
+                <Link
+                  to={`/feed/${order._id}`}
+                  state={{ background: location }}
+                  className={styles.emptyStyle}
+                >
+                  {/* {order._id} */}
+                  <Order id={order._id} data={order} />
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        {/* <ul className={styles.orders}>
           <Link
             to={`/feed/2`}
             state={{ background: location }}
@@ -53,14 +61,14 @@ export const OrdersListPage = () => {
           >
             <Order id={'2'} />
           </Link>
-        </ul>
+        </ul> */}
       </section>
       <section className={styles.summary}>
         <div className={styles.ordersQueues}>
           <div className={styles.ordersQueueWrapper}>
-            <h2 className={`${styles.minorHeader} text text_type_main-medium`}>
+            <h3 className={`${styles.minorHeader} text text_type_main-medium`}>
               Готовы:
-            </h2>
+            </h3>
             <ul className={styles.orderQueue}>
               {orders.map((order) =>
                 order.status === 'done' ? (
@@ -74,9 +82,9 @@ export const OrdersListPage = () => {
             </ul>
           </div>
           <div className={styles.ordersQueueWrapper}>
-            <h2 className={`${styles.minorHeader} text text_type_main-medium`}>
+            <h3 className={`${styles.minorHeader} text text_type_main-medium`}>
               В работе:
-            </h2>
+            </h3>
             <ul className={styles.orderQueue}>
               <ul className={styles.orderQueue}>
                 {orders.map((order) =>
@@ -93,17 +101,17 @@ export const OrdersListPage = () => {
           </div>
         </div>
         <div>
-          <h2 className={`${styles.minorHeader} text text_type_main-medium`}>
+          <h3 className={`${styles.minorHeader} text text_type_main-medium`}>
             Выполнено за все время:
-          </h2>
+          </h3>
           <p className={` ${styles.totalCount} text text_type_digits-large`}>
             {total}
           </p>
         </div>
         <div>
-          <h2 className={`${styles.minorHeader} text text_type_main-medium`}>
+          <h3 className={`${styles.minorHeader} text text_type_main-medium`}>
             Выполнено за сегодня:
-          </h2>
+          </h3>
           <p className={`${styles.totalCount} text text_type_digits-large `}>
             {totalToday}
           </p>

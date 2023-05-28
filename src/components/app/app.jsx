@@ -68,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: '/feed/:id',
         element: <OrderPage />,
+        loader: () => {
+          console.log('route to /feed/:id');
+          return null;
+        },
       },
       {
         path: '/ingredients/:id',
