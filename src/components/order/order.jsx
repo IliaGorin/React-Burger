@@ -43,7 +43,7 @@ function Order(props) {
         <ul className={styles.ingredientsList}>
           {orderIngredients &&
             orderLength <= 6 &&
-            orderIngredients.map((element) => {
+            orderIngredients.reverse().map((element) => {
               return (
                 <li className={styles.list} key={uuid4()}>
                   {element && (
@@ -62,13 +62,39 @@ function Order(props) {
             })}
           {orderIngredients &&
             orderLength > 6 &&
-            orderIngredients.slice(5, 6).map((element) => {
-              return (
-                <li className={styles.list} key={uuid4()}>
-                  <p
-                    className={`text text_type_main-default ${styles.disabled_count}`}
-                  >{`+${notShownIngredientsCount}`}</p>
-                  <div className={styles.disabledImg}>
+            orderIngredients
+              .reverse()
+              .slice(5, 6)
+              .map((element) => {
+                return (
+                  <li className={styles.list} key={uuid4()}>
+                    <p
+                      className={`text text_type_main-default ${styles.disabled_count}`}
+                    >{`+${notShownIngredientsCount}`}</p>
+                    <div className={styles.disabledImg}>
+                      {element && (
+                        <div className={styles.imageWrapper}>
+                          <div className={styles.imageStyler}>
+                            <img
+                              className={styles.image}
+                              src={element.image}
+                              alt={element.alt}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+          {orderIngredients &&
+            orderLength > 6 &&
+            orderIngredients
+              .reverse()
+              .slice(0, 5)
+              .map((element) => {
+                return (
+                  <li className={styles.list} key={uuid4()}>
                     {element && (
                       <div className={styles.imageWrapper}>
                         <div className={styles.imageStyler}>
@@ -80,29 +106,9 @@ function Order(props) {
                         </div>
                       </div>
                     )}
-                  </div>
-                </li>
-              );
-            })}
-          {orderIngredients &&
-            orderLength > 6 &&
-            orderIngredients.slice(0, 5).map((element) => {
-              return (
-                <li className={styles.list} key={uuid4()}>
-                  {element && (
-                    <div className={styles.imageWrapper}>
-                      <div className={styles.imageStyler}>
-                        <img
-                          className={styles.image}
-                          src={element.image}
-                          alt={element.alt}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </li>
-              );
-            })}
+                  </li>
+                );
+              })}
         </ul>
         <div className={styles.price}>
           <p className={`text text_type_digits-default ${styles.title}`}>
