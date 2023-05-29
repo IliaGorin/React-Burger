@@ -138,7 +138,6 @@ export const getUserInfo = () => {
     sendRequest('/auth/user', postDetails)
       .then((data) => {
         if (data.success) {
-          console.log('data.success');
           localStorage.setItem('isLoggedIn', true);
           dispatch({
             type: GET_USER_INFO_SUCCESSFUL,
@@ -154,7 +153,6 @@ export const getUserInfo = () => {
               localStorage.setItem('accessToken', data.accessToken);
               localStorage.setItem('refreshToken', data.refreshToken);
               localStorage.setItem('isLoggedIn', true);
-              console.log('tokes has been refreshed');
             })
             .then(() => {
               dispatch(getUserInfo());
@@ -169,12 +167,10 @@ export const getUserInfo = () => {
                 window.localStorage.removeItem('accessToken');
                 window.localStorage.removeItem('refreshToken');
                 window.localStorage.removeItem('isLoggedIn');
-                console.log(err);
               }
             });
         } else {
           window.localStorage.removeItem('isLoggedIn');
-          console.log(err.message);
         }
       });
   };
@@ -212,7 +208,6 @@ export const patchUserInfo = (name, email, password) => {
               localStorage.setItem('accessToken', data.accessToken);
               localStorage.setItem('refreshToken', data.refreshToken);
               localStorage.setItem('isLoggedIn', true);
-              console.log('tokes has been refreshed');
             })
             .then(() => {
               dispatch(patchUserInfo(name, email, password));
@@ -227,12 +222,10 @@ export const patchUserInfo = (name, email, password) => {
                 window.localStorage.removeItem('accessToken');
                 window.localStorage.removeItem('refreshToken');
                 window.localStorage.removeItem('isLoggedIn');
-                console.log(err);
               }
             });
         } else {
           window.localStorage.removeItem('isLoggedIn');
-          console.log(err.message);
         }
       });
   };

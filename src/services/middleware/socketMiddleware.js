@@ -12,7 +12,7 @@ const socketMiddleware = (wsUrl, wsActions) => {
         socket = new WebSocket(wsUrl);
 
         socket.onopen = (event) => {
-          console.log('connection success', type);
+          console.log('ws connect');
           dispatch({ type: onOpen, payload: event });
         };
 
@@ -25,13 +25,13 @@ const socketMiddleware = (wsUrl, wsActions) => {
         };
 
         socket.onmessage = (event) => {
-          console.log('get orders', type);
           const { data } = event;
           const parsedData = JSON.parse(data);
           dispatch({ type: onGetOrder, payload: parsedData });
         };
       }
       if (wsClose && type === wsClose && socket) {
+        console.log('ws disconnect');
         socket.close();
       }
       next(action);

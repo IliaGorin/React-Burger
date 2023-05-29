@@ -131,7 +131,6 @@ export const usersReducer = (state = initialState, action) => {
       };
     }
     case LOGOUT_USER: {
-      console.log(LOGOUT_USER);
       return {
         ...state,
 
@@ -140,7 +139,6 @@ export const usersReducer = (state = initialState, action) => {
       };
     }
     case LOGOUT_USER_SUCCESSFUL: {
-      console.log(LOGOUT_USER_SUCCESSFUL);
       return {
         ...state,
         user: '',

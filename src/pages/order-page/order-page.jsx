@@ -11,6 +11,7 @@ import {
   WS_CONNECTION_STOP,
 } from '../../services/actions/ws-actions';
 import Order from '../../components/order/order';
+import OrderInfoModal from '../../components/order-info-modal/order-info-modal';
 import { OrdersListPage } from '../orders-list/orders-list';
 
 export const OrderPage = () => {
@@ -46,25 +47,17 @@ export const OrderPage = () => {
     navigate(-1);
   };
 
-  useEffect(() => {
-    console.log(order, 'order in order-page');
-  }, []);
   return (
     <main className={styles.wrapper}>
       {background ? (
         <>
           {background.pathname === '/feed' ? <OrdersListPage /> : undefined}
           <Modal closeModal={closeModal} title="">
-            {order && <Order data={order} />}
-            {/* <Order data={order} /> */}
+            {order && <OrderInfoModal data={order} />}
           </Modal>
         </>
       ) : (
-        <>
-          <h1 className="text_type_main-large">Станица с заказом</h1>
-          {/* <Order data={order} /> */}
-          {order && <Order data={order} />}
-        </>
+        <>{order && <OrderInfoModal data={order} />}</>
       )}
     </main>
   );

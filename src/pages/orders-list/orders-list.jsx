@@ -45,23 +45,12 @@ export const OrdersListPage = () => {
                   state={{ background: location }}
                   className={styles.linkToOrder}
                 >
-                  {/* {order._id} */}
                   <Order id={order._id} data={order} />
                 </Link>
               </li>
             );
           })}
         </ul>
-        {/* <ul className={styles.orders}>
-          <Link
-            to={`/feed/2`}
-            state={{ background: location }}
-            className={styles.emptyStyle}
-            key={1234}
-          >
-            <Order id={'2'} />
-          </Link>
-        </ul> */}
       </section>
       <section className={styles.summary}>
         <div className={styles.ordersQueues}>

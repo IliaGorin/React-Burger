@@ -1,17 +1,11 @@
 import styles from './order.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import DayOfOrder from './day-of-order';
+import DayOfOrder from '../day-of-order/day-of-order';
 import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useLocation } from 'react-router-dom';
 import { v4 as uuid4 } from 'uuid';
 
 function Order(props) {
-  // const { id } = useParams();
-  // const order = props.data.find((element) => element._id === id);
-  // useEffect(() => {
-  //   console.log('order in order', props.data);
-  // }, []);
   const allIngredients = useSelector((store) => store.ingredients.data);
   const { name, createdAt, number, ingredients } = props.data;
   const orderLength = ingredients.length;
@@ -26,10 +20,8 @@ function Order(props) {
   );
   const priceScore = useMemo(() => {
     return orderIngredients.reduce((acc, element) => acc + element.price, 0);
-  }, [allIngredients]);
-  useEffect(() => {
-    console.log(orderIngredients);
-  }, []);
+  }, [orderIngredients]);
+
   return (
     <main className={`${styles.orderWrapper} mr-2`}>
       <div className={styles.info}>
