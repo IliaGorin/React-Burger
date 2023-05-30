@@ -26,7 +26,19 @@ function OrderInfoModal(props) {
     return orderIngredients.reduce((acc, element) => acc + element.price, 0);
   }, [orderIngredients]);
 
-  const counter = 1;
+  const arrayWithCounter = orderIngredients.map((ingredient) => {
+    return (ingredient.counter = orderIngredients.filter(
+      (item) => item._id === ingredient._id
+    ).length);
+  });
+
+  orderIngredients.forEach((ingredient, index) => {
+    ingredient.counter = arrayWithCounter[index];
+  });
+
+  const set = new Set(orderIngredients);
+
+  const arrayToRender = [...set];
 
   return (
     <main className={`${styles.orderWrapper} mr-2`}>
@@ -46,7 +58,7 @@ function OrderInfoModal(props) {
       <div className={styles.orderDetails}>
         <ul className={styles.ingredientsList}>
           {orderIngredients &&
-            orderIngredients.map((element) => {
+            arrayToRender.map((element) => {
               return (
                 <li className={styles.list} key={uuid4()}>
                   {element && (
@@ -68,9 +80,13 @@ function OrderInfoModal(props) {
                       </p>
                       <div className={styles.price}>
                         <p
-                          className={`text text_type_digits-default ${styles.title}`}
+                          className={`text text_type_digits-default ${styles.priceOfElement}`}
                         >
-                          {`${counter} x ${element.price}`}
+                          {`${
+                            orderIngredients.filter(
+                              (item) => item._id === element._id
+                            ).length
+                          } x ${element.price}`}
                         </p>
                         <CurrencyIcon type="primary" />
                       </div>
