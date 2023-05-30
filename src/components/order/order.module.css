@@ -35,26 +35,26 @@
 }
 
 .list {
-  flex-shrink: 0;
   position: relative;
-}
-
-.list:not(:first-child) {
   margin-right: -20px;
 }
 
 .imageWrapper {
   border-radius: 100%;
-  border: 2px dashed var(--colors-interface-accent);
+  min-width: 64px;
+  max-width: 64px;
+  height: 64px;
   background: linear-gradient(to top right, #801AB2, #4C4CFF);
-  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .imageStyler {
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
   background: var(--background-alt);
-  border-radius: 100px;
+  border-radius: 100%;
   box-sizing: border-box;
   background-size: cover;
 }

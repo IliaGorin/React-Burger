@@ -26,6 +26,8 @@ function OrderInfoModal(props) {
     return orderIngredients.reduce((acc, element) => acc + element.price, 0);
   }, [orderIngredients]);
 
+  const counter = 1;
+
   return (
     <main className={`${styles.orderWrapper} mr-2`}>
       <p
@@ -68,7 +70,7 @@ function OrderInfoModal(props) {
                         <p
                           className={`text text_type_digits-default ${styles.title}`}
                         >
-                          {priceScore}
+                          {`${counter} x ${element.price}`}
                         </p>
                         <CurrencyIcon type="primary" />
                       </div>

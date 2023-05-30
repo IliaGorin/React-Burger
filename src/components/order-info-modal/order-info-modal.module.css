@@ -30,11 +30,14 @@
 .ingredientsList {
   list-style-type: none;
   padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
+  gap: 16px;
   width: 100%;
-  max-height: 366px;
-  overflow-y: scroll;
+  min-height: 350px;
+  /* max-height: 360px; */
+  overflow-y: auto;
   scrollbar-color: #8585AD #2F2F37;
   scrollbar-width: thin;
 }
@@ -44,11 +47,16 @@
 }
 
 .ingredientsList::-webkit-scrollbar-thumb {
+  border-radius: 0;
   background-color: #8585AD;
 }
 
 .ingredientsList::-webkit-scrollbar-track {
   background: #2F2F37;
+}
+
+.ingredientsList::-webkit-scrollbar-thumb:hover {
+  background-color: #56999f;
 }
 
 .list {
@@ -57,24 +65,27 @@
   align-items: center;
   gap: 16px;
   width: 100%;
-}
-
-.list:not(:first-child) {
-  margin-right: -20px;
+  height: 64px;
+  box-sizing: border-box;
 }
 
 .imageWrapper {
   border-radius: 100%;
-  border: 2px dashed var(--colors-interface-accent);
+  min-width: 64px;
+  max-width: 64px;
+  height: 64px;
   background: linear-gradient(to top right, #801AB2, #4C4CFF);
-  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .imageStyler {
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
   background: var(--background-alt);
-  border-radius: 100px;
+  border-radius: 100%;
   box-sizing: border-box;
   background-size: cover;
 }
