@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-
 import styles from './order-page.module.css';
 import Modal from '../../components/modal/modal';
-
+import { OrdersHistoryPage } from '../orders-history/orders-history';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_STOP,
 } from '../../services/actions/ws-actions';
-import Order from '../../components/order/order';
+
 import OrderInfoModal from '../../components/order-info-modal/order-info-modal';
 import { OrdersListPage } from '../orders-list/orders-list';
 
@@ -48,17 +47,22 @@ export const OrderPage = () => {
   };
 
   return (
-    <main className={styles.wrapper}>
+    <>
       {background ? (
         <>
           {background.pathname === '/feed' ? <OrdersListPage /> : undefined}
+          {background.pathname === '/profile/orders' ? (
+            <OrdersHistoryPage />
+          ) : undefined}
           <Modal closeModal={closeModal} title="">
             {order && <OrderInfoModal data={order} />}
           </Modal>
         </>
       ) : (
-        <>{order && <OrderInfoModal data={order} />}</>
+        <div className={styles.wrapper}>
+          {order && <OrderInfoModal data={order} />}
+        </div>
       )}
-    </main>
+    </>
   );
 };

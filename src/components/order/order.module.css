@@ -1,7 +1,7 @@
 .orderWrapper {
   display: flex;
   flex-direction: column;
-  width: 536px;
+  width: 100%;
   gap: 24px;
   background: var(--background);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04), 0 0 2px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.04);

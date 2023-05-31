@@ -1,25 +1,47 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './orders.module.css';
+import React, { useEffect } from 'react';
+import Order from '../../components/order/order';
+import styles from './orders-history.module.css';
 import { ProfileNavMenu } from '../../components/profile-nav-menu/profile-nav-menu';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_STOP,
+} from '../../services/actions/ws-actions';
 
 export const OrdersHistoryPage = () => {
-  const navigate = useNavigate();
-  const handlerOnClick = () => {
-    navigate('/');
-  };
+  const orders = useSelector((store) => store.wsOrders.orders);
+  const location = useLocation();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: WS_CONNECTION_START,
+      payload: {},
+    });
+    return () => {
+      dispatch({
+        type: WS_CONNECTION_STOP,
+      });
+    };
+  }, []);
 
   return (
     <main className={styles.wrapper}>
       <ProfileNavMenu caption="В этом разделе вы можете просмотреть свою историю заказов" />
-      <div className={styles.main}>
-        <p className="text text_type_main-default text_color_inactive mt-8 mb-8">
-          История заказов
-        </p>
-        <Button onClick={handlerOnClick} htmlType="button">
-          Перейти на главную
-        </Button>
+      <div className={styles.orders}>
+        {orders?.map((order) => {
+          return (
+            <li className={styles.listOfOrders} key={order._id}>
+              <Link
+                to={`/feed/${order._id}`}
+                state={{ background: location }}
+                className={styles.linkToOrder}
+              >
+                <Order id={order._id} data={order} />
+              </Link>
+            </li>
+          );
+        })}
       </div>
     </main>
   );

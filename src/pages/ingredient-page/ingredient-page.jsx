@@ -25,7 +25,7 @@ export const IngredientPage = () => {
   };
 
   return (
-    <main className={styles.wrapper}>
+    <>
       {background ? (
         <>
           {background.pathname === '/' ? <HomePage /> : undefined}
@@ -34,11 +34,11 @@ export const IngredientPage = () => {
           </Modal>
         </>
       ) : (
-        <>
+        <div className={styles.wrapper}>
           <h1 className="text_type_main-large">Детали ингредиента</h1>
           <IngredientDetails item={selectedItem} />
-        </>
+        </div>
       )}
-    </main>
+    </>
   );
 };
