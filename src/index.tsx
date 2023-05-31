@@ -12,10 +12,8 @@ import { rootReducer } from './services/reducers';
 import './index.css';
 import App from './components/app/app';
 
-const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
-
 const enhancer = composeWithDevTools(
-  applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions))
+  applyMiddleware(thunk, socketMiddleware(wsActions))
 );
 
 export const store = createStore(rootReducer, enhancer);

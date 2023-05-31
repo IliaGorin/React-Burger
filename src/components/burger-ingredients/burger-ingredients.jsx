@@ -65,7 +65,7 @@ function BurgerIngredients() {
 
   return (
     <section>
-      <h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
+      <h2 className="text text_type_main-large mb-5 mt-5">Соберите бургер</h2>
       <div className={`${stylesForBurgeringredients.tabs}`}>
         {CATEGORIES.map((category) => {
           return (

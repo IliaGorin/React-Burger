@@ -16,7 +16,10 @@ export const OrdersHistoryPage = () => {
   useEffect(() => {
     dispatch({
       type: WS_CONNECTION_START,
-      payload: {},
+      payload: {
+        isAuth: true,
+        wsUrl: 'wss://norma.nomoreparties.space/orders',
+      },
     });
     return () => {
       dispatch({

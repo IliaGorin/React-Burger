@@ -16,10 +16,23 @@ import { OrdersListPage } from '../orders-list/orders-list';
 export const OrderPage = () => {
   const orders = useSelector((store) => store.wsOrders.orders);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const background = location.state && location.state.background;
+  let isAuth = false;
+  let wsUrl = 'wss://norma.nomoreparties.space/orders/all';
+
+  if (background.pathname === '/profile/orders') {
+    isAuth = true;
+    wsUrl = 'wss://norma.nomoreparties.space/orders';
+  }
+
   useEffect(() => {
     dispatch({
       type: WS_CONNECTION_START,
-      payload: {},
+      payload: {
+        isAuth: isAuth,
+        wsUrl: wsUrl,
+      },
     });
     return () => {
       dispatch({
@@ -34,11 +47,7 @@ export const OrderPage = () => {
 
   const navigate = useNavigate();
 
-  const location = useLocation();
-
   const { id } = useParams();
-
-  const background = location.state && location.state.background;
 
   const order = orders.find((element) => element._id === id);
 

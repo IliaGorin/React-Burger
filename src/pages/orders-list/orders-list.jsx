@@ -19,7 +19,10 @@ export const OrdersListPage = () => {
   useEffect(() => {
     dispatch({
       type: WS_CONNECTION_START,
-      payload: {},
+      payload: {
+        isAuth: false,
+        wsUrl: 'wss://norma.nomoreparties.space/orders/all',
+      },
     });
     return () => {
       dispatch({

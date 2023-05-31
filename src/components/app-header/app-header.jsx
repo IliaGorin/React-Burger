@@ -18,7 +18,7 @@ export const AppHeader = () => {
     <header className={stylesForAppHeader.header}>
       <nav className={stylesForAppHeader.nav}>
         <ul className={stylesForAppHeader.navList}>
-          <li className="pt-4 pr-5 pb-4 pl-5">
+          <li className={`pt-4 pr-5 pb-4 pl-5`}>
             <NavLink
               to="/"
               className={({ isActive }) =>

@@ -1,14 +1,21 @@
-const socketMiddleware = (wsUrl, wsActions) => {
+const socketMiddleware = (wsActions) => {
   return (store) => {
     let socket = null;
 
     return (next) => (action) => {
       const { dispatch } = store;
-      const { type } = action;
+      const { type, payload } = action;
       const { wsInit, wsClose, onOpen, onClose, onError, onGetOrder } =
         wsActions;
 
       if (type === wsInit) {
+        let token = window.localStorage.getItem('accessToken');
+        token = token.substring(7);
+        const wsUrl = payload.isAuth
+          ? payload.wsUrl + `?token=${token}`
+          : payload.wsUrl;
+
+        console.log(wsUrl + `?token=${token}`);
         socket = new WebSocket(wsUrl);
 
         socket.onopen = (event) => {
