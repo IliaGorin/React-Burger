@@ -9,7 +9,8 @@ const socketMiddleware = (wsActions) => {
         wsActions;
 
       if (type === wsInit) {
-        let token = window.localStorage.getItem('accessToken');
+        let token =
+          window.localStorage.getItem('accessToken') || 'noAccessToken';
         token = token.substring(7);
         const wsUrl = payload.isAuth
           ? payload.wsUrl + `?token=${token}`

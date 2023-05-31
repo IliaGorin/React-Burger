@@ -36,7 +36,7 @@ export const OrdersHistoryPage = () => {
           return (
             <li className={styles.listOfOrders} key={order._id}>
               <Link
-                to={`/feed/${order._id}`}
+                to={`/profile/orders/${order._id}`}
                 state={{ background: location }}
                 className={styles.linkToOrder}
               >

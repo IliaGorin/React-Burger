@@ -21,11 +21,15 @@ export const OrderPage = () => {
   let isAuth = false;
   let wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 
-  if (background.pathname === '/profile/orders') {
+  if (background?.pathname === '/profile/orders') {
     isAuth = true;
     wsUrl = 'wss://norma.nomoreparties.space/orders';
   }
-
+  const pathname = location.pathname.slice(0, 15);
+  if (background === null && pathname === '/profile/orders') {
+    isAuth = true;
+    wsUrl = 'wss://norma.nomoreparties.space/orders';
+  }
   useEffect(() => {
     dispatch({
       type: WS_CONNECTION_START,

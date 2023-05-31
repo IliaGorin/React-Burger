@@ -16,7 +16,6 @@ import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
 import { getIngredients } from '../../services/actions/get-ingredients-actions';
 import { useDispatch } from 'react-redux';
 import { getUserInfo } from '../../services/actions/users';
-import Order from '../order/order';
 import { OrderPage } from '../../pages/order-page/order-page';
 
 const router = createBrowserRouter([
@@ -58,7 +57,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/profile/orders/:id',
-        element: <OrdersHistoryPage />,
+        element: <OrderPage />,
         loader: checkAuthLoader,
       },
       {
