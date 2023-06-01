@@ -9,7 +9,8 @@ import {
 const initialState = {
   error: undefined,
   wsConnected: false,
-  orders: [],
+  allOrders: [],
+  userOrders: [],
   total: 0,
   totalToday: 0,
 };
@@ -31,7 +32,8 @@ export const wsReducer = (state = initialState, action) => {
     case WS_CONNECTION_CLOSED:
       return {
         ...state,
-        orders: [],
+        allOrders: [],
+        userOrders: [],
         error: undefined,
         wsConnected: false,
       };
@@ -45,7 +47,8 @@ export const wsReducer = (state = initialState, action) => {
       return {
         ...state,
         wsConnected: true,
-        orders: action.payload.orders,
+        allOrders: !action.payload.isAuth ? action.payload.orders : [],
+        userOrders: action.payload.isAuth ? action.payload.orders : [],
         total: action.payload.total,
         totalToday: action.payload.totalToday,
         error: undefined,

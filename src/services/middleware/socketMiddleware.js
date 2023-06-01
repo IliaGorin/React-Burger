@@ -37,6 +37,7 @@ const socketMiddleware = (wsActions) => {
         socket.onmessage = (event) => {
           const { data } = event;
           const parsedData = JSON.parse(data);
+          parsedData.isAuth = payload.isAuth;
           dispatch({ type: onGetOrder, payload: parsedData });
         };
       }

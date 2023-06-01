@@ -10,7 +10,7 @@ import {
 } from '../../services/actions/ws-actions';
 
 export const OrdersHistoryPage = () => {
-  const orders = useSelector((store) => store.wsOrders.orders);
+  const orders = useSelector((store) => store.wsOrders.userOrders);
   const location = useLocation();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -32,19 +32,20 @@ export const OrdersHistoryPage = () => {
     <main className={styles.wrapper}>
       <ProfileNavMenu caption="В этом разделе вы можете просмотреть свою историю заказов" />
       <div className={styles.orders}>
-        {orders?.map((order) => {
-          return (
-            <li className={styles.listOfOrders} key={order._id}>
-              <Link
-                to={`/profile/orders/${order._id}`}
-                state={{ background: location }}
-                className={styles.linkToOrder}
-              >
-                <Order id={order._id} data={order} />
-              </Link>
-            </li>
-          );
-        })}
+        {orders &&
+          orders.map((order) => {
+            return (
+              <li className={styles.listOfOrders} key={order._id}>
+                <Link
+                  to={`/profile/orders/${order._id}`}
+                  state={{ background: location }}
+                  className={styles.linkToOrder}
+                >
+                  <Order id={order._id} data={order} />
+                </Link>
+              </li>
+            );
+          })}
       </div>
     </main>
   );

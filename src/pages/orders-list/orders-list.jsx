@@ -10,7 +10,7 @@ import {
 } from '../../services/actions/ws-actions';
 
 export const OrdersListPage = () => {
-  const orders = useSelector((store) => store.wsOrders.orders);
+  const orders = useSelector((store) => store.wsOrders.allOrders);
   const total = useSelector((store) => store.wsOrders.total);
   const totalToday = useSelector((store) => store.wsOrders.totalToday);
   const location = useLocation();
@@ -40,19 +40,20 @@ export const OrdersListPage = () => {
       <section className={`${styles.ordersFeed} mt-10`}>
         <h2 className={'text text_type_main-large mb-5'}>Лента заказов</h2>
         <ul className={styles.orders}>
-          {orders?.map((order) => {
-            return (
-              <li className={styles.listOfOrders} key={order._id}>
-                <Link
-                  to={`/feed/${order._id}`}
-                  state={{ background: location }}
-                  className={styles.linkToOrder}
-                >
-                  <Order id={order._id} data={order} />
-                </Link>
-              </li>
-            );
-          })}
+          {orders &&
+            orders.map((order) => {
+              return (
+                <li className={styles.listOfOrders} key={order._id}>
+                  <Link
+                    to={`/feed/${order._id}`}
+                    state={{ background: location }}
+                    className={styles.linkToOrder}
+                  >
+                    <Order id={order._id} data={order} />
+                  </Link>
+                </li>
+              );
+            })}
         </ul>
       </section>
       <section className={styles.summary}>

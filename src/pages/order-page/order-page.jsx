@@ -14,7 +14,8 @@ import OrderInfoModal from '../../components/order-info-modal/order-info-modal';
 import { OrdersListPage } from '../orders-list/orders-list';
 
 export const OrderPage = () => {
-  const orders = useSelector((store) => store.wsOrders.orders);
+  const allOrders = useSelector((store) => store.wsOrders.allOrders);
+  const userOrders = useSelector((store) => store.wsOrders.userOrders);
   const dispatch = useDispatch();
   const location = useLocation();
   const background = location.state && location.state.background;
@@ -53,7 +54,10 @@ export const OrderPage = () => {
 
   const { id } = useParams();
 
-  const order = orders.find((element) => element._id === id);
+  const order =
+    pathname === '/profile/orders'
+      ? userOrders.find((element) => element._id === id)
+      : allOrders.find((element) => element._id === id);
 
   const closeModal = () => {
     navigate(-1);
