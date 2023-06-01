@@ -22,9 +22,11 @@ const socketMiddleware = (wsActions) => {
         socket.onopen = (event) => {
           console.log('ws connect');
           dispatch({ type: onOpen, payload: event });
+          console.log(event);
         };
 
         socket.onerror = (event) => {
+          console.log('ws error ', event);
           dispatch({ type: onError, payload: event });
         };
 
