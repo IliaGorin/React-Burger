@@ -10,11 +10,13 @@ import { ResetPasswordPage } from '../../pages/reset-password/reset-password';
 import { ProfilePage } from '../../pages/profile/profile';
 import { ErrorPage } from '../../pages/error/error';
 import { checkAuthLoader, checkNotAuthLoader } from '../../utils/auth';
-import { OrdersPage } from '../../pages/orders/orders';
+import { OrdersHistoryPage } from '../../pages/orders-history/orders-history';
 import { OrdersListPage } from '../../pages/orders-list/orders-list';
 import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
 import { getIngredients } from '../../services/actions/get-ingredients-actions';
 import { useDispatch } from 'react-redux';
+import { getUserInfo } from '../../services/actions/users';
+import { OrderPage } from '../../pages/order-page/order-page';
 
 const router = createBrowserRouter([
   {
@@ -50,13 +52,25 @@ const router = createBrowserRouter([
       },
       {
         path: '/profile/orders',
-        element: <OrdersPage />,
+        element: <OrdersHistoryPage />,
         loader: checkAuthLoader,
       },
       {
-        path: '/orders-list',
-        element: <OrdersListPage />,
+        path: '/profile/orders/:id',
+        element: <OrderPage />,
         loader: checkAuthLoader,
+      },
+      {
+        path: '/feed',
+        element: <OrdersListPage />,
+      },
+      {
+        path: '/feed/:id',
+        element: <OrderPage />,
+        loader: () => {
+          console.log('route to /feed/:id');
+          return null;
+        },
       },
       {
         path: '/ingredients/:id',
@@ -72,6 +86,10 @@ function App() {
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, []);
 
   return <RouterProvider router={router} />;
 }

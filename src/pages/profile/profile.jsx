@@ -26,13 +26,8 @@ export const ProfilePage = () => {
   const [form, setValue] = useState(initialState);
 
   useEffect(() => {
-    dispatch(getUserInfo());
-    setValue(form);
-  }, []);
-
-  useEffect(() => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate(`/login`);
     }
   }, [isLoggedIn]);
 

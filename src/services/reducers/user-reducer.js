@@ -93,6 +93,8 @@ export const usersReducer = (state = initialState, action) => {
         pending: false,
         success: true,
         isLoggedIn: true,
+        email: action.email,
+        name: action.name,
       };
     }
     case GET_USER_INFO: {
@@ -129,7 +131,6 @@ export const usersReducer = (state = initialState, action) => {
       };
     }
     case LOGOUT_USER: {
-      console.log(LOGOUT_USER);
       return {
         ...state,
 
@@ -138,11 +139,11 @@ export const usersReducer = (state = initialState, action) => {
       };
     }
     case LOGOUT_USER_SUCCESSFUL: {
-      console.log(LOGOUT_USER_SUCCESSFUL);
       return {
         ...state,
         user: '',
         email: '',
+        name: '',
         password: '',
         isLoggedIn: false,
         pending: false,

@@ -105,12 +105,14 @@ export const loginUser = (email, password, navigate, redirectRoute) => {
         password: `${password}`,
       }),
     };
-    dispatch({
-      type: LOGIN_USER_SUCCESSFUL,
-    });
     sendRequest('/auth/login', postDetails)
       .then((data) => {
         if (data.success) {
+          dispatch({
+            type: LOGIN_USER_SUCCESSFUL,
+            name: data.user.name,
+            email: data.user.email,
+          });
           localStorage.setItem('isLoggedIn', true);
           localStorage.setItem('accessToken', data.accessToken);
           localStorage.setItem('refreshToken', data.refreshToken);
@@ -136,7 +138,6 @@ export const getUserInfo = () => {
     sendRequest('/auth/user', postDetails)
       .then((data) => {
         if (data.success) {
-          console.log('data.success');
           localStorage.setItem('isLoggedIn', true);
           dispatch({
             type: GET_USER_INFO_SUCCESSFUL,
@@ -152,7 +153,6 @@ export const getUserInfo = () => {
               localStorage.setItem('accessToken', data.accessToken);
               localStorage.setItem('refreshToken', data.refreshToken);
               localStorage.setItem('isLoggedIn', true);
-              console.log('tokes has been refreshed');
             })
             .then(() => {
               dispatch(getUserInfo());
@@ -167,12 +167,10 @@ export const getUserInfo = () => {
                 window.localStorage.removeItem('accessToken');
                 window.localStorage.removeItem('refreshToken');
                 window.localStorage.removeItem('isLoggedIn');
-                console.log(err);
               }
             });
         } else {
           window.localStorage.removeItem('isLoggedIn');
-          console.log(err.message);
         }
       });
   };
@@ -210,7 +208,6 @@ export const patchUserInfo = (name, email, password) => {
               localStorage.setItem('accessToken', data.accessToken);
               localStorage.setItem('refreshToken', data.refreshToken);
               localStorage.setItem('isLoggedIn', true);
-              console.log('tokes has been refreshed');
             })
             .then(() => {
               dispatch(patchUserInfo(name, email, password));
@@ -225,18 +222,16 @@ export const patchUserInfo = (name, email, password) => {
                 window.localStorage.removeItem('accessToken');
                 window.localStorage.removeItem('refreshToken');
                 window.localStorage.removeItem('isLoggedIn');
-                console.log(err);
               }
             });
         } else {
           window.localStorage.removeItem('isLoggedIn');
-          console.log(err.message);
         }
       });
   };
 };
 
-export const logoutUser = () => {
+export const logoutUser = (navigate, pathname) => {
   return (dispatch) => {
     dispatch({
       type: LOGOUT_USER,
@@ -258,6 +253,7 @@ export const logoutUser = () => {
           dispatch({
             type: LOGOUT_USER_SUCCESSFUL,
           });
+          navigate(`/`);
         }
       })
       .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));

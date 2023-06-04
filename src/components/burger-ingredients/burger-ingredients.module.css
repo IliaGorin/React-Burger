@@ -1,6 +1,6 @@
 .ingredientsList {
   height: 83vh;
-  overflow-y: auto;
+  overflow-y: scroll;
   max-height: 716px;
   scrollbar-color: #8585AD #2F2F37;
   scrollbar-width: thin;

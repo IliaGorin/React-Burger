@@ -8,6 +8,7 @@ import {
 import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../services/actions/users';
+import { getUserInfo } from '../../services/actions/users';
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ export const LoginPage = () => {
     (e) => {
       e.preventDefault();
       dispatch(loginUser(email, password, navigate, redirectRoute));
+      dispatch(getUserInfo());
     },
     [email, password, navigate, dispatch, redirectRoute]
   );

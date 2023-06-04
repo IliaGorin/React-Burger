@@ -4,6 +4,7 @@ import { postOrderReducer } from './post-order-reducer';
 import { openIngredientCard } from './browsed-ingredient-reducer';
 import { ingredientsInConstructorReducer } from './ingr-in-constructor-reducer';
 import { usersReducer } from './user-reducer';
+import { wsReducer } from './ws-reducer';
 
 export const rootReducer = combineReducers({
   ingredients: getIngredientsReducer,
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
   openCard: openIngredientCard,
   inConstructor: ingredientsInConstructorReducer,
   users: usersReducer,
+  wsOrders: wsReducer,
 });
