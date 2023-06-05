@@ -1,4 +1,4 @@
-import { React, useMemo } from 'react';
+import { React, useEffect, useMemo } from 'react';
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -21,10 +21,15 @@ import {
 } from '../../services/actions/ingr-in-constructor-actions';
 import ConstructorElementDraggable from '../constructor-element-draggable/constructor-element-draggable.jsx';
 import { BUN } from '../../utils/constants.js';
+import { clearConstructor } from '../../services/actions/ingr-in-constructor-actions';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
   const orderNumber = useSelector((store) => store.order.order);
+  const orderPostProcessing = useSelector(
+    (store) => store.order.orderPostProcessing
+  );
+
   const { isLoggedIn } = useSelector((store) => store.users);
 
   const closeOrderModal = () => {
@@ -51,6 +56,11 @@ function BurgerConstructor() {
   const makeOrder = (orderedIngredients) => {
     dispatch(postOrder(orderedIngredients));
   };
+
+  const clearConstructorHandler = () => {
+    dispatch(clearConstructor());
+  };
+
   // eslint-disable-next-line
   const [{ isOver }, dropRef] = useDrop({
     accept: 'ingredient',
@@ -140,6 +150,7 @@ function BurgerConstructor() {
               size="large"
               onClick={() => {
                 makeOrder([bun, ...ingredientsForCurrentBurger, bun]);
+                clearConstructorHandler();
               }}
             >
               Оформить заказ
@@ -154,6 +165,14 @@ function BurgerConstructor() {
         <div className={'text text_type_main-default'}>
           Для оформления заказа выберите булку и ингредиенты
         </div>
+      )}
+
+      {orderPostProcessing && (
+        <Modal closeModal={closeOrderModal}>
+          <p className={'text text_type_main-default'}>
+            Заказ обрабатывается...
+          </p>
+        </Modal>
       )}
 
       {orderNumber && (

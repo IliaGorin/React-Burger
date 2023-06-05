@@ -5,6 +5,7 @@ export const ADD_BUN_TO_CONSTRUCTOR = 'ADD_BUN_TO_CONSTRUCTOR';
 export const REMOVE_INGREDIENT_FROM_CONSTRUCTOR =
   'REMOVE_INGREDIENT_FROM_CONSTRUCTOR';
 export const REORDER_CONSTRUCTOR = 'REORDER_CONSTRUCTOR';
+export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
 
 export const addIngredientToConstructor = (ingredient) => {
   return {
@@ -32,5 +33,11 @@ export const reorderConstructor = (ingredient) => {
   return {
     type: REORDER_CONSTRUCTOR,
     data: ingredient,
+  };
+};
+
+export const clearConstructor = () => {
+  return {
+    type: CLEAR_CONSTRUCTOR,
   };
 };

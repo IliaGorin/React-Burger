@@ -3,6 +3,7 @@ import {
   ADD_BUN_TO_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   REORDER_CONSTRUCTOR,
+  CLEAR_CONSTRUCTOR,
 } from '../actions/ingr-in-constructor-actions';
 
 const initialState = {
@@ -47,6 +48,13 @@ export const ingredientsInConstructorReducer = (
       return {
         ...state,
         ingredients: [...copyArr],
+      };
+    }
+    case CLEAR_CONSTRUCTOR: {
+      return {
+        ...state,
+        ingredients: [],
+        bun: null,
       };
     }
 
