@@ -19,7 +19,7 @@ export const ForgotPasswordPage = () => {
       e.preventDefault();
       dispatch(changePasswordRequest(email, navigate));
     },
-    [dispatch, email]
+    [dispatch, email, navigate]
   );
 
   const onChange = (e) => {

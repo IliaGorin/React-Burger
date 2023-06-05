@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styles from './orders-list.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import Order from '../../components/order/order';
@@ -29,11 +28,7 @@ export const OrdersListPage = () => {
         type: WS_CONNECTION_STOP,
       });
     };
-  }, []);
-
-  useEffect(() => {
-    console.log(orders);
-  }, []);
+  }, [dispatch]);
 
   return (
     <main className={styles.mainGrid}>

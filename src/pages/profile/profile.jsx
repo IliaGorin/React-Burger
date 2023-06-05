@@ -29,7 +29,11 @@ export const ProfilePage = () => {
     if (!isLoggedIn) {
       navigate(`/login`);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
+
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, [dispatch]);
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });

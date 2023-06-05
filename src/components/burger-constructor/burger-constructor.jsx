@@ -1,9 +1,6 @@
-import { React, useEffect, useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { typeOfingredient } from '../../utils/propTypes.js';
+import { React, useMemo } from 'react';
 import {
   ConstructorElement,
-  DragIcon,
   CurrencyIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -54,7 +51,7 @@ function BurgerConstructor() {
   const makeOrder = (orderedIngredients) => {
     dispatch(postOrder(orderedIngredients));
   };
-
+  // eslint-disable-next-line
   const [{ isOver }, dropRef] = useDrop({
     accept: 'ingredient',
     drop: (item) => {
@@ -72,7 +69,7 @@ function BurgerConstructor() {
   const deleteItem = (item) => {
     dispatch(removeIngredientFromConstructor(item));
   };
-
+  // eslint-disable-next-line
   const [, dragRef] = useDrag({
     type: 'ingredient',
   });

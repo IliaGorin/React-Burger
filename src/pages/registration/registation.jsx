@@ -26,7 +26,7 @@ export const RegistrationPage = () => {
       e.preventDefault();
       dispatch(registerUser(form.name, form.email, form.password, navigate));
     },
-    [dispatch, form]
+    [dispatch, form, navigate]
   );
 
   return (

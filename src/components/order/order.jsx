@@ -1,7 +1,7 @@
 import styles from './order.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import DayOfOrder from '../day-of-order/day-of-order';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { v4 as uuid4 } from 'uuid';
 

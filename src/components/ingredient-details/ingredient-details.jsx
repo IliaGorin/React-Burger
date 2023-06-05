@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import stylesForIngredientDetails from './ingredient-details.module.css';
 
 const IngredientDetails = ({ item }) => {

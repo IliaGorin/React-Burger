@@ -6,25 +6,25 @@ import stylesForModal from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { MODAL_ROOT } from '../../utils/constants';
 
-const Modal = (props) => {
+const Modal = ({ closeModal, title, children }) => {
   useEffect(() => {
     const pressEsc = (event) => {
-      event.key === 'Escape' && props.closeModal();
+      event.key === 'Escape' && closeModal();
     };
     document.addEventListener('keydown', pressEsc);
     return () => {
       document.removeEventListener('keydown', pressEsc);
     };
-  }, [props.closeModal]);
+  }, [closeModal]);
 
   return ReactDOM.createPortal(
-    <ModalOverlay onClick={props.closeModal} closeModal={props.closeModal}>
+    <ModalOverlay onClick={closeModal} closeModal={closeModal}>
       <div className={stylesForModal.modalContainer}>
-        <h4 className="text text_type_main-large">{props.title}</h4>
-        <div className={stylesForModal.modalClose} onClick={props.closeModal}>
+        <h4 className="text text_type_main-large">{title}</h4>
+        <div className={stylesForModal.modalClose} onClick={closeModal}>
           <CloseIcon className type="primary" />
         </div>
-        <div className={stylesForModal.modalWrapper}>{props.children}</div>
+        <div className={stylesForModal.modalWrapper}>{children}</div>
       </div>
     </ModalOverlay>,
     MODAL_ROOT
@@ -32,8 +32,8 @@ const Modal = (props) => {
 };
 
 Modal.propTypes = {
-  children: PropTypes.node.isRequired,
   // closeModal: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Modal;

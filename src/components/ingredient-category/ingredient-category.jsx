@@ -5,18 +5,19 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 const IngredientCategory = forwardRef((props, ref) => {
+  const { categoryType, id, category } = props;
   const ingredients = useSelector((store) => store.ingredients.data);
   const ingredientsForRender = ingredients.filter(
-    (data) => data.type === props.categoryType
+    (data) => data.type === categoryType
   );
 
   return (
-    <li ref={ref} id={props.id}>
+    <li ref={ref} id={id}>
       <h3
         className={`${classes.typeHeader} text text_type_main-medium`}
-        id={props.categoryType}
+        id={categoryType}
       >
-        {props.category}
+        {category}
       </h3>
       <ul className={classes.ingredientsByType}>
         {ingredientsForRender.map((ingredient) => (

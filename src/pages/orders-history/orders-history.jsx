@@ -26,7 +26,7 @@ export const OrdersHistoryPage = () => {
         type: WS_CONNECTION_STOP,
       });
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <main className={styles.wrapper}>

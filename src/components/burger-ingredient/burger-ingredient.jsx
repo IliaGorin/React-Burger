@@ -11,12 +11,12 @@ import { useDrag } from 'react-dnd';
 import { BUN } from '../../utils/constants.js';
 import { Link, useLocation } from 'react-router-dom';
 
-function BurgerIngredient(props) {
+function BurgerIngredient({ data }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({
     type: 'ingredient',
-    item: props.data,
+    item: data,
   });
   const ingredientsForCurrentBurger = useSelector(
     (store) => store.inConstructor.ingredients
@@ -25,24 +25,23 @@ function BurgerIngredient(props) {
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
-    if (props.data.type !== BUN) {
+    if (data.type !== BUN) {
       setCounter(
-        ingredientsForCurrentBurger.filter(
-          (item) => item._id === props.data._id
-        ).length
+        ingredientsForCurrentBurger.filter((item) => item._id === data._id)
+          .length
       );
     }
-    if (bun && props.data.type === BUN && props.data.name === bun.name) {
+    if (bun && data.type === BUN && data.name === bun.name) {
       setCounter('2');
     }
-    if (bun && props.data.type === BUN && props.data.name !== bun.name) {
+    if (bun && data.type === BUN && data.name !== bun.name) {
       setCounter('0');
     }
-  }, [ingredientsForCurrentBurger, bun]);
+  }, [ingredientsForCurrentBurger, bun, data.name, data.type, data._id]);
 
   return (
     <Link
-      to={`/ingredients/${props.data._id}`}
+      to={`/ingredients/${data._id}`}
       state={{ background: location }}
       className={stylesForBurgeringredient.link}
       draggable
@@ -50,23 +49,19 @@ function BurgerIngredient(props) {
     >
       <div
         className={`${stylesForBurgeringredient.ingredientWrap}`}
-        onClick={() => dispatch(openIngredientDetails(props.data))}
+        onClick={() => dispatch(openIngredientDetails(data))}
       >
         {counter > 0 && (
           <Counter count={counter} size="default" extraClass="m-1" />
         )}
-        <img
-          className={`pr-4 pl-4`}
-          src={props.data.image}
-          alt={props.data.name}
-        />
+        <img className={`pr-4 pl-4`} src={data.image} alt={data.name} />
         <div
           className={`${stylesForBurgeringredient.ingredientPriceWrap} pt-1 pb-1`}
         >
-          <p className={'text text_type_digits-default'}>{props.data.price}</p>
+          <p className={'text text_type_digits-default'}>{data.price}</p>
           <CurrencyIcon type={'primary'} />
         </div>
-        <p className={'text text_type_main-default'}>{props.data.name}</p>
+        <p className={'text text_type_main-default'}>{data.name}</p>
       </div>
     </Link>
   );

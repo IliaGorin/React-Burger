@@ -32,7 +32,7 @@ export const ResetPasswordPage = () => {
       dispatch(resetPassword(form, navigate));
       setValue({ password: '', token: '' });
     },
-    [form, dispatch]
+    [form, dispatch, navigate]
   );
 
   return (

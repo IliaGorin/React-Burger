@@ -89,7 +89,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getUserInfo());
-  }, []);
+  }, [dispatch]);
 
   return <RouterProvider router={router} />;
 }

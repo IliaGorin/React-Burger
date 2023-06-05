@@ -2,10 +2,10 @@ import React from 'react';
 import stylesForModalOverlay from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
-const ModalOverlay = (props) => {
+const ModalOverlay = ({ closeModal, children }) => {
   const handleClickOnOverlay = (event) => {
     if (event.target === event.currentTarget) {
-      props.closeModal();
+      closeModal();
     }
   };
 
@@ -14,7 +14,7 @@ const ModalOverlay = (props) => {
       className={stylesForModalOverlay.modalOverlay}
       onClick={handleClickOnOverlay}
     >
-      {props.children}
+      {children}
     </section>
   );
 };

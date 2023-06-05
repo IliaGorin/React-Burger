@@ -1,17 +1,11 @@
 import styles from './order-info-modal.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import DayOfOrder from '../day-of-order/day-of-order';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useLocation } from 'react-router-dom';
 import { v4 as uuid4 } from 'uuid';
 
 function OrderInfoModal(props) {
-  // const { id } = useParams();
-  // const order = props.data.find((element) => element._id === id);
-  // useEffect(() => {
-  //   console.log('order in order', props.data);
-  // }, []);
   const allIngredients = useSelector((store) => store.ingredients.data);
   const { name, createdAt, number, ingredients, status } = props.data;
 

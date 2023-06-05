@@ -1,11 +1,7 @@
 import { React, useEffect, useState, useRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForBurgeringredients from './burger-ingredients.module.css';
-import Modal from '../modal/modal.jsx';
-import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
-import { useSelector, useDispatch } from 'react-redux';
-import { closeIngredientDetails } from '../../services/actions/browsed-ingredient-actions';
 import { BUN, SAUCE, MAIN } from '../../utils/constants';
 
 function BurgerIngredients() {
@@ -13,14 +9,9 @@ function BurgerIngredients() {
   const [bunActive, setBunActive] = useState(false);
   const [sauceActive, setSauceActive] = useState(false);
   const [mainActive, setMainActive] = useState(false);
-  const dispatch = useDispatch();
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
   const mainRef = useRef(null);
-
-  const isModalIngredientOpen = useSelector(
-    (store) => store.openCard.browsedIngredient
-  );
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {

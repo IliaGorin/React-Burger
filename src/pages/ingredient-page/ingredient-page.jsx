@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useLocation, useNavigation, useParams } from 'react-router-dom';
+import React from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 import styles from './ingredient-page.module.css';
