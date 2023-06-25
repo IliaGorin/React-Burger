@@ -1,4 +1,6 @@
-function DayOfOrder({ createdAt }) {
+import React, { FC } from 'react';
+
+const DayOfOrder: FC = ({ createdAt }) => {
   const currentDay = new Date().getDate();
   const dayOfOrder = createdAt.slice(8, 10);
 
@@ -8,6 +10,6 @@ function DayOfOrder({ createdAt }) {
       {createdAt.slice(11, 16)} {`i-GMT+3`}
     </p>
   );
-}
+};
 
 export default DayOfOrder;

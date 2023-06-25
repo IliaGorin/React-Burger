@@ -1,10 +1,10 @@
-import { React, useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForBurgeringredients from './burger-ingredients.module.css';
 import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
 import { BUN, SAUCE, MAIN } from '../../utils/constants';
 
-function BurgerIngredients() {
+const BurgerIngredients: FC = () => {
   const [current, setCurrent] = useState(BUN);
   const [bunActive, setBunActive] = useState(false);
   const [sauceActive, setSauceActive] = useState(false);
@@ -84,6 +84,6 @@ function BurgerIngredients() {
       </ul>
     </section>
   );
-}
+};
 
 export default BurgerIngredients;

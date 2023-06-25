@@ -1,11 +1,14 @@
 import { URL_API } from '../../utils/constants';
+import { PostDetails, Response } from '../../utils/Types/data';
 
-export function sendRequest(url, options) {
+export function sendRequest(url: string, options: PostDetails) {
   return fetch(`${URL_API}${url}`, options).then(checkResponse);
 }
 
-export const checkResponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+export const checkResponse = (res: Response) => {
+  return res.ok
+    ? res.json()
+    : res.json().then((err: Response) => Promise.reject(err));
 };
 
 export function refreshTokens() {

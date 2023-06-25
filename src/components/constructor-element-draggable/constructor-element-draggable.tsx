@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, FC } from 'react';
 import {
   ConstructorElement,
   DragIcon,
@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { reorderConstructor } from '../../services/actions/ingr-in-constructor-actions';
 import PropTypes from 'prop-types';
 
-function ConstructorElementDraggable({
+const ConstructorElementDraggable: FC = ({
   id,
   index,
   text,
@@ -17,7 +17,7 @@ function ConstructorElementDraggable({
   thumbnail,
   handleKey,
   ...props
-}) {
+}) => {
   const dispatch = useDispatch();
 
   const ref = useRef();
@@ -89,7 +89,7 @@ function ConstructorElementDraggable({
       />
     </li>
   );
-}
+};
 
 ConstructorElementDraggable.propTypes = {
   text: PropTypes.string.isRequired,

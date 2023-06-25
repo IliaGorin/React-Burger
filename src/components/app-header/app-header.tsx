@@ -6,14 +6,16 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForAppHeader from './app-header.module.css';
 import { Link, NavLink, useMatch } from 'react-router-dom';
+import React, { FC } from 'react';
 
-export const AppHeader = () => {
+export const AppHeader: FC = () => {
   const isConstructor = !!useMatch({ path: '/', end: true });
   const isOrders = !!useMatch({ path: '/feed' });
   const isProfile = !!useMatch({ path: '/profile', end: false });
 
   const activeLinkStyle = `${stylesForAppHeader.link} text_type_main-default`;
   const inactiveLinkStyle = `${stylesForAppHeader.link} text_type_main-default text_color_inactive`;
+
   return (
     <header className={stylesForAppHeader.header}>
       <nav className={stylesForAppHeader.nav}>

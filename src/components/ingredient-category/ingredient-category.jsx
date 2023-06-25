@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, FC } from 'react';
 import classes from './ingredient-category.module.css';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import PropTypes from 'prop-types';

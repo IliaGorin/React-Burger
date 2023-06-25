@@ -18,6 +18,8 @@ const enhancer = composeWithDevTools(
 
 export const store = createStore(rootReducer, enhancer);
 
+export type RootState = ReturnType<typeof store.getState>;
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

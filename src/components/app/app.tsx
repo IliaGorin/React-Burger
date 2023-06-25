@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RootLayout from '../../pages/root/root';
@@ -80,7 +80,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-function App() {
+const App: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -92,6 +92,6 @@ function App() {
   }, [dispatch]);
 
   return <RouterProvider router={router} />;
-}
+};
 
 export default App;

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import { typeOfingredient } from '../../utils/propTypes.js';
 import {
   CurrencyIcon,
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForBurgeringredient from './burger-ingredient.module.css';
-import { openIngredientDetails } from '../../services/actions/browsed-ingredient-actions';
+import { openIngredientDetails } from '../../services/actions/browsed-ingredient-actions.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { BUN } from '../../utils/constants.js';
 import { Link, useLocation } from 'react-router-dom';
 
-function BurgerIngredient({ data }) {
+const BurgerIngredient: FC = ({ data }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({
@@ -32,10 +32,10 @@ function BurgerIngredient({ data }) {
       );
     }
     if (bun && data.type === BUN && data.name === bun.name) {
-      setCounter('2');
+      setCounter(2);
     }
     if (bun && data.type === BUN && data.name !== bun.name) {
-      setCounter('0');
+      setCounter(0);
     }
   }, [ingredientsForCurrentBurger, bun, data.name, data.type, data._id]);
 
@@ -65,7 +65,7 @@ function BurgerIngredient({ data }) {
       </div>
     </Link>
   );
-}
+};
 
 BurgerIngredient.propTypes = {
   data: typeOfingredient.isRequired,

@@ -1,10 +1,35 @@
 import { URL_API } from '../../utils/constants';
 import { checkResponse, sendRequest } from './index';
+import { Order } from '../../utils/Types/data';
 
-export const SEND_ORDER = 'SEND_ORDER';
-export const SEND_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
-export const SEND_ORDER_FAILED = 'SEND_ORDER_FAILED';
-export const CLEAR_ORDER = 'CLEAR_ORDER';
+export const SEND_ORDER: 'SEND_ORDER' = 'SEND_ORDER';
+export const SEND_ORDER_SUCCESS: 'SEND_ORDER_SUCCESS' = 'SEND_ORDER_SUCCESS';
+export const SEND_ORDER_FAILED: 'SEND_ORDER_FAILED' = 'SEND_ORDER_FAILED';
+export const CLEAR_ORDER: 'CLEAR_ORDER' = 'CLEAR_ORDER';
+
+export type OrderRequest = {
+  readonly type: typeof SEND_ORDER;
+};
+
+export type OrderSuccess = {
+  readonly type: typeof SEND_ORDER_SUCCESS;
+  order: Order | null;
+};
+
+export type OrderError = {
+  readonly type: typeof SEND_ORDER_FAILED;
+};
+
+export interface OrderClear {
+  readonly type: typeof CLEAR_ORDER;
+  data: null;
+}
+
+export type PostOrderActions =
+  | OrderRequest
+  | OrderSuccess
+  | OrderError
+  | OrderClear;
 
 export const postOrder = (orderedIngredients) => {
   return (dispatch) => {

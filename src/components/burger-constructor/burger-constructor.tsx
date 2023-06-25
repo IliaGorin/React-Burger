@@ -1,4 +1,4 @@
-import { React, useEffect, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -23,7 +23,7 @@ import ConstructorElementDraggable from '../constructor-element-draggable/constr
 import { BUN } from '../../utils/constants.js';
 import { clearConstructor } from '../../services/actions/ingr-in-constructor-actions';
 
-function BurgerConstructor() {
+const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const orderNumber = useSelector((store) => store.order.order);
   const orderPostProcessing = useSelector(
@@ -182,6 +182,6 @@ function BurgerConstructor() {
       )}
     </section>
   );
-}
+};
 
 export default BurgerConstructor;
