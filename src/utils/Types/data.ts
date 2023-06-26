@@ -36,3 +36,13 @@ export type Order = {
   updatedAt: string;
   number: number;
 };
+
+export type Ws_Order = {
+  id: number;
+  order: {
+    ingredients?: Array<Ingredient>;
+    createdAt: string;
+    number: number;
+    name: string;
+  };
+};

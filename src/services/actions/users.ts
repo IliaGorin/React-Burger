@@ -1,4 +1,5 @@
 import { sendRequest, refreshTokens } from './index';
+import { AppThunk, AppDispatch } from '../../utils/Types';
 
 export const FORGOT_PASSWORD: 'FORGOT_PASSWORD' = 'FORGOT_PASSWORD';
 export const FORGOT_PASSWORD_SUCCESSFUL: 'FORGOT_PASSWORD_SUCCESSFUL' =
@@ -25,7 +26,91 @@ export const REFRESH_USER: 'REFRESH_USER' = 'REFRESH_USER';
 export const REFRESH_USER_SUCCESS: 'REFRESH_USER_SUCCESS' =
   'REFRESH_USER_SUCCESS';
 
-export type UserActions = string;
+export type ForgotPasswordRequest = {
+  readonly type: typeof FORGOT_PASSWORD;
+  email: string;
+};
+
+export type ForgotPasswordSuccessful = {
+  readonly type: typeof FORGOT_PASSWORD_SUCCESSFUL;
+};
+
+export type RegistrationRequest = {
+  readonly type: typeof REGISTER_USER;
+  email: string;
+  password: string;
+  name: string;
+};
+
+export type RegistrationSuccessful = {
+  readonly type: typeof REGISTER_USER_SUCCESSFUL;
+};
+
+export type ResetPasswordRequest = {
+  readonly type: typeof RESET_PASSWORD;
+  token: string;
+  password: string;
+};
+
+export type ResetPasswordSuccessful = {
+  readonly type: typeof RESET_PASSWORD_SUCCESSFUL;
+};
+
+export type LoginRequest = {
+  readonly type: typeof LOGIN_USER;
+  email: string;
+  password: string;
+};
+
+export type LoginSuccessful = {
+  readonly type: typeof LOGIN_USER_SUCCESSFUL;
+  email: string;
+  name: string;
+};
+
+export type GetUserRequest = {
+  readonly type: typeof GET_USER_INFO;
+};
+
+export type GetUserSuccessful = {
+  readonly type: typeof GET_USER_INFO_SUCCESSFUL;
+  email: string;
+  name: string;
+};
+
+export type PatchUserRequest = {
+  readonly type: typeof PATCH_USER_INFO;
+  email: string;
+  name: string;
+};
+
+export type PatchUserSuccessful = {
+  readonly type: typeof PATCH_USER_INFO_SUCCESSFUL;
+};
+
+export type LogoutUser = {
+  readonly type: typeof LOGOUT_USER;
+};
+
+export type LogoutUserSuccessful = {
+  readonly type: typeof LOGOUT_USER_SUCCESSFUL;
+};
+
+export type UserActions =
+  | ForgotPasswordRequest
+  | ForgotPasswordSuccessful
+  | RegistrationRequest
+  | RegistrationSuccessful
+  | ResetPasswordRequest
+  | ResetPasswordSuccessful
+  | LoginRequest
+  | LoginSuccessful
+  | GetUserRequest
+  | GetUserSuccessful
+  | PatchUserRequest
+  | PatchUserSuccessful
+  | LogoutUser
+  | LogoutUserSuccessful;
 
 export const changePasswordRequest = (email, navigate) => {
   return (dispatch) => {

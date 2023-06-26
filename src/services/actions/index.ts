@@ -1,7 +1,7 @@
 import { URL_API } from '../../utils/constants';
 import { PostDetails, Response } from '../../utils/Types/data';
 
-export function sendRequest(url: string, options: PostDetails) {
+export function sendRequest(url: string, options?: PostDetails) {
   return fetch(`${URL_API}${url}`, options).then(checkResponse);
 }
 

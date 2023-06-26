@@ -4,9 +4,20 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_STOP,
   WS_GET_ORDERS,
+  WsActions,
 } from '../actions/ws-actions';
+import { Order } from '../../utils/Types/data';
 
-const initialState = {
+type State = {
+  error: undefined | Event;
+  wsConnected: boolean;
+  allOrders: Array<Order>;
+  userOrders: Array<Order>;
+  total: number;
+  totalToday: number;
+};
+
+const initialState: State = {
   error: undefined,
   wsConnected: false,
   allOrders: [],
@@ -15,7 +26,7 @@ const initialState = {
   totalToday: 0,
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsReducer = (state = initialState, action: WsActions): State => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {

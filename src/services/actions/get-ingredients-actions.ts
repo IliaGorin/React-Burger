@@ -1,5 +1,6 @@
 import { sendRequest } from './index';
 import { Ingredient } from '../../utils/Types/data';
+import { AppThunk, AppDispatch } from '../../utils/Types';
 
 export const GET_INGREDIENTS: 'GET_INGREDIENTS' = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' =
@@ -31,23 +32,21 @@ export type GetIngredientsActions =
   | GetIngredientsSuccess
   | GetIngredientsError;
 
-export const getIngredients = () => {
-  return (dispatch) => {
-    dispatch({
-      type: GET_INGREDIENTS,
-    });
-    sendRequest(`/ingredients`)
-      .then((res) => {
-        dispatch({
-          type: GET_INGREDIENTS_SUCCESS,
-          data: res.data,
-        });
-      })
-      .catch((err) => {
-        dispatch({
-          type: GET_INGREDIENTS_FAILED,
-          error: err.message,
-        });
+export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
+  dispatch({
+    type: GET_INGREDIENTS,
+  });
+  sendRequest(`/ingredients`)
+    .then((res) => {
+      dispatch({
+        type: GET_INGREDIENTS_SUCCESS,
+        data: res.data,
       });
-  };
+    })
+    .catch((err) => {
+      dispatch({
+        type: GET_INGREDIENTS_FAILED,
+        error: err.message,
+      });
+    });
 };
