@@ -17,8 +17,11 @@ export type Ingredient = {
 };
 
 export type PostDetails = {
-  method: 'POST' | 'GET' | 'PATCH';
-  headers: {};
+  method: string;
+  headers: {
+    'Content-Type': string;
+    Authorization?: string | null;
+  };
   body?: string;
 };
 

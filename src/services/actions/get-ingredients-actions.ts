@@ -32,21 +32,23 @@ export type GetIngredientsActions =
   | GetIngredientsSuccess
   | GetIngredientsError;
 
-export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
-  dispatch({
-    type: GET_INGREDIENTS,
-  });
-  sendRequest(`/ingredients`)
-    .then((res) => {
-      dispatch({
-        type: GET_INGREDIENTS_SUCCESS,
-        data: res.data,
-      });
-    })
-    .catch((err) => {
-      dispatch({
-        type: GET_INGREDIENTS_FAILED,
-        error: err.message,
-      });
+export const getIngredients = () => {
+  return function (dispatch: AppDispatch) {
+    dispatch({
+      type: GET_INGREDIENTS,
     });
+    sendRequest(`/ingredients`)
+      .then((res) => {
+        dispatch({
+          type: GET_INGREDIENTS_SUCCESS,
+          data: res.data,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: GET_INGREDIENTS_FAILED,
+          error: err.message,
+        });
+      });
+  };
 };

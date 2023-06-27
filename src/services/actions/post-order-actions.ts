@@ -1,6 +1,7 @@
 import { URL_API } from '../../utils/constants';
 import { checkResponse, sendRequest } from './index';
-import { Order } from '../../utils/Types/data';
+import { Ingredient, Order } from '../../utils/Types/data';
+import { AppDispatch } from '../../utils/Types';
 
 export const SEND_ORDER: 'SEND_ORDER' = 'SEND_ORDER';
 export const SEND_ORDER_SUCCESS: 'SEND_ORDER_SUCCESS' = 'SEND_ORDER_SUCCESS';
@@ -31,8 +32,8 @@ export type PostOrderActions =
   | OrderError
   | OrderClear;
 
-export const postOrder = (orderedIngredients) => {
-  return (dispatch) => {
+export const postOrder = (orderedIngredients: Array<Ingredient>) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: SEND_ORDER,
     });

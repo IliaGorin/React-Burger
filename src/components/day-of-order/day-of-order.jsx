@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-const DayOfOrder: FC = ({ createdAt }) => {
+const DayOfOrder = ({ createdAt }) => {
   const currentDay = new Date().getDate();
   const dayOfOrder = createdAt.slice(8, 10);
 

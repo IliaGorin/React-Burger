@@ -5,13 +5,13 @@ import {
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForBurgeringredient from './burger-ingredient.module.css';
-import { openIngredientDetails } from '../../services/actions/browsed-ingredient-actions.js';
+import { openIngredientDetails } from '../../services/actions/browsed-ingredient-actions.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { BUN } from '../../utils/constants.js';
 import { Link, useLocation } from 'react-router-dom';
 
-const BurgerIngredient: FC = ({ data }) => {
+const BurgerIngredient = ({ data }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({

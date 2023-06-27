@@ -4,7 +4,7 @@ import stylesForBurgeringredients from './burger-ingredients.module.css';
 import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
 import { BUN, SAUCE, MAIN } from '../../utils/constants';
 
-const BurgerIngredients: FC = () => {
+const BurgerIngredients = () => {
   const [current, setCurrent] = useState(BUN);
   const [bunActive, setBunActive] = useState(false);
   const [sauceActive, setSauceActive] = useState(false);

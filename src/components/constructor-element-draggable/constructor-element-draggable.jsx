@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { reorderConstructor } from '../../services/actions/ingr-in-constructor-actions';
 import PropTypes from 'prop-types';
 
-const ConstructorElementDraggable: FC = ({
+const ConstructorElementDraggable = ({
   id,
   index,
   text,
