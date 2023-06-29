@@ -10,6 +10,7 @@ import { GetIngredientsActions } from '../../services/actions/get-ingredients-ac
 import { IngredientInConstructorActions } from '../../services/actions/ingr-in-constructor-actions';
 import { PostOrderActions } from '../../services/actions/post-order-actions';
 import { WsActions } from '../../services/actions/ws-actions';
+import { UserActions } from '../../services/actions/users';
 
 import { store } from '../..';
 
@@ -19,6 +20,7 @@ export type ApplicationActions =
   | GetIngredientsActions
   | IngredientInConstructorActions
   | PostOrderActions
+  | UserActions
   | WsActions;
 
 export type RootState = ReturnType<typeof store.getState>;

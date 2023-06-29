@@ -9,7 +9,16 @@ export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' =
   'WS_CONNECTION_CLOSED';
 export const WS_GET_ORDERS: 'WS_GET_ORDERS' = 'WS_GET_ORDERS';
 
-export const wsActions = {
+export type WsSocketMiddlewareActions = {
+  readonly wsInit: typeof WS_CONNECTION_START;
+  readonly wsClose: typeof WS_CONNECTION_STOP;
+  readonly onOpen: typeof WS_CONNECTION_SUCCESS;
+  readonly onError: typeof WS_CONNECTION_ERROR;
+  readonly onClose: typeof WS_CONNECTION_CLOSED;
+  readonly onGetOrder: typeof WS_GET_ORDERS;
+};
+
+export const wsActions: WsSocketMiddlewareActions = {
   wsInit: WS_CONNECTION_START,
   wsClose: WS_CONNECTION_STOP,
   onOpen: WS_CONNECTION_SUCCESS,
@@ -28,6 +37,7 @@ export type WsConnectionStart = {
 
 export type WsConnectionStop = {
   type: typeof WS_CONNECTION_STOP;
+  payload?: Event;
 };
 
 export type WsConnectionSuccess = {

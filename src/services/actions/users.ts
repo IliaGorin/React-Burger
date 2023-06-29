@@ -1,5 +1,6 @@
-/*import { sendRequest, refreshTokens } from './index';
-import { AppThunk, AppDispatch } from '../../utils/Types';
+import { sendRequest, refreshTokens } from './index';
+import { AppDispatch } from '../../utils/Types';
+import { NavigateFunction } from 'react-router-dom';
 
 export const FORGOT_PASSWORD: 'FORGOT_PASSWORD' = 'FORGOT_PASSWORD';
 export const FORGOT_PASSWORD_SUCCESSFUL: 'FORGOT_PASSWORD_SUCCESSFUL' =
@@ -112,10 +113,14 @@ export type UserActions =
   | LogoutUser
   | LogoutUserSuccessful;
 
-export const changePasswordRequest = (email, navigate) => {
-  return (dispatch) => {
+export const changePasswordRequest = (
+  email: string,
+  navigate: NavigateFunction
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: FORGOT_PASSWORD,
+      email: email,
     });
     const postDetails = {
       method: 'POST',
@@ -136,8 +141,13 @@ export const changePasswordRequest = (email, navigate) => {
   };
 };
 
-export const registerUser = (name, email, password, navigate) => {
-  return (dispatch) => {
+export const registerUser = (
+  name: string,
+  email: string,
+  password: string,
+  navigate: NavigateFunction
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTER_USER,
       email: email,
@@ -164,12 +174,16 @@ export const registerUser = (name, email, password, navigate) => {
   };
 };
 
-export const resetPassword = (form, navigate) => {
+export const resetPassword = (
+  form: { password: string; token: string },
+  navigate: NavigateFunction
+) => {
   const { password, token } = form;
-  return (dispatch) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: RESET_PASSWORD,
       token: token,
+      password: password,
     });
     const postDetails = {
       method: 'POST',
@@ -185,8 +199,13 @@ export const resetPassword = (form, navigate) => {
   };
 };
 
-export const loginUser = (email, password, navigate, redirectRoute) => {
-  return (dispatch) => {
+export const loginUser = (
+  email: string,
+  password: string,
+  navigate: NavigateFunction,
+  redirectRoute: string
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGIN_USER,
       email: email,
@@ -208,7 +227,7 @@ export const loginUser = (email, password, navigate, redirectRoute) => {
             name: data.user.name,
             email: data.user.email,
           });
-          localStorage.setItem('isLoggedIn', true);
+          localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('accessToken', data.accessToken);
           localStorage.setItem('refreshToken', data.refreshToken);
           navigate(redirectRoute);
@@ -219,7 +238,7 @@ export const loginUser = (email, password, navigate, redirectRoute) => {
 };
 
 export const getUserInfo = () => {
-  return (dispatch) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_INFO,
     });
@@ -271,8 +290,12 @@ export const getUserInfo = () => {
   };
 };
 
-export const patchUserInfo = (name, email, password) => {
-  return (dispatch) => {
+export const patchUserInfo = (
+  name: string,
+  email: string,
+  password: string
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: PATCH_USER_INFO,
       email: email,
@@ -326,8 +349,8 @@ export const patchUserInfo = (name, email, password) => {
   };
 };
 
-export const logoutUser = (navigate, pathname) => {
-  return (dispatch) => {
+export const logoutUser = (navigate: NavigateFunction) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGOUT_USER,
     });
@@ -355,8 +378,7 @@ export const logoutUser = (navigate, pathname) => {
   };
 };
 
-*/
-import { sendRequest, refreshTokens } from './index';
+/*import { sendRequest, refreshTokens } from './index';
 
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const FORGOT_PASSWORD_SUCCESSFUL = 'FORGOT_PASSWORD_SUCCESSFUL';
@@ -617,3 +639,4 @@ export const logoutUser = (navigate, pathname) => {
       .catch((err) => alert(`'Ошибка, код ошибки: ', ${err.message}`));
   };
 };
+*/

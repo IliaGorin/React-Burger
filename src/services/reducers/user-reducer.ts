@@ -13,9 +13,20 @@ import {
   PATCH_USER_INFO_SUCCESSFUL,
   LOGOUT_USER_SUCCESSFUL,
   LOGOUT_USER,
+  UserActions,
 } from '../actions/users';
 
-const initialState = {
+type State = {
+  email: string;
+  token: string;
+  password: string;
+  name: string;
+  pending: boolean;
+  success: boolean;
+  isLoggedIn: boolean;
+};
+
+const initialState: State = {
   email: '',
   token: '',
   password: '',
@@ -25,7 +36,10 @@ const initialState = {
   isLoggedIn: false,
 };
 
-export const usersReducer = (state = initialState, action) => {
+export const usersReducer = (
+  state = initialState,
+  action: UserActions
+): State => {
   switch (action.type) {
     case FORGOT_PASSWORD: {
       return {
@@ -141,7 +155,6 @@ export const usersReducer = (state = initialState, action) => {
     case LOGOUT_USER_SUCCESSFUL: {
       return {
         ...state,
-        user: '',
         email: '',
         name: '',
         password: '',

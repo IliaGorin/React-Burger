@@ -3,15 +3,26 @@ import {
   SEND_ORDER_SUCCESS,
   SEND_ORDER_FAILED,
   CLEAR_ORDER,
+  PostOrderActions,
 } from '../actions/post-order-actions';
+import { Order } from '../../utils/Types/data';
 
-const initialStatePost = {
+type State = {
+  order: Order | null;
+  orderPostProcessing: boolean;
+  orderPostFailed: boolean;
+};
+
+const initialStatePost: State = {
   order: null,
   orderPostProcessing: false,
   orderPostFailed: false,
 };
 
-export const postOrderReducer = (state = initialStatePost, action) => {
+export const postOrderReducer = (
+  state = initialStatePost,
+  action: PostOrderActions
+): State => {
   switch (action.type) {
     case SEND_ORDER: {
       return {
