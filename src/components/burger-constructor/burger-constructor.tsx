@@ -1,4 +1,4 @@
-/*import React, { FC, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -23,10 +23,11 @@ import {
 import ConstructorElementDraggable from '../constructor-element-draggable/constructor-element-draggable.jsx';
 import { BUN } from '../../utils/constants.js';
 import { clearConstructor } from '../../services/actions/ingr-in-constructor-actions';
+import { Ingredient } from '../../utils/Types/data';
 
 const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
-  const orderNumber = useSelector((store) => store.order.order);
+  const orderNumber = useSelector((store) => store.order.order?.number);
   const orderPostProcessing = useSelector(
     (store) => store.order.orderPostProcessing
   );
@@ -40,7 +41,9 @@ const BurgerConstructor: FC = () => {
   const ingredientsForCurrentBurger = useSelector(
     (store) => store.inConstructor.ingredients
   );
-  const bun = useSelector((store) => store.inConstructor.bun);
+  const bun: Ingredient | null = useSelector(
+    (store) => store.inConstructor.bun
+  );
 
   const currentPrice = useMemo(() => {
     return (
@@ -54,7 +57,7 @@ const BurgerConstructor: FC = () => {
     );
   }, [ingredientsForCurrentBurger, bun]);
 
-  const makeOrder = (orderedIngredients) => {
+  const makeOrder = (orderedIngredients: Array<Ingredient>) => {
     dispatch(postOrder(orderedIngredients));
   };
 
@@ -65,7 +68,7 @@ const BurgerConstructor: FC = () => {
   // eslint-disable-next-line
   const [{ isOver }, dropRef] = useDrop({
     accept: 'ingredient',
-    drop: (item) => {
+    drop: (item: Ingredient) => {
       if (item.type !== BUN) {
         dispatch(addIngredientToConstructor(item));
       } else if (item.type === BUN) {
@@ -77,7 +80,7 @@ const BurgerConstructor: FC = () => {
     }),
   });
 
-  const deleteItem = (item) => {
+  const deleteItem = (item: string) => {
     dispatch(removeIngredientFromConstructor(item));
   };
   // eslint-disable-next-line
@@ -85,18 +88,20 @@ const BurgerConstructor: FC = () => {
     type: 'ingredient',
   });
 
-  const bunRender = (type, name) => {
-    return (
-      <div className={`ml-8`}>
-        <ConstructorElement
-          type={type}
-          isLocked={true}
-          text={`${bun.name} (${name})`}
-          price={bun.price}
-          thumbnail={bun.image}
-        />
-      </div>
-    );
+  const bunRender = (type: 'top' | 'bottom' | undefined, name: string) => {
+    if (bun !== null) {
+      return (
+        <div className={`ml-8`}>
+          <ConstructorElement
+            type={type}
+            isLocked={true}
+            text={`${bun.name} (${name})`}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+        </div>
+      );
+    }
   };
 
   return (
@@ -169,7 +174,7 @@ const BurgerConstructor: FC = () => {
       )}
 
       {orderPostProcessing && (
-        <Modal closeModal={closeOrderModal}>
+        <Modal closeModal={closeOrderModal} title="">
           <p className={'text text_type_main-default'}>
             Заказ обрабатывается...
           </p>
@@ -177,7 +182,7 @@ const BurgerConstructor: FC = () => {
       )}
 
       {orderNumber && (
-        <Modal closeModal={closeOrderModal}>
+        <Modal closeModal={closeOrderModal} title="">
           <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
@@ -186,7 +191,8 @@ const BurgerConstructor: FC = () => {
 };
 
 export default BurgerConstructor;
-*/
+
+/*
 import { React, useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { typeOfingredient } from '../../utils/propTypes.js';
@@ -358,3 +364,4 @@ function BurgerConstructor() {
 }
 
 export default BurgerConstructor;
+*/

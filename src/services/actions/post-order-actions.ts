@@ -23,8 +23,15 @@ export type OrderError = {
 
 export interface OrderClear {
   readonly type: typeof CLEAR_ORDER;
-  data: null;
+  order: null;
 }
+
+export const clearOrder = () => {
+  return {
+    type: CLEAR_ORDER,
+    order: null,
+  };
+};
 
 export type PostOrderActions =
   | OrderRequest
@@ -59,12 +66,5 @@ export const postOrder = (orderedIngredients: Array<Ingredient>) => {
           error: err.message,
         });
       });
-  };
-};
-
-export const clearOrder = () => {
-  return {
-    type: CLEAR_ORDER,
-    order: null,
   };
 };

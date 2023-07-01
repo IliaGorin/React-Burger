@@ -31,13 +31,15 @@ export type Response = {
 };
 
 export type Order = {
+  ingredients: Array<Ingredient>;
   _id: string;
-  ingredients: Array<string>;
+  owner: { name: string; email: string; createdAt: string; updatedAt: string };
   status: Status;
   name: string;
   createdAt: string;
   updatedAt: string;
   number: number;
+  price: number;
 };
 
 export type Ws_Order = {
