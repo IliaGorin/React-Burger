@@ -8,7 +8,7 @@ import {
 import { Order } from '../../utils/Types/data';
 
 type State = {
-  order: Order | null;
+  order: number | null;
   orderPostProcessing: boolean;
   orderPostFailed: boolean;
 };

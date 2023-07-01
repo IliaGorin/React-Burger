@@ -27,7 +27,7 @@ import { Ingredient } from '../../utils/Types/data';
 
 const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
-  const orderNumber = useSelector((store) => store.order.order?.number);
+  const orderNumber = useSelector((store) => store.order.order);
   const orderPostProcessing = useSelector(
     (store) => store.order.orderPostProcessing
   );

@@ -14,7 +14,7 @@ export type OrderRequest = {
 
 export type OrderSuccess = {
   readonly type: typeof SEND_ORDER_SUCCESS;
-  order: Order | null;
+  order: number | null;
 };
 
 export type OrderError = {
