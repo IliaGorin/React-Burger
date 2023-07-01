@@ -15,6 +15,7 @@ export type Ingredient = {
   price: number;
   __v: number;
   keyId?: string;
+  counter?: number;
 };
 
 export type PostDetails = {

@@ -2,32 +2,35 @@ import styles from './order-info-modal.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import DayOfOrder from '../day-of-order/day-of-order';
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/Types';
 import { v4 as uuid4 } from 'uuid';
+import { FC } from 'react';
+import { OrderType } from '../../utils/Types/data';
 
-function OrderInfoModal(props) {
+const OrderInfoModal: FC<{ data: OrderType }> = ({ data }) => {
   const allIngredients = useSelector((store) => store.ingredients.data);
-  const { name, createdAt, number, ingredients, status } = props.data;
+  const { name, createdAt, number, ingredients, status } = data;
 
   const orderIngredients = useMemo(
     () =>
       ingredients
         .filter((id) => id !== null)
-        .map((id) => allIngredients.find((item) => id === item._id)),
+        .map((id) => allIngredients?.find((item) => id === item._id)),
     [ingredients, allIngredients]
   );
   const priceScore = useMemo(() => {
-    return orderIngredients.reduce((acc, element) => acc + element.price, 0);
+    return orderIngredients.reduce((acc, element) => acc + element!.price, 0);
   }, [orderIngredients]);
 
   const arrayWithCounter = orderIngredients.map((ingredient) => {
-    return (ingredient.counter = orderIngredients.filter(
-      (item) => item._id === ingredient._id
+    return (ingredient!.counter = orderIngredients.filter(
+      (item) => item!._id === ingredient!._id
     ).length);
   });
 
   orderIngredients.forEach((ingredient, index) => {
-    ingredient.counter = arrayWithCounter[index];
+    ingredient!.counter = arrayWithCounter[index];
   });
 
   const set = new Set(orderIngredients);
@@ -78,7 +81,7 @@ function OrderInfoModal(props) {
                         >
                           {`${
                             orderIngredients.filter(
-                              (item) => item._id === element._id
+                              (item) => item!._id === element._id
                             ).length
                           } x ${element.price}`}
                         </p>
@@ -102,6 +105,6 @@ function OrderInfoModal(props) {
       </div>
     </main>
   );
-}
+};
 
 export default OrderInfoModal;
