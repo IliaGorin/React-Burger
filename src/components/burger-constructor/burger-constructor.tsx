@@ -20,7 +20,7 @@ import {
   removeIngredientFromConstructor,
   addBunToConstructor,
 } from '../../services/actions/ingr-in-constructor-actions';
-import ConstructorElementDraggable from '../constructor-element-draggable/constructor-element-draggable.jsx';
+import ConstructorElementDraggable from '../constructor-element-draggable/constructor-element-draggable';
 import { BUN } from '../../utils/constants';
 import { clearConstructor } from '../../services/actions/ingr-in-constructor-actions';
 import { Ingredient } from '../../utils/Types/data';
@@ -131,7 +131,7 @@ const BurgerConstructor: FC = () => {
             price={ingredient.price}
             thumbnail={ingredient.image}
             handleClose={deleteItem}
-            handleKey={ingredient.keyId}
+            handleKey={ingredient.keyId ? ingredient.keyId : 'someID'}
             index={index}
             key={ingredient.keyId}
             id={ingredient.keyId}

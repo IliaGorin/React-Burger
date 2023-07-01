@@ -3,24 +3,34 @@ import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDrop, useDrag } from 'react-dnd';
+import { useDrop, useDrag, DropTargetMonitor } from 'react-dnd';
 import styles from './constructor-element-draggable.module.css';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/Types';
 import { reorderConstructor } from '../../services/actions/ingr-in-constructor-actions';
-import PropTypes from 'prop-types';
 
-const ConstructorElementDraggable = ({
-  id,
-  index,
-  text,
-  price,
-  thumbnail,
-  handleKey,
-  ...props
-}) => {
+const ConstructorElementDraggable: FC<{
+  id: string | undefined;
+  index: number;
+  text: string;
+  price: number;
+  thumbnail: string;
+  handleKey: string;
+  handleClose: (item: string) => void;
+}> = ({ id, index, text, price, thumbnail, handleKey, handleClose }) => {
   const dispatch = useDispatch();
 
-  const ref = useRef();
+  const ref = useRef<HTMLLIElement>(null);
+
+  const [{ isDragging }, drag] = useDrag({
+    type: 'sortingIgredients',
+    item: () => {
+      return { id, index };
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
 
   const [, drop] = useDrop(() => ({
     accept: 'sortingIgredients',
@@ -29,7 +39,10 @@ const ConstructorElementDraggable = ({
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover: (
+      item: { index: number; type: string; id: string },
+      monitor: DropTargetMonitor
+    ) => {
       if (!ref.current) {
         return;
       }
@@ -41,9 +54,12 @@ const ConstructorElementDraggable = ({
       }
 
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const clientOffset = monitor.getClientOffset();
+
+      if (!hoverBoundingRect || !clientOffset) return;
+
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
@@ -57,16 +73,6 @@ const ConstructorElementDraggable = ({
       item.index = hoverIndex;
     },
   }));
-
-  const [{ isDragging }, drag] = useDrag({
-    type: 'sortingIgredients',
-    item: () => {
-      return { id, index };
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
 
   drag(drop(ref));
 
@@ -85,20 +91,10 @@ const ConstructorElementDraggable = ({
         text={text}
         price={price}
         thumbnail={thumbnail}
-        handleClose={() => props.handleClose(handleKey)}
+        handleClose={() => handleClose(handleKey)}
       />
     </li>
   );
-};
-
-ConstructorElementDraggable.propTypes = {
-  text: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  handleKey: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired,
 };
 
 export default ConstructorElementDraggable;
