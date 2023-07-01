@@ -2,12 +2,15 @@ import styles from './order.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import DayOfOrder from '../day-of-order/day-of-order';
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/Types';
 import { v4 as uuid4 } from 'uuid';
+import { FC } from 'react';
+import { OrderType } from '../../utils/Types/data';
 
-function Order(props) {
+const Order: FC<{ data: OrderType }> = ({ data }) => {
   const allIngredients = useSelector((store) => store.ingredients.data);
-  const { name, createdAt, number, ingredients } = props.data;
+  const { name, createdAt, number, ingredients } = data;
   const orderLength = ingredients.length;
   const notShownIngredientsCount = orderLength - 6;
 
@@ -15,11 +18,11 @@ function Order(props) {
     () =>
       ingredients
         .filter((id) => id !== null)
-        .map((id) => allIngredients.find((item) => id === item._id)),
+        .map((id) => allIngredients?.find((item) => id === item._id)),
     [ingredients, allIngredients]
   );
   const priceScore = useMemo(() => {
-    return orderIngredients.reduce((acc, element) => acc + element.price, 0);
+    return orderIngredients.reduce((acc, element) => acc + element!.price, 0);
   }, [orderIngredients]);
 
   return (
@@ -111,6 +114,6 @@ function Order(props) {
       </div>
     </main>
   );
-}
+};
 
 export default Order;

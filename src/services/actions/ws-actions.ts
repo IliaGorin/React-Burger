@@ -1,4 +1,4 @@
-import { Order } from '../../utils/Types/data';
+import { OrderType } from '../../utils/Types/data';
 
 export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
 export const WS_CONNECTION_STOP: 'WS_CONNECTION_STOP' = 'WS_CONNECTION_STOP';
@@ -58,7 +58,7 @@ export type WsConnectionClosed = {
 export type WSGetOrders = {
   readonly type: typeof WS_GET_ORDERS;
   payload: {
-    orders: Array<Order>;
+    orders: Array<OrderType>;
     total: number;
     totalToday: number;
     length: number;

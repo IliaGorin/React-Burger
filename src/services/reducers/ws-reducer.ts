@@ -6,13 +6,13 @@ import {
   WS_GET_ORDERS,
   WsActions,
 } from '../actions/ws-actions';
-import { Order } from '../../utils/Types/data';
+import { OrderType } from '../../utils/Types/data';
 
 type State = {
   error: undefined | Event;
   wsConnected: boolean;
-  allOrders: Array<Order>;
-  userOrders: Array<Order>;
+  allOrders: Array<OrderType>;
+  userOrders: Array<OrderType>;
   total: number;
   totalToday: number;
 };

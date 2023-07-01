@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import stylesForIngredientDetails from './ingredient-details.module.css';
+import { Ingredient } from '../../utils/Types/data';
 
-const IngredientDetails = ({ item }) => {
+const IngredientDetails: FC<{ item: Ingredient }> = ({ item }) => {
   return (
     <>
       {item && (

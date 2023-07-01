@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { FC, ReactNode, MouseEventHandler } from 'react';
 import stylesForModalOverlay from './modal-overlay.module.css';
-import PropTypes from 'prop-types';
 
-const ModalOverlay = ({ closeModal, children }) => {
-  const handleClickOnOverlay = (event) => {
+const ModalOverlay: FC<{
+  closeModal: () => void;
+  children: ReactNode;
+}> = ({ closeModal, children }) => {
+  const handleClickOnOverlay: MouseEventHandler = (event) => {
     if (event.target === event.currentTarget) {
       closeModal();
     }
@@ -17,11 +19,6 @@ const ModalOverlay = ({ closeModal, children }) => {
       {children}
     </section>
   );
-};
-
-ModalOverlay.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
 };
 
 export default ModalOverlay;

@@ -1,6 +1,6 @@
 import { URL_API } from '../../utils/constants';
 import { checkResponse, sendRequest } from './index';
-import { Ingredient, Order } from '../../utils/Types/data';
+import { Ingredient } from '../../utils/Types/data';
 import { AppDispatch } from '../../utils/Types';
 
 export const SEND_ORDER: 'SEND_ORDER' = 'SEND_ORDER';

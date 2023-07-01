@@ -5,7 +5,6 @@ import {
   CLEAR_ORDER,
   PostOrderActions,
 } from '../actions/post-order-actions';
-import { Order } from '../../utils/Types/data';
 
 type State = {
   order: number | null;

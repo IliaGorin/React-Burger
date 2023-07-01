@@ -7,6 +7,7 @@ export type Ingredient = {
   image: string;
   image_mobile: string;
   image_large: string;
+  alt: string;
   proteins: number;
   fat: number;
   carbohydrates: number;
@@ -30,8 +31,8 @@ export type Response = {
   json: any;
 };
 
-export type Order = {
-  ingredients: Array<Ingredient>;
+export type OrderType = {
+  ingredients: Array<string>;
   _id: string;
   owner: { name: string; email: string; createdAt: string; updatedAt: string };
   status: Status;
