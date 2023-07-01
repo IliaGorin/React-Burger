@@ -1,4 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  FC,
+  FormEvent,
+  MouseEventHandler,
+} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -6,10 +13,11 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './reset-password.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/Types';
 import { resetPassword } from '../../services/actions/users';
 
-export const ResetPasswordPage = () => {
+export const ResetPasswordPage: FC = () => {
   const navigate = useNavigate();
   const successEmail = useSelector((state) => state.users.success);
 
@@ -22,11 +30,11 @@ export const ResetPasswordPage = () => {
   const dispatch = useDispatch();
   const [form, setValue] = useState({ password: '', token: '' });
 
-  const onChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
+  const onChange = (e: FormEvent<HTMLInputElement>) => {
+    setValue({ ...form, [e.currentTarget.name]: e.currentTarget.value });
   };
 
-  const handlerResetPassword = useCallback(
+  const handlerResetPassword: MouseEventHandler<HTMLFormElement> = useCallback(
     (e) => {
       e.preventDefault();
       dispatch(resetPassword(form, navigate));
@@ -37,7 +45,7 @@ export const ResetPasswordPage = () => {
 
   return (
     <main className={styles.main}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handlerResetPassword}>
         <h1 className="text text_type_main-medium text_color_primary">
           Восстановление пароля
         </h1>
@@ -56,12 +64,7 @@ export const ResetPasswordPage = () => {
           errorText={'Ошибка'}
           onChange={onChange}
         />
-        <Button
-          htmlType="button"
-          type="primary"
-          size="medium"
-          onClick={handlerResetPassword}
-        >
+        <Button htmlType="submit" type="primary" size="medium">
           Сохранить
         </Button>
       </form>

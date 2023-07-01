@@ -1,4 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, {
+  useState,
+  useCallback,
+  FC,
+  FormEvent,
+  MouseEventHandler,
+} from 'react';
 import {
   Input,
   EmailInput,
@@ -7,21 +13,22 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import styles from './registration.module.css';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/Types';
 import { registerUser } from '../../services/actions/users';
 import { useNavigate } from 'react-router-dom';
 
-export const RegistrationPage = () => {
+export const RegistrationPage: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [form, setValue] = useState({ name: '', email: '', password: '' });
 
-  const onChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
+  const onChange = (e: FormEvent<HTMLInputElement>) => {
+    setValue({ ...form, [e.currentTarget.name]: e.currentTarget.value });
   };
 
-  const handleRegister = useCallback(
+  const handleRegister: MouseEventHandler<HTMLFormElement> = useCallback(
     (e) => {
       e.preventDefault();
       dispatch(registerUser(form.name, form.email, form.password, navigate));
@@ -31,7 +38,7 @@ export const RegistrationPage = () => {
 
   return (
     <main className={styles.main}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleRegister}>
         <h1 className="text text_type_main-medium text_color_primary">
           Регистрация
         </h1>
@@ -55,12 +62,7 @@ export const RegistrationPage = () => {
           name={'password'}
           onChange={onChange}
         />
-        <Button
-          onClick={handleRegister}
-          htmlType="button"
-          type="primary"
-          size="medium"
-        >
+        <Button htmlType="submit" type="primary" size="medium">
           Зарегистрироваться
         </Button>
       </form>

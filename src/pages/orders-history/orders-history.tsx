@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import Order from '../../components/order/order';
 import styles from './orders-history.module.css';
 import { ProfileNavMenu } from '../../components/profile-nav-menu/profile-nav-menu';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/Types';
 import { Link, useLocation } from 'react-router-dom';
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_STOP,
 } from '../../services/actions/ws-actions';
 
-export const OrdersHistoryPage = () => {
+export const OrdersHistoryPage: FC = () => {
   const orders = useSelector((store) => store.wsOrders.userOrders);
   const location = useLocation();
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ export const OrdersHistoryPage = () => {
                   state={{ background: location }}
                   className={styles.linkToOrder}
                 >
-                  <Order id={order._id} data={order} />
+                  <Order data={order} />
                 </Link>
               </li>
             );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC, FormEvent } from 'react';
 import {
   Input,
   Button,
@@ -8,10 +8,11 @@ import {
 import styles from './profile.module.css';
 import { ProfileNavMenu } from '../../components/profile-nav-menu/profile-nav-menu';
 import { getUserInfo, patchUserInfo } from '../../services/actions/users';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../utils/Types';
 import { useNavigate } from 'react-router-dom';
 
-export const ProfilePage = () => {
+export const ProfilePage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { name, email, password, isLoggedIn } = useSelector(
@@ -35,8 +36,8 @@ export const ProfilePage = () => {
     dispatch(getUserInfo());
   }, [dispatch]);
 
-  const onChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
+  const onChange = (e: FormEvent<HTMLInputElement>) => {
+    setValue({ ...form, [e.currentTarget.name]: e.currentTarget.value });
   };
 
   const handleUpdateUserInfo = () => {
@@ -66,12 +67,7 @@ export const ProfilePage = () => {
             icon={'EditIcon'}
             error={false}
           />
-          <EmailInput
-            onChange={onChange}
-            value={form.email}
-            name="email"
-            icon="EditIcon"
-          />
+          <EmailInput onChange={onChange} value={form.email} name="email" />
           <PasswordInput
             onChange={onChange}
             value={form.password}

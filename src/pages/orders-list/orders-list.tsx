@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import styles from './orders-list.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import Order from '../../components/order/order';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/Types';
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_STOP,
 } from '../../services/actions/ws-actions';
 
-export const OrdersListPage = () => {
+export const OrdersListPage: FC = () => {
   const orders = useSelector((store) => store.wsOrders.allOrders);
   const total = useSelector((store) => store.wsOrders.total);
   const totalToday = useSelector((store) => store.wsOrders.totalToday);
@@ -44,7 +45,7 @@ export const OrdersListPage = () => {
                     state={{ background: location }}
                     className={styles.linkToOrder}
                   >
-                    <Order id={order._id} data={order} />
+                    <Order data={order} />
                   </Link>
                 </li>
               );

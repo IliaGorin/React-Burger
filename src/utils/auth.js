@@ -1,5 +1,7 @@
 import { redirect } from 'react-router-dom';
 
+// type RequestType = typeof Request();
+
 export function checkAuthLoader({ request }) {
   const pathname = new URL(request.url).pathname;
 

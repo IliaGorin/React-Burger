@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import styles from './order-page.module.css';
 import Modal from '../../components/modal/modal';
 import { OrdersHistoryPage } from '../orders-history/orders-history';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../utils/Types';
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_STOP,
@@ -13,7 +14,7 @@ import {
 import OrderInfoModal from '../../components/order-info-modal/order-info-modal';
 import { OrdersListPage } from '../orders-list/orders-list';
 
-export const OrderPage = () => {
+export const OrderPage: FC = () => {
   const allOrders = useSelector((store) => store.wsOrders.allOrders);
   const userOrders = useSelector((store) => store.wsOrders.userOrders);
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ export const OrderPage = () => {
         type: WS_CONNECTION_STOP,
       });
     };
-  }, []);
+  }, [dispatch, isAuth, wsUrl]);
 
   useEffect(() => {
     console.log('order-page has been mounted');
