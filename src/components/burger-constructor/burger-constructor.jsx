@@ -29,6 +29,9 @@ function BurgerConstructor() {
   const dispatch = useDispatch();
   const orderNumber = useSelector((store) => store.order.order);
   const { isLoggedIn } = useSelector((store) => store.users);
+  const orderPostProcessing = useSelector(
+    (store) => store.order.orderPostProcessing
+  );
 
   const closeOrderModal = () => {
     dispatch(clearOrder());
@@ -159,8 +162,16 @@ function BurgerConstructor() {
         </div>
       )}
 
+      {orderPostProcessing && (
+        <Modal closeModal={closeOrderModal} title="">
+          <p className={'text text_type_main-default'}>
+            Заказ обрабатывается...
+          </p>
+        </Modal>
+      )}
+
       {orderNumber && (
-        <Modal closeModal={closeOrderModal}>
+        <Modal closeModal={closeOrderModal} title="">
           <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
