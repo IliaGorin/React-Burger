@@ -1,20 +1,21 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, FC, MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Button,
   EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forgot-password.module.css';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/Types';
 import { useNavigate } from 'react-router-dom';
 import { changePasswordRequest } from '../../services/actions/users';
 
-export const ForgotPasswordPage = () => {
+export const ForgotPasswordPage: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
 
-  const handleRequest = useCallback(
+  const handleRequest: MouseEventHandler<HTMLFormElement> = useCallback(
     (e) => {
       e.preventDefault();
       dispatch(changePasswordRequest(email, navigate));
@@ -22,28 +23,19 @@ export const ForgotPasswordPage = () => {
     [dispatch, email, navigate]
   );
 
-  const onChange = (e) => {
-    setEmail(e.target.value);
-  };
-
   return (
     <main className={styles.main}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleRequest}>
         <h1 className="text text_type_main-medium text_color_primary">
           Восстановление пароля
         </h1>
         <EmailInput
-          onChange={onChange}
+          onChange={(event) => setEmail(event.target.value)}
           value={email}
           placeholder={'Укажите e-mail'}
           name={'email'}
         />
-        <Button
-          htmlType="button"
-          type="primary"
-          size="medium"
-          onClick={handleRequest}
-        >
+        <Button htmlType="submit" type="primary" size="medium">
           Восстановить
         </Button>
       </form>

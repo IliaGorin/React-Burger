@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './error.module.css';
 
-export const ErrorPage = () => {
+export const ErrorPage: FC = () => {
   const navigate = useNavigate();
   const handlerOnClick = () => {
     navigate('/');
