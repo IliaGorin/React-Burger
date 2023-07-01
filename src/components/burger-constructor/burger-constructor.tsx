@@ -21,7 +21,7 @@ import {
   addBunToConstructor,
 } from '../../services/actions/ingr-in-constructor-actions';
 import ConstructorElementDraggable from '../constructor-element-draggable/constructor-element-draggable.jsx';
-import { BUN } from '../../utils/constants.js';
+import { BUN } from '../../utils/constants';
 import { clearConstructor } from '../../services/actions/ingr-in-constructor-actions';
 import { Ingredient } from '../../utils/Types/data';
 

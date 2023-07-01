@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef, FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForBurgeringredients from './burger-ingredients.module.css';
-import IngredientCategory from '../ingredient-category/ingredient-category.jsx';
+import IngredientCategory from '../ingredient-category/ingredient-category';
 import { BUN, SAUCE, MAIN } from '../../utils/constants';
 
-const BurgerIngredients = () => {
-  const [current, setCurrent] = useState(BUN);
+const BurgerIngredients: FC = () => {
+  const [current, setCurrent] = useState<string>(BUN);
   const [bunActive, setBunActive] = useState(false);
   const [sauceActive, setSauceActive] = useState(false);
   const [mainActive, setMainActive] = useState(false);
@@ -26,7 +26,7 @@ const BurgerIngredients = () => {
     mainRef.current !== null && observer.observe(mainRef.current);
   }, []);
 
-  const onTabClick = (tab) => {
+  const onTabClick = (tab: string) => {
     setCurrent(tab);
     const element = document.getElementById(tab);
     if (element) element.scrollIntoView({ behavior: 'smooth' });
