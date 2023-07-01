@@ -1,17 +1,20 @@
 import React, { useEffect, useState, FC } from 'react';
-import { typeOfingredient } from '../../utils/propTypes.js';
 import {
   CurrencyIcon,
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesForBurgeringredient from './burger-ingredient.module.css';
-import { openIngredientDetails } from '../../services/actions/browsed-ingredient-actions.ts';
-import { useDispatch, useSelector } from 'react-redux';
+import { openIngredientDetails } from '../../services/actions/browsed-ingredient-actions';
+// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/Types/index';
 import { useDrag } from 'react-dnd';
-import { BUN } from '../../utils/constants.js';
+import { BUN } from '../../utils/constants';
 import { Link, useLocation } from 'react-router-dom';
+import { Ingredient } from '../../utils/Types/data';
 
-const BurgerIngredient = ({ data }) => {
+const BurgerIngredient: FC<{
+  data: Ingredient;
+}> = ({ data }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({
@@ -65,10 +68,6 @@ const BurgerIngredient = ({ data }) => {
       </div>
     </Link>
   );
-};
-
-BurgerIngredient.propTypes = {
-  data: typeOfingredient.isRequired,
 };
 
 export default BurgerIngredient;

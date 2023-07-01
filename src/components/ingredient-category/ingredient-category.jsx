@@ -22,7 +22,7 @@ const IngredientCategory = forwardRef((props, ref) => {
       <ul className={classes.ingredientsByType}>
         {ingredientsForRender.map((ingredient) => (
           <li key={ingredient._id}>
-            <BurgerIngredient data={ingredient} id={ingredient._id} />
+            <BurgerIngredient data={ingredient} />
           </li>
         ))}
       </ul>
